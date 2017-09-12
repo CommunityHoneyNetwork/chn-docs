@@ -1,0 +1,9 @@
+site_name: CommunityHoneyNetwork
+site_url: https://communityhoneynetwork.github.io
+repo_url: https://github.com/CommunityHoneyNetwork
+site_description: An Open, Post-Modern Honey Network for OpSec Drop Bears, and the rest of us
+theme: readthedocs
+pages:
+  - CommunityHoneyNetwork: index.md
+  - About:
+      - License: LICENSE.md

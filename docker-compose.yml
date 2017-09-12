@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  mkdocs:
+    image: mkdocs
+    volumes:
+      - ../project_documentation:/mnt/docs:z
+      - ../communityhoneynetwork.github.io:/mnt/site:z
+      - ./mkdocs.yml:/mnt/mkdocs.yml:z
+    entrypoint:
+      - /usr/bin/runsvdir
+      - -P
+      - /etc/service
+    working_dir: /mnt
+    ports: 
+      - 127.0.0.1:80:80
