@@ -4,7 +4,7 @@ services:
   mkdocs:
     image: mkdocs
     volumes:
-      - ../project_documentation:/mnt/docs:z
+      - ../docs:/mnt/docs:z
       - ../communityhoneynetwork.github.io:/mnt/site:z
       - ./mkdocs.yml:/mnt/mkdocs.yml:z
     entrypoint:
