@@ -5,5 +5,7 @@ site_description: An Open, Post-Modern Honey Network for OpSec Drop Bears, and t
 theme: readthedocs
 pages:
   - CommunityHoneyNetwork: index.md
+  - QuickStart Guide: quickstart.md
+  - Advanced Deployments: advanced.md
   - About:
       - License: LICENSE.md
