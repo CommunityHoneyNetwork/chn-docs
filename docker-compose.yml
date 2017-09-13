@@ -2,6 +2,8 @@ version: '2'
 
 services:
   mkdocs:
+    build:
+      context: ./
     image: mkdocs
     volumes:
       - ../docs:/mnt/docs:z

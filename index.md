@@ -6,7 +6,7 @@ Honeypot deployment and management automation
 ## Simple management server deployment for your platform
 
 ```
-sudo curl https://gist.githubusercontent.com/clcollins/87c954704917a3830fa646466a11fa60/raw/98b879050b7aeb24e7ea8faf2cadc1e6b89c2d40/chnserver_deploy.sh | bash
+curl -sSL https://gist.github.com/clcollins/452bca577bbcd2f9436843239f57179d -o docker-compose.yml && sudo docker-compose up
 ```
 
 Ok, ok, that's scary.  How about a docker-compose file instead:

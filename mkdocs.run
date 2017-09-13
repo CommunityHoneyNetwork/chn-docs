@@ -1,0 +1,4 @@
+#!/bin/bash
+cd /mnt
+mkdocs build --clean
+exec mkdocs serve
