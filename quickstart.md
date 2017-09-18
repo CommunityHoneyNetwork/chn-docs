@@ -3,9 +3,7 @@ QuickStart Guide
 
 Deploy a honeypot management server and sample honeypot in seconds.  This guide will deploy all the contianers for the server on a single host using a default configuration.  The honeypot can be deployed on the same host or a separate host as desired.
 
-If you'd like to deploy the server across multiple servers, modifiy the default configuation, or do other fun things, check out the [Advanced Deployment Guide](advanced.md).
-
-**Note:** This setup is recommended for testing only.  It's recommended that production deployments follow one of the [Advanced Deployment](advanced.md) options.
+If you'd like to deploy the server across multiple servers or modifiy the default configuation, or do other fun things, check out the [Advanced Configuration Guide](config.md).
 
 ## Prerequesites
 

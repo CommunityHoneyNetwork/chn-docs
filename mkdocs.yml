@@ -8,6 +8,11 @@ theme: readthedocs
 pages:
   - CommunityHoneyNetwork: index.md
   - QuickStart Guide: quickstart.md
-  - Advanced Deployments: advanced.md
-  - About:
-      - License: LICENSE.md
+  - Advanced Options: 
+    - Advanced Configuration: config.md
+    - Deploying without Docker: nondocker.md
+    - Deploying on Kubernetes: kubernetes.md
+    - Deploying to cloud providers: cloud.md
+
+    #  - About:
+    #  - License: LICENSE.md

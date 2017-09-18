@@ -1,7 +1,7 @@
-Advanced Configuration Options
-==============================
+Advanced Options
+================
 
-## Using sysconfig/default files
+## Using sysconfig/default files for configuration
 
 Each of the services and honeypots in the CommunityHoneyNetwork project should work together out of the box following the [Quickstart Guide](quickstart.md). More advanced configuration options can be configured using an /etc/sysconfig/<servicename> or /etc/default/<servicename> file for CentOS-based or Ubuntu-based systems, respectively.
 
@@ -59,9 +59,9 @@ The inventory file can be modified to deploy to remote hosts, as well.  In fact,
 
 ### Notes about Non-Container Installs
 
-**BETA** The ability to install directly to regular hosts _should_ work, but is still in development and _might_ break something.  Use at your own risk.  You're most likely to be successful installing on a freshly installed system, rather than a shared host.
+**BETA:** The ability to install directly to regular hosts _should_ work, but is still in development and _might_ break something.  Use at your own risk.  You're most likely to be successful installing on a freshly installed system, rather than a shared host.
 
-_Supported Operating Systems:_
+**Supported Operating Systems**
 
 The CommunityHoneyNetwork projects are developed and tested to work with:
 
@@ -74,7 +74,7 @@ They *should* also work with the following, but are currently untested and unsup
 * Red Hat Enterprise Linux 7
 * Debian Stretch
 
-_Runit:_
+**Runit**
 
 Each of the projects use [Runit](http://smarden.org/runit/) as the process manager for their respective services, whether in containers or not.  The Ansible playbooks will install Runit along with the services.  This should not impact systems using SysVinit or Systemd.  Since Ansible will install the services using packages provided by the OS maintainer, there will be appropriate configuration files for the init system of that OS, but without the Runit configs, the services will not be setup correctly to talk to one another.
 
@@ -82,7 +82,7 @@ Runit services can be controlled directly using the [Runit sv command](http://sm
 
 Startup scripts for each service exist in /etc/service/<service name>/run.
 
-_Installation Directory_
+**Installation Directory**
 
 Most of the services will use the upstream packages for your OS or Python PIP packages, and install in the standard locations for those packages.
 
