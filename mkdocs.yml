@@ -8,11 +8,14 @@ theme: readthedocs
 pages:
   - CommunityHoneyNetwork: index.md
   - QuickStart Guide: quickstart.md
+  - Your First Honeypot: firstpot.md
   - Advanced Options: 
     - Advanced Configuration: config.md
     - Deploying without Docker: nondocker.md
     - Deploying on Kubernetes: kubernetes.md
     - Deploying to cloud providers: cloud.md
+  - Honeypots:
+    - Cowrie: cowrie.md
 
     #  - About:
     #  - License: LICENSE.md
