@@ -8,7 +8,7 @@ services:
     volumes:
       - ../docs/docs:/mnt/docs:z
       - ../communityhoneynetwork.github.io:/mnt/site:z
-      - ./mkdocs.yml:/mnt/mkdocs.yml:z
+      - ./docs/mkdocs.yml:/mnt/mkdocs.yml:z
     entrypoint:
       - /usr/bin/runsvdir
       - -P
