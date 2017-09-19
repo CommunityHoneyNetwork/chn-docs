@@ -6,7 +6,7 @@ services:
       context: ./
     image: mkdocs
     volumes:
-      - ../docs:/mnt/docs:z
+      - ../docs/docs:/mnt/docs:z
       - ../communityhoneynetwork.github.io:/mnt/site:z
       - ./mkdocs.yml:/mnt/mkdocs.yml:z
     entrypoint:
