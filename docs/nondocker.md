@@ -17,7 +17,7 @@ As an example of a non-container deployment, to install the [MongoDB service](ht
     cd /opt
     git clone https://github.com/CommunityHoneyNetwork/mongodb/
     cd mongodb
-    echo "localhost ansible_connection=local" inventory.txt
+    echo "localhost ansible_connection=local" > inventory.txt
     ansible-playbook mongodb.yml -i inventory.txt -c local
 
 The inventory file can be modified to deploy to remote hosts, as well.  In fact, [Ansible is incredibly configurable](http://docs.ansible.com/ansible/latest/playbooks.html), and all of the playbooks could be combined with an appropriate inventory file to manage all of the hosts with a single Ansible setup.
