@@ -22,7 +22,7 @@ version: '2'
 services:
   cowrie:
     build:
-      context: https://github.com/CommunityHoneyNetwork/cowrie
+      context: https://github.com/CommunityHoneyNetwork/cowrie.git
       dockerfile: Dockerfile-centos
     image: cowrie:centos
     volumes:
