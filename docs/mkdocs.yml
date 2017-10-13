@@ -16,6 +16,8 @@ pages:
     - Deploying to cloud providers: cloud.md
   - Honeypots:
     - Cowrie: cowrie.md
+  - API:
+    - CHN Server: serverapi.md
 
     #  - About:
     #  - License: LICENSE.md
