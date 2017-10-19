@@ -16,6 +16,7 @@ pages:
     - Deploying to cloud providers: cloud.md
   - Honeypots:
     - Cowrie: cowrie.md
+    - Dionaea: dionaea.md
   - API:
     - CHN Server: serverapi.md
 
