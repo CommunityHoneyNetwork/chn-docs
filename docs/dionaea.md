@@ -73,7 +73,7 @@ services:
     image: dionaea:ubuntu
     volumes:
       - ./dionaea.sysconfig:/etc/default/dionaea
-      - ./dionaea/services-enabled/:/opt/dionaea/etc/dionaea/services-enabled/
+      - ./dionaea/services-available/:/opt/dionaea/etc/dionaea/services-enabled/
     ports:
       - "21:21"
       - "23:23"
@@ -91,7 +91,6 @@ services:
       - "3306:3306"
       - "5000:5000"
       - "5060:5060"
-      - "5061:5061"
       - "5061:5061"
       - "11211:11211"
       - "27017:27017"
@@ -200,7 +199,7 @@ Current Dionaea services available:
 
 ## Disabling Dionaea services
 
-If you wish to remove a service from the dionaea honeypot, you can simply delete the corresponding yaml file from `./dionaea/services-enabled/`.
+If you wish to remove a service from the dionaea honeypot, you can simply delete the corresponding yaml file from `./dionaea/services-enabled/`, and remove the relevant service from dionaea.sysconfig.
 
 # Acknowlegements
 

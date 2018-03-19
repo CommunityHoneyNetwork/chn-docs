@@ -42,28 +42,39 @@ Before starting the container, copy the following and save it as `cowrie.sysconf
 If you haven't yet setup a management server, follow the [Quickstart Guide](quickstart.md)
 
 ```
+# This file is read from /etc/sysconfig/cowrie or /etc/default/cowrie
+# depending on the base distro
 #
 # This can be modified to change the default setup of the cowrie unattended installation
 
 DEBUG=false
 
+# CHN Server api to register to
+CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
+
 # Server to stream data to
-FEEDS_SERVER=<IP.OR.NAME.OF.YOUR.CHNSERVER>
-FEEDS_SERVER_PORT="10000"
+FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS"
+FEEDS_SERVER_PORT=10000
 
 # Deploy key from the FEEDS_SERVER administrator
 # This is a REQUIRED value
-DEPLOY_KEY=<YOUR_DEPLOY_KEY>
+DEPLOY_KEY=
 
 # Registration information file
 # If running in a container, this needs to persist
-# COWRIE_JSON="/etc/cowrie.json
+# COWRIE_JSON="/etc/cowrie/cowrie.json
 
 # SSH Listen Port
 # Can be set to 22 for deployments on real servers
 # or left at 2222 and have the port mapped if deployed
 # in a container
 SSH_LISTEN_PORT=2222
+
+# Telnet Listen Port
+# Can be set to 23 for deployments on real servers
+# or left at 2223 and have the port mapped if deployed
+# in a container
+TELNET_LISTEN_PORT=2223
 ```
 
 Build the container images for the Cowrie container:

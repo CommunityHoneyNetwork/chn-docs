@@ -54,6 +54,8 @@ services:
     links:
       - mongodb:mongodb
       - hpfeeds:hpfeeds
+    ports:
+      - "10000:10000"
   chnserver:
     build:
       dockerfile: ./Dockerfile-centos
