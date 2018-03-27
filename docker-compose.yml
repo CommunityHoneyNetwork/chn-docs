@@ -9,10 +9,6 @@ services:
       - ../docs/docs:/mnt/docs:z
       - ../communityhoneynetwork.github.io:/mnt/site:z
       - ./docs/mkdocs.yml:/mnt/mkdocs.yml:z
-    entrypoint:
-      - /usr/bin/runsvdir
-      - -P
-      - /etc/service
     working_dir: /mnt
     ports: 
-      - 127.0.0.1:8000:80
+      - 127.0.0.1:8080:8080
