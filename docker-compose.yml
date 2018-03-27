@@ -15,4 +15,4 @@ services:
       - /etc/service
     working_dir: /mnt
     ports: 
-      - 127.0.0.1:8080:80
+      - 127.0.0.1:8000:80
