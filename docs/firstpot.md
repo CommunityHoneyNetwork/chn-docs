@@ -115,6 +115,6 @@ Attacks logged to your management server will show up under the `Attacks` sectio
 
 ## Troubleshooting
 
-1. If cowrie is unable to register with the management server, make sure your host can communitcate with the management server on port 80 (check host and network firewall rules, etc).
+1. If cowrie is unable to register with the management server, make sure your host can communicate with the management server on port 80 (check host and network firewall rules, etc).
 
 
