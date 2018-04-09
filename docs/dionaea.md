@@ -148,7 +148,7 @@ You can verify the honeypot is running with `docker-compose ps`
 
 When you're ready, the honeypot can be stopped by running `docker-compose down` from the directory containing the docker-compose.yml file.
 
-You're new honeypot should show up within the web interface of your management server under the `Sensors` tab, with the hostname of the container and the UUID that was stored in the dionaea.json file during registration.  As it detects attempts to login to its fake services, it will send this attack info to the management server.
+Your new honeypot should show up within the web interface of your management server under the `Sensors` tab, with the hostname of the container and the UUID that was stored in the dionaea.json file during registration.  As it detects attempts to login to its fake services, it will send this attack info to the management server.
 
 You can now test the honeypot logging by trying to netcat to one of the open honeypot ports, for example the ftp service (if enabled):
 

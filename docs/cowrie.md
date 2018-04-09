@@ -50,11 +50,13 @@ TELNET_LISTEN_PORT=2223
 The following options are supported in the `/etc/sysconfig/cowrie` and `/etc/default/cowrie files`:
 
 * DEBUG: (boolean) Enable more verbose output to the console
+* CHN_SERVER: (string) The URL of the CHN Server used to register honeypot.
 * FEEDS_SERVER: (string) The hostname or IP address of the HPFeeds server to send logged events.  This is likely going to be the CHN management server.
 * FEEDS_SERVER_PORT: (integer) The HPFeeds port.  Default is 10000.
 * DEPLOY_KEY: (string; REQUIRED) The deploy key provided by the feeds server administration for registration during the first startup.  This key is **required** for registration.
 * COWRIE_JSON: (string) The location to store the registration information returned from the HPFeeds server.
 * SSH_LISTEN_PORT: (integer) The port for the Cowrie daemon to listen on for SSH connections.  In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
+* TELNET_LISTEN_PORT: (integer) The port for the Cowrie daemon to listen on for Telnet connections. In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
 
 ## Deploying Cowrie with Docker and docker-compose
 
