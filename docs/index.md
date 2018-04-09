@@ -9,6 +9,18 @@ CHN aims to make deployments honeypots and honeypot management tools easy and fl
 
 With flexibility in mind, though, all parts of the project can be deployed separately, with or without containers, on CentOS or Ubuntu hosts.  Check the [advanced configuration documentation](config.md), [installing and running without Docker](nondocker.md), or [deploying to cloud providers](cloud.md).
 
+
+## Getting the correct versions
+When installing CHN Server and Honeypots, it is important to make sure versions of each component are compatible with the others.  We recommend using release tags to maintain compatibility between projects.  CHN maintains stable release tags that are tested to work across the different CHN projects.
+
+The most recent tags will receive minor feature backports and fixes. Older branches will receive only critical fixes.
+
+In addition to the releases, the master branches from each project track current work **in development**, and are not guaranteed to be stable.
+
+**Getting the latest releases**
+
+The releases pages for each project - for example, the [CHN-Server release page](https://github.com/CommunityHoneyNetwork/CHN-Server/releases) - for each project list the available releases.  We recommend using the latest stable release. GitHub will direct you to the latest release for any project by adding `/latest` to the URL for that project's releases page.  Using the CHN-Server repository as an example: [github.com/CommunityHoneyNetwork/CHN-Server/releases/latest](https://github.com/CommunityHoneyNetwork/CHN-Server/releases/latest)
+
 ## Contributing
 
 Contributions to the CommunityHoneyNetwork project are welcome!  Afterall, it's not much of a community without your help.  Documentation always needs help, individual projects each have their own issues or bugs that need to be addressed, and test coverage can always be improved.

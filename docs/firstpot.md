@@ -22,7 +22,7 @@ version: '2'
 services:
   cowrie:
     build:
-      context: https://github.com/CommunityHoneyNetwork/cowrie.git
+      context: https://github.com/CommunityHoneyNetwork/cowrie.git#v1.1
       dockerfile: Dockerfile-centos
     image: cowrie:centos
     volumes:
@@ -116,5 +116,3 @@ Attacks logged to your management server will show up under the `Attacks` sectio
 ## Troubleshooting
 
 1. If cowrie is unable to register with the management server, make sure your host can communicate with the management server on port 80, or 443 if using SSL (check host and network firewall rules, etc), as well as hpfeeds on port 10000.
-
-

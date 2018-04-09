@@ -1,20 +1,16 @@
-FROM ubuntu:17.10
+FROM centos:7
 MAINTAINER Chris Collins <collins.christopher@gmail.com>
 
-ENV PKGS python python-pip nginx runit
-
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y $PKGS
+COPY RPM-GPG-KEY-EPEL* /etc/pki/rpm-gpg/
+RUN yum install -y epel-release \
+      && yum install -y python-pip \
+      && yum clean all \
+      && rm -rf /var/cache/yum
 
 RUN pip install mkdocs
-ADD default /etc/nginx/sites-enabled/default
+COPY mkdocs.run /mkdocs.run
 
-RUN mkdir -p /etc/service/nginx
-ADD nginx.run /etc/service/nginx/run
-RUN chmod -R a+x /etc/service/nginx
+EXPOSE 8080
+USER 1000
 
-RUN mkdir -p /etc/service/mkdocs
-ADD mkdocs.run /etc/service/mkdocs/run
-RUN chmod -R a+x /etc/service/mkdocs
-
-EXPOSE 80
+CMD [ "/mkdocs.run" ]

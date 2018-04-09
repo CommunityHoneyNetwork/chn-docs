@@ -28,28 +28,28 @@ services:
   mongodb:
     build:
       dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/mongodb.git
+      context: https://github.com/CommunityHoneyNetwork/mongodb.git#v1.1
     image: mongodb:centos
     volumes:
       - ./storage/mongodb:/var/lib/mongo:z
   redis:
     build:
       dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/redis.git
+      context: https://github.com/CommunityHoneyNetwork/redis.git#v1.1
     image: redis:centos
     volumes:
       - ./storage/redis:/var/lib/redis:z
   hpfeeds:
     build:
       dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/hpfeeds.git
+      context: https://github.com/CommunityHoneyNetwork/hpfeeds.git#v1.1
     image: hpfeeds:centos
     links:
       - mongodb:mongodb
   mnemosyne:
     build:
       dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/mnemosyne.git
+      context: https://github.com/CommunityHoneyNetwork/mnemosyne.git#v1.1
     image: mnemosyne:centos
     links:
       - mongodb:mongodb
@@ -59,7 +59,7 @@ services:
   chnserver:
     build:
       dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/CHN-Server.git
+      context: https://github.com/CommunityHoneyNetwork/CHN-Server.git#v1.1
     image: chnserver:centos
     volumes:
       - ./config/collector:/etc/collector:z
