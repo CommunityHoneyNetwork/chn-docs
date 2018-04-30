@@ -6,6 +6,8 @@ dev_addr: 0.0.0.0:8080
 site_description: An Open, Post-Modern Honey Network for OpSec Drop Bears, and the rest of us
 google_analytics: ['UA-106435025-1', 'CommunityHoneyNetwork.github.io']
 theme: readthedocs
+markdown_extensions:
+  - markdown.extensions.admonition
 pages:
   - CommunityHoneyNetwork: index.md
   - QuickStart Guide: quickstart.md
@@ -19,6 +21,11 @@ pages:
   - Honeypots:
     - Cowrie: cowrie.md
     - Dionaea: dionaea.md
+    - Glastopf: glastopf.md
+    - Wordpot: wordpot.md
+    - Conpot: conpot.md
+    - Amun: amun.md
+    - RDPhoney: rdphoney.md
   - API:
     - CHN Server: serverapi.md
 
