@@ -46,6 +46,8 @@ services:
     image: hpfeeds:centos
     links:
       - mongodb:mongodb
+    ports:
+      - "10000:10000"
   mnemosyne:
     build:
       dockerfile: ./Dockerfile-centos
@@ -54,8 +56,6 @@ services:
     links:
       - mongodb:mongodb
       - hpfeeds:hpfeeds
-    ports:
-      - "10000:10000"
   chnserver:
     build:
       dockerfile: ./Dockerfile-centos
