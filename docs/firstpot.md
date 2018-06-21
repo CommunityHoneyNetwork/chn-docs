@@ -10,6 +10,8 @@ The default deployment model uses Docker and Docker Compose to deploy containers
 * Docker >= 1.13.1
 * Docker Compose >= 1.15.0
 
+Note: non-Linux platforms for Docker hosting are known to not work correctly. For example, a Mac Docker host will report the container's gateway as the attacking source.
+
 ## Building and Deploying Cowrie
 
 As an example, we'll deploy Cowrie with SSH listening on port 2222.  This is not likely helpful in a production deployment, but will serve as an example for creating a honeypot, registering a new sensor with the management server, and capturing attack data.  For more details on production deployments, see the full [Cowrie Documentation](cowrie.md).
