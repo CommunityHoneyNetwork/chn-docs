@@ -68,7 +68,7 @@ version: '2'
 services:
   dionaea:
     build:
-      context: https://github.com/CommunityHoneyNetwork/dionaea.git#v1.1
+      context: https://github.com/CommunityHoneyNetwork/dionaea.git#v1.2
       dockerfile: Dockerfile-ubuntu
     image: dionaea:ubuntu
     volumes:
