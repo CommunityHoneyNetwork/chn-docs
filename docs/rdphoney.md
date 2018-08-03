@@ -68,10 +68,7 @@ Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 version: '2'
 services:
     rdphoney:
-        build:
-            context: https://github.com/CommunityHoneyNetwork/rdphonehy.git
-            dockerfile: Dockerfile-centos
-        image: rdphoney:centos
+        image: stingar/rdphoney:0.1-alpha-centos
         volumes:
             - ./rdphonehy.sysconfig:/etc/sysconfig/rdphoney
         ports:
@@ -110,13 +107,11 @@ DEPLOY_KEY=
 # RDPHONEY_JSON="/etc/rdphoney/rdphoney.json
 ```
 
-Build the container image for the RDPhoney container:
-
-    $ docker-compose build
-
-When the images are built, start the honeypot with:
+Once you have saved your `docker-compose.yml` file, start the honeypot with:
 
     $ docker-compose up -d
+
+This command will download the pre-built image from hub.docker.com, and start your honeypot using this image.
 
 You can verify the honeypot is running with `docker-compose ps`
 

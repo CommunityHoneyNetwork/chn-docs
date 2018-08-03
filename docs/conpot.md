@@ -72,10 +72,7 @@ Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 version: '2'
 services:
     conpot:
-        build:
-            context: https://github.com/CommunityHoneyNetwork/conpot.git
-            dockerfile: Dockerfile-centos
-        image: conpot:centos
+        image: stingar/conpot:0.1-alpha-centos
         volumes:
             - ./conpot.sysconfig:/etc/sysconfig/conpot
         ports:
@@ -119,13 +116,11 @@ CONPOT_JSON="/etc/conpot/conpot.json"
 CONPOT_TEMPLATE=default
 ```
 
-Build the container images for the Conpot container:
-
-    $ docker-compose build
-
-When the images are built, start the honeypot with:
+Once you have saved your `docker-compose.yml` file, start the honeypot with:
 
     $ docker-compose up -d
+
+This command will download the pre-built image from hub.docker.com, and start your honeypot using this image.
 
 You can verify the honeypot is running with `docker-compose ps`
 

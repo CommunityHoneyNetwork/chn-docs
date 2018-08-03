@@ -71,10 +71,7 @@ Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 version: '2'
 services:
     glastopf:
-        build:
-            context: https://github.com/CommunityHoneyNetwork/glastopf.git
-            dockerfile: Dockerfile-ubuntu
-        image: glastopf:ubuntu
+        image: stingar/glastopf:0.1-alpha-ubuntu
         volumes:
             - ./glastopf.sysconfig:/etc/default/glastopf
         ports:
@@ -115,13 +112,11 @@ GLASTOPF_JSON="/etc/glastopf/glastopf.json"
 GLASTOPF_PORT=8080
 ```
 
-Build the container images for the Glastopf container:
-
-    $ docker-compose build
-
-When the images are built, start the honeypot with:
+Once you have saved your `docker-compose.yml` file, start the honeypot with:
 
     $ docker-compose up -d
+
+This command will download the pre-built image from hub.docker.com, and start your honeypot using this image.
     
 You can verify the honeypot is running with `docker-compose ps`
 

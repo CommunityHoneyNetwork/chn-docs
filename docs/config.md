@@ -39,3 +39,78 @@ HPFEEDS_PORT=10000
 # Mnemosyne config options
 IGNORE_RFC1918=False
 ```
+
+# Building docker containers from source
+
+We recommend using the pre-built docker images on hub.docker.com for building CHN Server and honeypots. However, there may be circumstances where you wish to build your own docker images from source.
+
+To build from source as opposed to from an image, simply add the following lines before the `image` tag under the service name in your `docker-compose.yml` file:
+
+```
+    build:
+      dockerfile: ./Dockerfile-centos
+      context: https://github.com/CommunityHoneyNetwork/<repo_name>.git#<version_tag>
+```
+
+For example, if you wish to build CHN Server from source, your docker-compose file will look like the following:
+
+```
+version: '2'
+services:
+  mongodb:
+    build:
+      dockerfile: ./Dockerfile-centos
+      context: https://github.com/CommunityHoneyNetwork/mongodb.git#v1.1
+    image: mongodb:centos
+    volumes:
+      - ./storage/mongodb:/var/lib/mongo:z
+  redis:
+    build:
+      dockerfile: ./Dockerfile-centos
+      context: https://github.com/CommunityHoneyNetwork/redis.git#v1.1
+    image: redis:centos
+    volumes:
+      - ./storage/redis:/var/lib/redis:z
+  hpfeeds:
+    build:
+      dockerfile: ./Dockerfile-centos
+      context: https://github.com/CommunityHoneyNetwork/hpfeeds.git#v1.1
+    image: hpfeeds:centos
+    links:
+      - mongodb:mongodb
+    ports:
+      - "10000:10000"
+  mnemosyne:
+    build:
+      dockerfile: ./Dockerfile-centos
+      context: https://github.com/CommunityHoneyNetwork/mnemosyne.git#v1.1
+    image: mnemosyne:centos
+    links:
+      - mongodb:mongodb
+      - hpfeeds:hpfeeds
+  chnserver:
+    build:
+      dockerfile: ./Dockerfile-centos
+      context: https://github.com/CommunityHoneyNetwork/CHN-Server.git#v1.1
+    image: chnserver:centos
+    volumes:
+      - ./config/collector:/etc/collector:z
+    links:
+      - mongodb:mongodb
+      - redis:redis
+      - hpfeeds:hpfeeds
+    ports:
+      - "80:80"
+```
+
+Build the Docker images for the containers that make up the server:
+
+```
+$ docker-compose build
+```
+
+Once the images are built, you start up your new server with:
+
+```
+$ docker-compose up -d
+```

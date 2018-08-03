@@ -72,10 +72,7 @@ Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 version: '2'
 services:
     wordpot:
-        build:
-            context: https://github.com/CommunityHoneyNetwork/wordpot.git
-            dockerfile: Dockerfile-centos
-        image: wordpot:centos
+        image: stingar/wordpot:0.1-alpha-centos
         volumes:
             - ./wordpot.sysconfig:/etc/sysconfig/wordpot
         ports:
@@ -117,13 +114,11 @@ DEPLOY_KEY=
 WORDPRESS_PORT=8080
 ```
 
-Build the container images for the Wordpot container:
-
-    $ docker-compose build
-
-When the images are built, start the honeypot with:
+Once you have saved your `docker-compose.yml` file, start the honeypot with:
 
     $ docker-compose up -d
+
+This command will download the pre-built image from hub.docker.com, and start your honeypot using this image.
 
 You can verify the honeypot is running with `docker-compose ps`
 
