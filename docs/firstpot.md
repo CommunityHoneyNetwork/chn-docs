@@ -23,10 +23,7 @@ Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 version: '2'
 services:
   cowrie:
-    build:
-      context: https://github.com/CommunityHoneyNetwork/cowrie.git#v1.2
-      dockerfile: Dockerfile-centos
-    image: cowrie:centos
+    image: stingar/cowrie:latest
     volumes:
       - ./cowrie.sysconfig:/etc/sysconfig/cowrie
       - ./cowrie:/etc/cowrie
@@ -50,6 +47,10 @@ If you haven't yet setup a management server, follow the [Quickstart Guide](quic
 # This can be modified to change the default setup of the cowrie unattended installation
 
 DEBUG=false
+
+# IP Address of the honeypot
+# Leaving this blank will default to the docker container IP
+IP_ADDRESS=
 
 # CHN Server api to register to
 CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
@@ -79,13 +80,11 @@ SSH_LISTEN_PORT=2222
 TELNET_LISTEN_PORT=2223
 ```
 
-Build the container images for the Cowrie container:
-
-    $ docker-compose build
-
-When the images are built, start the honeypot with:
+Once you have saved your `docker-compose.yml` file, start the honeypot with:
 
     $ docker-compose up -d
+
+This command will download the pre-built cowrie image from hub.docker.com, and start your honeypot using this image.
 
 You can verify the honeypot is running with `docker-compose ps`:
 
@@ -112,7 +111,7 @@ Attacks logged to your management server will show up under the `Attacks` sectio
 
 ![Attacks](img/attacks.png)
 
-*Above: The Attack Report page of the managment server, showing a logged hit to the Cowrie honeypot*
+*Above: The Attack Report page of the management server, showing a logged hit to the Cowrie honeypot*
 
 
 ## Troubleshooting

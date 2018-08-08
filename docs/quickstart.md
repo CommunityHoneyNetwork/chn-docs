@@ -26,43 +26,29 @@ Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 version: '2'
 services:
   mongodb:
-    build:
-      dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/mongodb.git#v1.1
-    image: mongodb:centos
+    image: stingar/mongodb:latest
     volumes:
       - ./storage/mongodb:/var/lib/mongo:z
   redis:
-    build:
-      dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/redis.git#v1.1
-    image: redis:centos
+    image: stingar/redis:latest
     volumes:
       - ./storage/redis:/var/lib/redis:z
   hpfeeds:
-    build:
-      dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/hpfeeds.git#v1.1
-    image: hpfeeds:centos
+    image: stingar/hpfeeds:latest
     links:
       - mongodb:mongodb
     ports:
       - "10000:10000"
   mnemosyne:
-    build:
-      dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/mnemosyne.git#v1.1
-    image: mnemosyne:centos
+    image: stingar/mnemosyne:latest
     links:
       - mongodb:mongodb
       - hpfeeds:hpfeeds
   chnserver:
-    build:
-      dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/CHN-Server.git#v1.1
-    image: chnserver:centos
+    image: stingar/chn-server:latest
     volumes:
       - ./config/collector:/etc/collector:z
+      - ./storage/chnserver/sqlite:/opt/sqlite
     links:
       - mongodb:mongodb
       - redis:redis
@@ -71,13 +57,11 @@ services:
       - "80:80"
 ```
 
-Build the Docker images for the containers that make up the server:
-
-    $ docker-compose build
-
-Once the images are built, you start up your new server with:
+Once you have saved your `docker-compose.yml` file, you start up your new server with:
 
     $ docker-compose up -d
+
+This command will download the pre-built images from hub.docker.com, and start containers using these images.
 
 Verify your server is running with `docker-compose ps`:
 

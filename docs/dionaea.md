@@ -15,6 +15,10 @@ Prior to starting, Dionaea will parse some options from `/etc/sysconfig/dionaea`
 
 DEBUG=false
 
+# IP Address of the honeypot
+# Leaving this blank will default to the docker container IP
+IP_ADDRESS=
+
 CHN_SERVER="http://localhost"
 DEPLOY_KEY=
 
@@ -39,6 +43,7 @@ FEEDS_SERVER_PORT=10000
 The following options are supported in the `/etc/sysconfig/dionaea` and `/etc/default/dionaea` files:
 
 * DEBUG: (boolean) Enable more verbose output to the console
+* IP_ADDRESS: IP address of the host running the honeypot container
 * CHN_SERVER: (string) The hostname or IP address of the CHN Server to register honeypot.
 * DEPLOY_KEY: (string; REQUIRED) The deploy key provided by the feeds server administration for registration during the first startup. This key is **required** for registration.
 * LISTEN_ADDRESSES: (string) The IP address of the Dionaea network listener
@@ -67,10 +72,7 @@ Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 version: '2'
 services:
   dionaea:
-    build:
-      context: https://github.com/CommunityHoneyNetwork/dionaea.git#v1.1
-      dockerfile: Dockerfile-ubuntu
-    image: dionaea:ubuntu
+    image: stingar/dionaea:latest
     volumes:
       - ./dionaea.sysconfig:/etc/default/dionaea
       - ./dionaea/services-available/:/opt/dionaea/etc/dionaea/services-enabled/
@@ -111,6 +113,10 @@ If you haven't yet setup a management server, follow the [Quickstart Guide](quic
 
 DEBUG=true
 
+# IP Address of the honeypot
+# Leaving this blank will default to the docker container IP
+IP_ADDRESS=
+
 CHN_SERVER="http://localhost"
 DEPLOY_KEY=
 
@@ -130,13 +136,11 @@ FEEDS_SERVER="localhost"
 FEEDS_SERVER_PORT=10000
 ```
 
-Build the container images for the Dionaea container:
-
-    $ docker-compose build
-
-When the images are built, start the honeypot with:
+Once you have saved your `docker-compose.yml` file, start the honeypot with:
 
     $ docker-compose up -d
+
+This command will download the pre-built image from hub.docker.com, and start your honeypot using this image.
 
 You can verify the honeypot is running with `docker-compose ps`
 

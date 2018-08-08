@@ -22,6 +22,10 @@ Prior to starting, Conpot will parse some options from `/etc/sysconfig/conpot` f
 
 DEBUG=false
 
+# IP Address of the honeypot
+# Leaving this blank will default to the docker container IP
+IP_ADDRESS=
+
 # CHN Server api to register to
 CHN_SERVER="http://chnserver"
 
@@ -46,6 +50,7 @@ CONPOT_TEMPLATE=default
 The following options are supported in the `/etc/sysconfig/conpot` or `/etc/default/conpot` files:
 
 * DEBUG: (boolean) Enable more verbose output to the console
+* IP_ADDRESS: IP address of the host running the honeypot container
 * CHN_SERVER: (string) The URL of the CHN Server used to register honeypot.
 * FEEDS_SERVER: (string) The hostname or IP address of the HPFeeds server to send logged events. This will likely be the CHN management server.
 * FEEDS_SERVER_PORT: (integer) The HPFeeds port. Default is 10000.
@@ -72,10 +77,7 @@ Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 version: '2'
 services:
     conpot:
-        build:
-            context: https://github.com/CommunityHoneyNetwork/conpot.git
-            dockerfile: Dockerfile-centos
-        image: conpot:centos
+        image: stingar/conpot:0.2-alpha-centos
         volumes:
             - ./conpot.sysconfig:/etc/sysconfig/conpot
         ports:
@@ -100,6 +102,10 @@ If you havent' yet set up a management server, follow the [Quickstart Guide](qui
 
 DEBUG=false
 
+# IP Address of the honeypot
+# Leaving this blank will default to the docker container IP
+IP_ADDRESS=
+
 # CHN Server api to register to
 CHN_SERVER="http://chnserver"
 
@@ -119,13 +125,11 @@ CONPOT_JSON="/etc/conpot/conpot.json"
 CONPOT_TEMPLATE=default
 ```
 
-Build the container images for the Conpot container:
-
-    $ docker-compose build
-
-When the images are built, start the honeypot with:
+Once you have saved your `docker-compose.yml` file, start the honeypot with:
 
     $ docker-compose up -d
+
+This command will download the pre-built image from hub.docker.com, and start your honeypot using this image.
 
 You can verify the honeypot is running with `docker-compose ps`
 
