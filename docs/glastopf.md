@@ -22,6 +22,10 @@ Prior to starting, Glastopf will parse some options from `/etc/default/glastopf`
 
 DEBUG=false
 
+# IP Address of the honeypot
+# Leaving this blank will default to the docker container IP
+IP_ADDRESS=
+
 # CHN Server api to register to
 CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
 
@@ -45,6 +49,7 @@ GLASTOPF_PORT=8080
 The following options are supported in the `/etc/default/glastopf` files
 
 * DEBUG: (boolean) Enable more verbose output to the console
+* IP_ADDRESS: IP address of the host running the honeypot container
 * CHN_SERVER: (string) The URL of the CHN Server used to register honeypot.
 * FEEDS_SERVER: (string) The hostname or IP address of the HPFeeds server to send logged events.  This will likely be the CHN management server.
 * FEEDS_SERVER_PORT: (integer) The HPFeeds port.  Default is 10000.
@@ -71,7 +76,7 @@ Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 version: '2'
 services:
     glastopf:
-        image: stingar/glastopf:0.1-alpha-ubuntu
+        image: stingar/glastopf:0.2-alpha-ubuntu
         volumes:
             - ./glastopf.sysconfig:/etc/default/glastopf
         ports:
@@ -93,6 +98,10 @@ If you haven't yet setup a management server, follow the [Quickstart Guide](quic
 # This can be modified to change the default setup of the glastopf unattended installation
 
 DEBUG=false
+
+# IP Address of the honeypot
+# Leaving this blank will default to the docker container IP
+IP_ADDRESS=
 
 # CHN Server api to register to
 CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"

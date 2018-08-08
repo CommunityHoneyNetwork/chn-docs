@@ -46,6 +46,10 @@ If you haven't yet setup a management server, follow the [Quickstart Guide](quic
 
 DEBUG=false
 
+# IP Address of the honeypot
+# Leaving this blank will default to the docker container IP
+IP_ADDRESS=
+
 # CHN Server api to register to
 CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
 

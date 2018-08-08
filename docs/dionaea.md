@@ -15,6 +15,10 @@ Prior to starting, Dionaea will parse some options from `/etc/sysconfig/dionaea`
 
 DEBUG=false
 
+# IP Address of the honeypot
+# Leaving this blank will default to the docker container IP
+IP_ADDRESS=
+
 CHN_SERVER="http://localhost"
 DEPLOY_KEY=
 
@@ -39,6 +43,7 @@ FEEDS_SERVER_PORT=10000
 The following options are supported in the `/etc/sysconfig/dionaea` and `/etc/default/dionaea` files:
 
 * DEBUG: (boolean) Enable more verbose output to the console
+* IP_ADDRESS: IP address of the host running the honeypot container
 * CHN_SERVER: (string) The hostname or IP address of the CHN Server to register honeypot.
 * DEPLOY_KEY: (string; REQUIRED) The deploy key provided by the feeds server administration for registration during the first startup. This key is **required** for registration.
 * LISTEN_ADDRESSES: (string) The IP address of the Dionaea network listener
@@ -107,6 +112,10 @@ If you haven't yet setup a management server, follow the [Quickstart Guide](quic
 # This can be modified to change the default setup of the dionaea unattended installation
 
 DEBUG=true
+
+# IP Address of the honeypot
+# Leaving this blank will default to the docker container IP
+IP_ADDRESS=
 
 CHN_SERVER="http://localhost"
 DEPLOY_KEY=

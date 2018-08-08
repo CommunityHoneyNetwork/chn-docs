@@ -48,6 +48,7 @@ services:
     image: stingar/chn-server:latest
     volumes:
       - ./config/collector:/etc/collector:z
+      - ./storage/chnserver/sqlite:/opt/sqlite
     links:
       - mongodb:mongodb
       - redis:redis

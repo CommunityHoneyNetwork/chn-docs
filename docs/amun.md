@@ -22,6 +22,10 @@ Prior to starting, Amun will parse some options from `/etc/sysconfig/amun` for R
 
 DEBUG=false
 
+# IP Address of the honeypot
+# Leaving this blank will default to the docker container IP
+IP_ADDRESS=
+
 # CHN Server api to register to
 CHN_SERVER="http://chnserver"
 
@@ -43,6 +47,7 @@ AMUN_JSON="/etc/amun/amun.json"
 The following options are supported in the `/etc/sysconfig/amun` or `/etc/default/amun` files:
 
 * DEBUG: (boolean) Enable more verbose output to the console
+* IP_ADDRESS: IP address of the host running the honeypot container
 * CHN_SERVER: (string) The URL of the CHN Server used to register honeypot.
 * FEEDS_SERVER: (string) The hostname or IP address of the HPFeeds server to send logged events. This will likely be the CHN management server.
 * FEEDS_SERVER_PORT: (integer) The HPFeeds port. Default is 10000.
@@ -69,7 +74,7 @@ Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 version: '2'
 services:
     amun:
-        image: stingar/amun:0.1-alpha-centos
+        image: stingar/amun:0.2-alpha-centos
         volumes:
             - ./amun.sysconfig:/etc/sysconfig/amun
         ports:
@@ -91,6 +96,10 @@ If you haven't yet set up a management server, follow the [Quickstart Guide](qui
 # This can be modified to change the default setup of the amun unattended installation
 
 DEBUG=false
+
+# IP Address of the honeypot
+# Leaving this blank will default to the docker container IP
+IP_ADDRESS=
 
 # CHN Server api to register to
 CHN_SERVER="http://chnserver"
