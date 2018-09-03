@@ -75,7 +75,8 @@ services:
     rdphoney:
         image: stingar/rdphoney:0.2-alpha-centos
         volumes:
-            - ./rdphonehy.sysconfig:/etc/sysconfig/rdphoney
+            - ./rdphoney.sysconfig:/etc/sysconfig/rdphoney
+            - ./rdphoney:/etc/rdphoney
         ports:
             - "3389:3389"
 ```

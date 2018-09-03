@@ -77,6 +77,7 @@ services:
         image: stingar/amun:0.2-alpha-centos
         volumes:
             - ./amun.sysconfig:/etc/sysconfig/amun
+            - ./amun:/etc/amun
         ports:
             - "445:445"
 ```

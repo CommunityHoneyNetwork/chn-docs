@@ -80,6 +80,7 @@ services:
         image: stingar/wordpot:0.2-alpha-centos
         volumes:
             - ./wordpot.sysconfig:/etc/sysconfig/wordpot
+            - ./wordpot:/etc/wordpot
         ports:
             - "8080:8080"
 ```

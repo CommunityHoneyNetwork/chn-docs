@@ -80,6 +80,7 @@ services:
         image: stingar/conpot:0.2-alpha-centos
         volumes:
             - ./conpot.sysconfig:/etc/sysconfig/conpot
+            - ./conpot:/etc/conpot
         ports:
             - "127.0.0.1:8082:80"
             - "127.0.0.1:102:102"

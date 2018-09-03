@@ -79,6 +79,7 @@ services:
         image: stingar/glastopf:0.2-alpha-ubuntu
         volumes:
             - ./glastopf.sysconfig:/etc/default/glastopf
+            - ./glastopf:/etc/glastopf
         ports:
             - "8080:8080"
 ```

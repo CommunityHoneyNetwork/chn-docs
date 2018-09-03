@@ -75,6 +75,7 @@ services:
     image: stingar/dionaea:latest
     volumes:
       - ./dionaea.sysconfig:/etc/default/dionaea
+      - ./dionaea:/etc/dionaea
       - ./dionaea/services-available/:/opt/dionaea/etc/dionaea/services-enabled/
     ports:
       - "21:21"
