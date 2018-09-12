@@ -82,9 +82,9 @@ services:
             - ./conpot.sysconfig:/etc/sysconfig/conpot
             - ./conpot:/etc/conpot
         ports:
-            - "127.0.0.1:8082:80"
-            - "127.0.0.1:102:102"
-            - "127.0.0.1:502:502"
+            - 80:80
+            - 102:102
+            - 502:502
 ```
 
 This will tell docker-compose to build the Conpot container image from the files in the [CommunityHoneyNetwork Conpot repository](https://github.com/CommunityHoneyNetwork/conpot), and mount the volume:
@@ -137,7 +137,7 @@ You can verify the honeypot is running with `docker-compose ps`
     $ docker-compose ps
             Name                       Command               State                    Ports
     ----------------------------------------------------------------------------------------------------------------
-    chnserver_conpot_1       /usr/bin/runsvdir -P /etc/ ...   Up               0.0.0.0:8080->8080/tcp
+    chnserver_conpot_1       /usr/bin/runsvdir -P /etc/ ...   Up                0.0.0.0:102->102/tcp, 0.0.0.0:502->502/tcp, 0.0.0.0:80->80/tc
 
 When you're ready, the honeypot can be stopped by running `docker-compose down` from the directory containing the docker-compose.yml file.
 
