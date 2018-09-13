@@ -9,8 +9,5 @@ RUN yum install -y epel-release \
 
 RUN pip install mkdocs
 COPY mkdocs.run /mkdocs.run
-
 EXPOSE 8080
-USER 1000
-
 CMD [ "/mkdocs.run" ]
