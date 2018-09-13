@@ -63,6 +63,34 @@ The following options are supported in the `/etc/sysconfig/cowrie` and `/etc/def
 * SSH_LISTEN_PORT: (integer) The port for the Cowrie daemon to listen on for SSH connections.  In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
 * TELNET_LISTEN_PORT: (integer) The port for the Cowrie daemon to listen on for Telnet connections. In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
 
+## Running Cowrie on port 22/23
+
+By default Cowrie will run on port 2222/2223, to avoid any conflict with the real SSH or Telnet services on the machine. If you wish to run the honeypot on port 22, you need to move the real SSH service to a new port. This is outside the scope of our documentation, but would look generally like:
+
+* Edit `/etc/ssh/sshd_config` and change the `Port 22` stanza to your desired port, such as `Port 22222`.
+* Restart the SSH daemon `sudo systemctl restart ssh.service`
+* Ensure the SSH daemon is running `sudo systemctl status ssh.service` and look for "Active: active (running)"
+* From a NEW terminal, try to SSH to your new port, to ensure your config is working
+* (Optional) Disconnect from your exiting SSH session(s)
+* Edit the `docker-compose.yml` file to expose the standard SSH port:
+```
+version: '2'
+services:
+  cowrie:
+    image: stingar/cowrie:latest
+    volumes:
+      - ./cowrie.sysconfig:/etc/sysconfig/cowrie
+      - ./cowrie:/etc/cowrie
+    ports:
+      - "22:2222"
+      - "23:2223"
+```
+* **DO NOT** edit the `cowrie.sysconfig` file and change the SSH_LISTEN_PORT or TELNET_LISTEN_PORT; just let Docker handle the translation
+* Restart the container:
+```
+docker-compose down && docker-compose up -d
+```
+
 ## Deploying Cowrie with Docker and docker-compose
 
 Deploying Cowrie with Docker and docker-compose is covered in the [Your First Honeypot](firstpot.md) documentation.

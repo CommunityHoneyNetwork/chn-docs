@@ -115,3 +115,6 @@ Attacks logged to your management server will show up under the `Attacks` sectio
 ## Troubleshooting
 
 1. If cowrie is unable to register with the management server, make sure your host can communicate with the management server on port 80, or 443 if using SSL (check host and network firewall rules, etc), as well as hpfeeds on port 10000.
+
+## Running cowrie on port 22 or port 23
+This is covered in the [Cowrie](cowrie.md#running-cowrie-on-port-2223) configuration section
