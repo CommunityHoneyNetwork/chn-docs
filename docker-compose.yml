@@ -7,7 +7,7 @@ services:
     image: mkdocs
     volumes:
       - ../docs/docs:/mnt/docs:z
-      - ../communityhoneynetwork.github.io:/mnt/site:z
+      - ../CommunityHoneyNetwork.github.io:/mnt/site:z
       - ./docs/mkdocs.yml:/mnt/mkdocs.yml:z
     working_dir: /mnt
     ports: 
