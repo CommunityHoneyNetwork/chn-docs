@@ -21,6 +21,7 @@ IP_ADDRESS=
 
 CHN_SERVER="http://localhost"
 DEPLOY_KEY=
+DIONAEA_JSON="/etc/dionaea/dionaea.json"
 
 # Network options
 LISTEN_ADDRESSES="0.0.0.0"
@@ -46,6 +47,7 @@ The following options are supported in the `/etc/sysconfig/dionaea` and `/etc/de
 * IP_ADDRESS: IP address of the host running the honeypot container
 * CHN_SERVER: (string) The hostname or IP address of the CHN Server to register honeypot.
 * DEPLOY_KEY: (string; REQUIRED) The deploy key provided by the feeds server administration for registration during the first startup. This key is **required** for registration.
+* DIONAEA_JSON: (string) The path to write out the Dionaea registration information.
 * LISTEN_ADDRESSES: (string) The IP address of the Dionaea network listener
 * LISTEN_INTERFACES: (string) The hardware interfaces to listen on for Dionaea network connectivity
 * SERVICES: (array of strings) The network services to enable for the Dionaea honeypot.
@@ -82,10 +84,10 @@ services:
       - "23:23"
       - "53:53"
       - "69:69"
-      - "80:8080"
+      - "80:80"
       - "123:123"
       - "135:135"
-      - "443:8443"
+      - "443:443"
       - "445:445"
       - "1433:1433"
       - "1723:1723"
@@ -120,6 +122,7 @@ IP_ADDRESS=
 
 CHN_SERVER="http://localhost"
 DEPLOY_KEY=
+DIONAEA_JSON="/etc/dionaea/dionaea.json"
 
 # Network options
 LISTEN_ADDRESSES="0.0.0.0"
