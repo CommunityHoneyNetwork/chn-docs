@@ -95,6 +95,15 @@ docker-compose down && docker-compose up -d
 
 Deploying Cowrie with Docker and docker-compose is covered in the [Your First Honeypot](firstpot.md) documentation.
 
+## Running Cowrie on port 22
+
+The default configuration file runs Cowrie on port 2222. You can change the container to listen on port 22 and redirect to 2222 by editing `docker-compose.yml` and changing the ports settings to:
+
+	ports:
+ 		- "22":"2222"
+
+*Before* you start your container though, you will very likely first want to have your host's sshd listening on a different port. Assuming you are running Ubuntu, edit the file `/etc/ssh/sshd_config`, and change the Port setting to anything you like. Restart sshd, but make sure to test the new port is accessible before you exit from the session you used to edit the file.
+
 ## Deploying Cowrie without Docker
 
 While deploying Cowrie in a container is the strongly suggested method, it can be deployed directly on a host, without the use of Docker, by running an [Ansible](https://www.ansible.com/) playbook.
