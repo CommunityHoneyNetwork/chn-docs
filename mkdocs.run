@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-set -o errexit
-set -o xtrace
-
-cd /mnt
-mkdocs build --clean
-exec mkdocs serve
