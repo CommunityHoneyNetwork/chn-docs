@@ -1,0 +1,27 @@
+site_name: CommunityHoneyNetwork
+site_url: https://communityhoneynetwork.readthedocs.io
+theme: readthedocs
+docs_dir: docs
+markdown_extensions:
+- markdown.extensions.admonition
+pages:
+    - 'CommunityHoneyNetwork': index.md
+    - 'QuickStart Guide': quickstart.md
+    - 'Your First Honeypot': firstpot.md
+    - 'Security Considerations': security.md
+    - 'Advanced Options':
+        - 'Advanced Configuration': config.md
+        - 'Deploying without Docker': nondocker.md
+        - 'Deploying on Kubernetes': kubernetes.md
+        - 'Deploying to cloud providers': cloud.md
+    - 'Honeypots':
+        - 'Cowrie': cowrie.md
+        - 'Dionaea': dionaea.md
+        - 'Glastopf': glastopf.md
+        - 'Wordpot': wordpot.md
+        - 'Conpot': conpot.md
+        - 'Amun': amun.md
+        - 'RDPhoney': rdphoney.md
+    - 'API':
+        - 'CHN Server': serverapi.md
+    - 'LICENSE': LICENSE.md
