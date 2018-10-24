@@ -18,7 +18,39 @@ Create a new directory to hold your server deployment:
 
     $ mkdir chnserver
     $ cd chnserver
+    
+Copy the following chnserver.sysconfig variables file, and save it as 
+`chnserver.sysconfig`:
 
+```
+# This file is read from /etc/sysconfig/chnserver or /etc/default/chnserver
+# depending on the base distro
+#
+# This can be modified to change the default setup of the chnserver unattended installation
+
+DEBUG=false
+
+EMAIL=admin@localhost
+SERVER_BASE_URL=''
+HONEYMAP_URL=''
+REDIS_URL='redis://redis:6379'
+MAIL_SERVER='127.0.0.1'
+MAIL_PORT=25
+MAIL_TLS='y'
+MAIL_SSL='y'
+MAIL_USERNAME=''
+MAIL_PASSWORD=''
+DEFAULT_MAIL_SENDER=''
+MONGODB_HOST='mongodb'
+MONGODB_PORT=27017
+HPFEEDS_HOST='hpfeeds'
+HPFEEDS_PORT=10000
+
+SUPERUSER_EMAIL=''
+SUPERUSER_PASSWORD=''
+SECRET_KEY=''
+DEPLOY_KEY=''
+```
 Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 
 
