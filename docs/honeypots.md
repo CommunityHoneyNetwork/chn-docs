@@ -16,6 +16,7 @@ The default deployment model uses Docker and Docker Compose to deploy containers
 ## Deploying More Honeypots
 
 Currently the following Honeypots are supported with CHN:
+
 * [Cowrie](cowrie.md)
 * [Dionaea](dionaea.md)
 * [Glastopf](glastopf.md)
@@ -47,4 +48,4 @@ docker-compose and adding the local user to the docker group
 
 **Please Note** that you should generally not change the ports in the 
 sysconfig files, but rather change the ports that Docker translates 
-connectiojns to (i.e., in the )
+connects to (i.e., in the )
