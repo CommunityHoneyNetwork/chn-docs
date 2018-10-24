@@ -1,15 +1,19 @@
 RDPhoney Honeypot
 =================
 
-!!! note "Note"
-    RDPhoney is currently in alpha. This honeypot has been verified to work under limited test cases. However, all functionality may not be currently implemented.
+## Prerequisites
 
-    Please report any issues or feature requests to the [RDPhoney issues page](https://github.com/CommunityHoneyNetwork/rdphoney/issues).
+The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
 
+* Docker >= 1.13.1
+* Docker Compose >= 1.15.0
 
-The CommunityHoneyNetwork RDPhoney Honeypot is a basic RDP honeypot, configured to report logged attacks to the CommunityHoneyNetwork management server.
+**Please ensure the user on the system installing the honeypot is in the local
+ docker group**
+ 
+ Please see your system documentation for adding a user to the docker group.
 
-## Configuring RDPhoney to talk to the CHN management server
+## Deploying RDPHoney
 
 Prior to starting, RDPhoney will parse some options from `/etc/sysconfig/rdphoney` for RedHat-base or `/etc/default/rdphoney` for Debian-based systems or containers. The following is an example config file:
 
