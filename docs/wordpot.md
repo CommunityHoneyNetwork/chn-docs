@@ -1,5 +1,9 @@
 Wordpot Honeypot
 ================
+The CommunityHoneyNetwork Wordpot Honeypot is an implementation of [@gbrindisi's Wordpot](https://github.com/gbrindisi/wordpot), configured to report logged attacks to the CommunityHoneyNetwork management server.
+
+> "Wordpot is a Wordpress honeypot which detects probes for plugins, themes, timthumb and other common files used to fingerprint a wordpress installation."
+
 ## Prerequisites
 
 The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
@@ -12,13 +16,7 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  
  Please see your system documentation for adding a user to the docker group.
 
-## Deploying Wordpot
-
-The CommunityHoneyNetwork Wordpot Honeypot is an implementation of [@gbrindisi's Wordpot](https://github.com/gbrindisi/wordpot), configured to report logged attacks to the CommunityHoneyNetwork management server.
-
-> "Wordpot is a Wordpress honeypot which detects probes for plugins, themes, timthumb and other common files used to fingerprint a wordpress installation."
-
-## Configuring Wordpot to talk to the CHN management server
+## Example dionaea.sysconfig file
 
 Prior to starting, Wordpot will parse some options from `/etc/sysconfig/wordpot` for RedHat-based or `/etc/default/wordpot` for Debian-based systems or containers.  The following is an example config file:
 
@@ -35,10 +33,10 @@ DEBUG=false
 IP_ADDRESS=
 
 # CHN Server api to register to
-CHN_SERVER="http://chnserver"
+CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
 
 # Server to stream data to
-FEEDS_SERVER="hpfeeds"
+FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS>"
 FEEDS_SERVER_PORT=10000
 
 # Deploy key from the FEEDS_SERVER administrator
@@ -65,49 +63,6 @@ The following options are supported in the `/etc/sysconfig/wordpot` or `/etc/def
 * DEPLOY_KEY: (string; REQUIRED) The deploy key provided by the feeds server administration for registration during the first startup. This key is **required** for registration.
 * WORDPOT_JSON: (string) The location to store the registration information returned from the HPFeeds server.
 * WORDPRESS_PORT: (integer) The web server port for the Wordpot daemon. In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
-
-
-## Building and Deploying Wordpot
-
-Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
-
-```
-version: '2'
-services:
-    wordpot:
-        image: stingar/wordpot:0.2-alpha-centos
-        volumes:
-            - ./wordpot.sysconfig:/etc/sysconfig/wordpot
-            - ./wordpot:/etc/wordpot
-        ports:
-            - "8080:8080"
-```
-
-This will tell docker-compose to build the Wordpot container image from the files in the [CommunityHoneyNetwork Wordpot repository](https://github.com/CommunityHoneyNetwork/wordpot), and mount the volume:
-
-* ./wordpot.sysconfig as /etc/sysconfig/wordpot - configuration file for Wordpot (see below)
-
-
-Once you have saved your `docker-compose.yml` file, start the honeypot with:
-
-    $ docker-compose up -d
-
-This command will download the pre-built image from hub.docker.com, and start your honeypot using this image.
-
-You can verify the honeypot is running with `docker-compose ps`
-
-    $ docker-compose ps
-            Name                       Command               State                    Ports
-    ----------------------------------------------------------------------------------------------------------------
-    chnserver_wordpot_1      /usr/bin/runsvdir -P /etc/ ...   Up               0.0.0.0:8080->8080/tcp
-
-When you're ready, the honeypot can be stopped by running `docker-compose down` from the directory containing the docker-compose.yml file.
-
-Your new honeypot should show up within the web interface of your management server under the `Sensors` tab, with the hostname of the container and the UUID that was stored in the wordpot.json file during registration. As it detects attempts to login to its fake services, it will send this attack info to the management server.
-
-You can now test the honeypot logging by trying to connect to one of the open honeypot ports in your web browser.
-
-Attacks logged to your management server will show up under the `Attacks` section in the web interface
 
 # Acknowlegements
 
