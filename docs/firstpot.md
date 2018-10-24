@@ -10,87 +10,53 @@ The default deployment model uses Docker and Docker Compose to deploy containers
 * Docker >= 1.13.1
 * Docker Compose >= 1.15.0
 
-## Building and Deploying Cowrie
+**Please ensure the user on the system installing the honeypot is in the local
+ docker group**
+ 
+ Please see your system documentation for adding a user to the docker group.
 
-As an example, we'll deploy Cowrie with SSH listening on port 2222.  This is not likely helpful in a production deployment, but will serve as an example for creating a honeypot, registering a new sensor with the management server, and capturing attack data.  For more details on production deployments, see the full [Cowrie Documentation](cowrie.md).
+## Deploying Cowrie
 
+As an example, we'll deploy Cowrie with SSH listening on port 2222, and a 
+telnet server on port 23.  This is not likely helpful in a production 
+deployment, but will serve as an example for creating a honeypot, registering
+ a new sensor with the management server, and capturing attack data.  For 
+ more details on production deployments, see the full [Cowrie Documentation]
+ (cowrie.md).
 
-Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
+If you haven't yet setup a management server, follow the [Quickstart Guide]
+(quickstart.md)
 
-```
-version: '2'
-services:
-  cowrie:
-    image: stingar/cowrie:latest
-    volumes:
-      - ./cowrie.sysconfig:/etc/sysconfig/cowrie
-      - ./cowrie:/etc/cowrie
-    ports:
-      - "2222:2222"
-```
+Log into the management server and browse to the "Deploy" tab. Once in the 
+Deploy section, select the drop-down box with default "New Script" and choose
+ the "Ubuntu - Cowrie" option.
 
-This will tell docker-compose to build the Cowrie container image from the files in the [CommunityHoneyNetwork Cowrie repository](https://github.com/CommunityHoneyNetwork/cowrie), map port 2222 on the host to port 2222 on the container (the default SSH port in the container), and mount two volumes: 
+Once you've selected the "Ubuntu - Cowrie" script, the page will populate 
+with 2 sections; "Deploy Command":
 
-* ./cowrie as /etc/cowrie - to persist the registration information from the management server
-* ./cowrie.sysconfig as /etc/sysconfig/cowrie - configuration file for Cowrie (see below)
+![Deploy](img/select_cowrie.png)
 
-Before starting the container, copy the following and save it as `cowrie.sysconfig`, setting the `FEEDS_SERVER` to the ip or hostname of the management server the honeypot will be reporting to, and `DEPLOY_KEY` to the deploy key from the management server.
+and "Deploy Script": 
 
-If you haven't yet setup a management server, follow the [Quickstart Guide](quickstart.md)
+![Script](img/cowrie_deploy_script.png)
 
-```
-# This file is read from /etc/sysconfig/cowrie or /etc/default/cowrie
-# depending on the base distro
-#
-# This can be modified to change the default setup of the cowrie unattended installation
+Copy the "Deploy Command" section and paste the command into a terminal window on your 
+honeypot host.
 
-DEBUG=false
+![Script_Output](img/script_output.png)
 
-# IP Address of the honeypot
-# Leaving this blank will default to the docker container IP
-IP_ADDRESS=
-
-# CHN Server api to register to
-CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
-
-# Server to stream data to
-FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS"
-FEEDS_SERVER_PORT=10000
-
-# Deploy key from the FEEDS_SERVER administrator
-# This is a REQUIRED value
-DEPLOY_KEY=
-
-# Registration information file
-# If running in a container, this needs to persist
-# COWRIE_JSON="/etc/cowrie/cowrie.json
-
-# SSH Listen Port
-# Can be set to 22 for deployments on real servers
-# or left at 2222 and have the port mapped if deployed
-# in a container
-SSH_LISTEN_PORT=2222
-
-# Telnet Listen Port
-# Can be set to 23 for deployments on real servers
-# or left at 2223 and have the port mapped if deployed
-# in a container
-TELNET_LISTEN_PORT=2223
-```
-
-Once you have saved your `docker-compose.yml` file, start the honeypot with:
-
-    $ docker-compose up -d
-
-This command will download the pre-built cowrie image from hub.docker.com, and start your honeypot using this image.
+This command will download the script shown in the "Deploy Script" 
+section, execute it, and start the honeypot in the background. The 
+script installs a docker-compose.yml file that uses the pre-built cowrie 
+image from hub.docker.com, and and a cowrie.sysconfig file setting required 
+options.
 
 You can verify the honeypot is running with `docker-compose ps`:
 
     $ docker-compose ps
-         Name                    Command              State           Ports         
-    --------------------------------------------------------------------------------
-    cowrie_centos_1   /sbin/runsvdir -P               Up      0.0.0.0:2222->2222/tcp
-                  /etc/service     
+        Name                  Command               State                      Ports                    
+    ----------------------------------------------------------------------------------------------------
+    vcm_cowrie_1   /sbin/runsvdir -P /etc/service   Up      0.0.0.0:2222->2222/tcp, 0.0.0.0:23->2223/tcp 
 
 
 When you're ready, the honeypot can be stopped by running `docker-compose down` from the directory containing the docker-compose.yml file.

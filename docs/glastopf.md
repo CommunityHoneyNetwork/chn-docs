@@ -1,16 +1,19 @@
 Glastopf Honeypot
 =================
 
-!!! note "Note"
-    Glastopf is currently in alpha. This honeypot has been verified to work under limited test cases. However, all functionality may not be currently implemented.
+## Prerequisites
 
-    Please report any issues or feature requests to the [Glastopf issues page](https://github.com/CommunityHoneyNetwork/glastopf/issues).
+The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
 
-The CommunityHoneyNetwork Glastopf Honeypot is an implementation of [@mushorgs's Glastopf](https://github.com/mushorg/glastopf), configured to report logged attacks to the CommunityHoneyNetwork management server.
+* Docker >= 1.13.1
+* Docker Compose >= 1.15.0
 
-> "Glastopf is a Python web application honeypot founded by Lukas Rist."
+**Please ensure the user on the system installing the honeypot is in the local
+ docker group**
+ 
+ Please see your system documentation for adding a user to the docker group.
 
-## Configuring Glastopf to talk to the CHN management server
+## Deploying Glastopf
 
 Prior to starting, Glastopf will parse some options from `/etc/default/glastopf` for Debian-based systems or containers. The following is an example config file:
 
@@ -56,17 +59,6 @@ The following options are supported in the `/etc/default/glastopf` files
 * DEPLOY_KEY: (string; REQUIRED) The deploy key provided by the feeds server administration for registration during the first startup.  This key is **required** for registration.
 * GLASTOPF_JSON: (string) The location to store the registration information returned from the HPFeeds server.
 * GLASTOPF_PORT: (integer) The web server port for the Glastopf daemon. In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
-
-# Deploying Glastopf with Docker and docker-compose
-
-This example covers how to build and deploy an example [Glastopf honeypot](https://github.com/mushorg/glastopf) and connect it to a running CommunityHoneyNetwork server for collection of data.
-
-## Prerequisites
-
-The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
-
-* Docker >= 1.13.1
-* Docker Compose >= 1.15.0
 
 ## Building and Deploying Glastopf
 
@@ -155,4 +147,3 @@ The ThreatStream implementation of Glastopf with HPFeeds, upon which CommunityHo
 
 The [CommunityHoneyNetwork Glastopf deployment model and code](https://github.com/CommunityHoneyNetwork/glastopf) is therefore also licensed under the [GNU LESSER GENERAL PUBLIC LICENSE Version 2.1](https://raw.githubusercontent.com/CommunityHoneyNetwork/glastopf/master/LICENSE)
 
-    

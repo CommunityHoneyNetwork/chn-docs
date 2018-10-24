@@ -93,12 +93,6 @@ user found, updating password
 
 You can now log into the web interface for your new honeypot management server.  In a browser, navigate to `http://<your.host.name>`, using the hostname or IP of the host where the Docker containers are running.  You should be able to login using the `admin@localhost` account and the password you just set.
 
-Finally, retrieve your DEPLOY_KEY.  This key is needed to deploy honeypots that talk with the server deployment.  Retrieve it with:
-
-`docker-compose exec chnserver awk '/DEPLOY_KEY/' /opt/config.py`
-
-Make note of this key to use later (or alternatively, just run the above command again when you need it).
-
 ## Next Steps
 
 At this point you have a functioning CommunityHoneyNetwork server, ready to register honeypots and start collecting data.  Next, try [deploying your first honeypot](firstpot.md)...

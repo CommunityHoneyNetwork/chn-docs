@@ -1,11 +1,22 @@
 Dionaea Honeypot
 ================
+## Prerequisites
+
+The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
+
+* Docker >= 1.13.1
+* Docker Compose >= 1.15.0
+
+**Please ensure the user on the system installing the honeypot is in the local
+ docker group**
+ 
+ Please see your system documentation for adding a user to the docker group.
+
+## Deploying Dionaea
 
 The CommunityHoneyNetwork dionaea honeypot is an implementation of [@DinoTools's Dionaea](https://github.com/DinoTools/dionaea), configured to report logged attacks to the CommunityHoneyNetwork management server.
 
 > "Dionaea's intention is to trap malware exploiting vulnerabilities exposed by services offerd to a network, the ultimate goal is gaining a copy of the malware."
-
-## Configuring Dionaea to talk to the CHN management server
 
 Prior to starting, Dionaea will parse some options from `/etc/sysconfig/dionaea` for RedHat-based or `/etc/default/dionaea` for Debian-based systems or containers. The following is an example config file:
 

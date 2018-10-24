@@ -1,10 +1,18 @@
 Conpot Honeypot
 ===============
+## Prerequisites
 
-!!! note "Note"
-    Conpot is currently in alpha. This honeypot has been verified to work under limited test cases. However, all functionality may not be currently implemented.
+The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
 
-    Please report any issues or feature requests to the [Conpot issues page](https://github.com/CommunityHoneyNetwork/conpot/issues).
+* Docker >= 1.13.1
+* Docker Compose >= 1.15.0
+
+**Please ensure the user on the system installing the honeypot is in the local
+ docker group**
+ 
+ Please see your system documentation for adding a user to the docker group.
+
+## Deploying Conpot
 
 The CommunityHoneyNetwork Conpot Honeypot is an implementation of of [@mushorg's Conpot](https://github.com/mushorg/conpot), configured to report logged attacks to the CommunityHoneyNetwork management server.
 

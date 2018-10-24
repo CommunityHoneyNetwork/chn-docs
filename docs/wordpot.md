@@ -1,10 +1,18 @@
 Wordpot Honeypot
 ================
+## Prerequisites
 
-!!! note "Note"
-    Wordpot is currently in alpha. This honeypot has been verified to work under limited test cases. However, all functionality may not be currently implemented.
+The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
 
-    Please report any issues or feature requests to the [Wordpot issues page](https://github.com/CommunityHoneyNetwork/wordpot/issues).
+* Docker >= 1.13.1
+* Docker Compose >= 1.15.0
+
+**Please ensure the user on the system installing the honeypot is in the local
+ docker group**
+ 
+ Please see your system documentation for adding a user to the docker group.
+
+## Deploying Wordpot
 
 The CommunityHoneyNetwork Wordpot Honeypot is an implementation of [@gbrindisi's Wordpot](https://github.com/gbrindisi/wordpot), configured to report logged attacks to the CommunityHoneyNetwork management server.
 
@@ -58,16 +66,6 @@ The following options are supported in the `/etc/sysconfig/wordpot` or `/etc/def
 * WORDPOT_JSON: (string) The location to store the registration information returned from the HPFeeds server.
 * WORDPRESS_PORT: (integer) The web server port for the Wordpot daemon. In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
 
-# Deploying Wordpot with Docker and docker-compose
-
-This example covers how to build and deploy an example [Wordpot honypot](https://github.com/gbrindisi/wordpot) and connect it to a running CommunityHoneyNetwork server for collection of data.
-
-## Prerequisites
-
-The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, requires the following:
-
-* Docker >= 1.13.1
-* Docker Compose >= 1.15.0
 
 ## Building and Deploying Wordpot
 
@@ -89,40 +87,6 @@ This will tell docker-compose to build the Wordpot container image from the file
 
 * ./wordpot.sysconfig as /etc/sysconfig/wordpot - configuration file for Wordpot (see below)
 
-Before starting the container, copy the following and save it as `wordpot.sysconfig`, setting the `FEEDS_SERVER` and `CHN_SERVER` to the ip or hostname of the management server the honeypot will be reporting to, and `DEPLOY_KEY`
-
-If you haven't yet set up a management server, follow the [Quickstart Guide](quickstart.md)
-
-```
-# This file is read from /etc/sysconfig/wordpot or /etc/default/wordpot
-# depending on the base distro
-#
-# This can be modified to change the default setup of the wordpot unattended installation
-
-DEBUG=false
-
-# IP Address of the honeypot
-# Leaving this blank will default to the docker container IP
-IP_ADDRESS=
-
-# CHN Server api to register to
-CHN_SERVER="http://chnserver"
-
-# Server to stream data to
-FEEDS_SERVER="hpfeeds"
-FEEDS_SERVER_PORT=10000
-
-# Deploy key from the FEEDS_SERVER administrator
-# This is a REQUIRED value
-DEPLOY_KEY=
-
-# Registration information file
-# If running in a container, this needs to persist
-# WORDPOT_JSON="/etc/wordpot/wordpot.json
-
-# Wordpress options
-WORDPRESS_PORT=8080
-```
 
 Once you have saved your `docker-compose.yml` file, start the honeypot with:
 

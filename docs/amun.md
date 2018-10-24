@@ -1,16 +1,16 @@
 Amun Honeypot
 =============
+## Prerequisites
 
-!!! note "Note"
-    Amun is currently in alpha. This honeypot has been verified to work under limited test cases. However, all functionality may not be currently implemented.
+The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
 
-    Please report any issues or feature requests to the [Amun issues page](https://github.com/CommunityHoneyNetwork/amun/issues).
+* Docker >= 1.13.1
+* Docker Compose >= 1.15.0
 
-The CommunityHoneyNetwork Amun Honeypot is an implementation of [@zeroq's Amun](https://github.com/zeroq/amun), configured to report logged attacks to the CommunityHoneyNetwork management server.
-
-> "Amun was the first python-based low-interaction honeypot, following the concepts of Nepenthes but extending it with more sophisticated emulation and easier maintenance."
-
-## Configuring Amun to talk to the CHN management server
+**Please ensure the user on the system installing the honeypot is in the local
+ docker group**
+ 
+ Please see your system documentation for adding a user to the docker group.
 
 Prior to starting, Amun will parse some options from `/etc/sysconfig/amun` for RedHat-based or `/etc/default/amun` for Debian-based systems or containers. The following is an example config file:
 
