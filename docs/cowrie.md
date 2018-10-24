@@ -5,9 +5,9 @@ The CommunityHoneyNetwork Cowrie Honeypot is an implementation of [@michelooster
 
 > "Cowrie is a medium interaction SSH and Telnet honeypot designed to log brute force attacks and the shell interaction performed by the attacker."
 
-## Configuring Cowrie to talk to the CHN management server
+## Example cowrie.sysconfig file
 
-Prior to starting, Cowrie will parse some options from `/etc/sysconfig/cowrie` for RedHat-based or `/etc/default/cowrie` for Debian-based systems or containers.  The following is an example config file:
+Prior to starting, Cowrie will parse some options from `/etc/default/cowrie` for Debian-based containers.  The following is an example config file:
 
 ```
 # This file is read from /etc/sysconfig/cowrie or /etc/default/cowrie
@@ -25,7 +25,7 @@ IP_ADDRESS=
 CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
 
 # Server to stream data to
-FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS"
+FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS>"
 FEEDS_SERVER_PORT=10000
 
 # Deploy key from the FEEDS_SERVER administrator
@@ -91,27 +91,6 @@ services:
 docker-compose down && docker-compose up -d
 ```
 
-## Deploying Cowrie with Docker and docker-compose
-
-Deploying Cowrie with Docker and docker-compose is covered in the [Your First Honeypot](firstpot.md) documentation.
-
-## Deploying Cowrie without Docker
-
-While deploying Cowrie in a container is the strongly suggested method, it can be deployed directly on a host, without the use of Docker, by running an [Ansible](https://www.ansible.com/) playbook.
-
-_The warnings, prerequisites, supported operating systems and other notes from the overall [Deploying Without Docker](nondocker.md) documentation apply._
-
-To deploy the latest CommunityHoneyNetwork Cowrie honeypot without Docker:
-
-    cd /opt
-    git clone https://github.com/CommunityHoneyNetwork/cowrie/
-    cd cowrie
-    echo "localhost ansible_connection=local" inventory.txt
-    ansible-playbook cowrie.yml -i inventory.txt -c local
-
-After installation, adjust the `/etc/sysconfig/cowrie` or `/etc/default/cowrie` file as described above to register the honeypot with the CHN management server.
-
-As with other CommunityHoneyNetwork projects, Cowrie relies on [Runit](http://smarden.org/runit/) as its process manager.   See the [Runit Section](nondocker.md#Runit) section of the Deploying Without Docker documentation for more information.
 
 ## Acknowledgements
 

@@ -13,7 +13,7 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  
  Please see your system documentation for adding a user to the docker group.
 
-## Deploying Glastopf
+## Example glastopf.sysconfig file
 
 Prior to starting, Glastopf will parse some options from `/etc/default/glastopf` for Debian-based systems or containers. The following is an example config file:
 
@@ -33,7 +33,7 @@ IP_ADDRESS=
 CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
 
 # Server to stream data to
-FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS"
+FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS>"
 FEEDS_SERVER_PORT=10000
 
 # Deploy key from the FEEDS_SERVER administrator
@@ -59,81 +59,6 @@ The following options are supported in the `/etc/default/glastopf` files
 * DEPLOY_KEY: (string; REQUIRED) The deploy key provided by the feeds server administration for registration during the first startup.  This key is **required** for registration.
 * GLASTOPF_JSON: (string) The location to store the registration information returned from the HPFeeds server.
 * GLASTOPF_PORT: (integer) The web server port for the Glastopf daemon. In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
-
-## Building and Deploying Glastopf
-
-Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
-
-```
-version: '2'
-services:
-    glastopf:
-        image: stingar/glastopf:0.2-alpha-ubuntu
-        volumes:
-            - ./glastopf.sysconfig:/etc/default/glastopf
-            - ./glastopf:/etc/glastopf
-        ports:
-            - "8080:8080"
-```
-
-This will tell docker-compose to build the Glastopf container image from the files in the [CommunityHoneyNetwork Glastopf repository](https://github.com/CommunityHoneyNetwork/glastopf), and mount the volume:
-
-* ./glastopf.sysconfig as /etc/default/glastopf - configuration file for Glastopf (see below)
-
-Before starting the container, copy the following and save it as `glastopf.sysconfig`, setting the `FEEDS_SERVER` and `CHN_SERVER` to the ip or hostname of the management server the honeypot will be reporting to, and `DEPLOY_KEY`
-
-If you haven't yet setup a management server, follow the [Quickstart Guide](quickstart.md)
-
-```
-# This file is read from /etc/default/glastopf
-# depending on the base distro
-#
-# This can be modified to change the default setup of the glastopf unattended installation
-
-DEBUG=false
-
-# IP Address of the honeypot
-# Leaving this blank will default to the docker container IP
-IP_ADDRESS=
-
-# CHN Server api to register to
-CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
-
-# Server to stream data to
-FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS"
-FEEDS_SERVER_PORT=10000
-
-# Deploy key from the FEEDS_SERVER administrator
-# This is a REQUIRED value
-DEPLOY_KEY=
-
-# Registration information file
-# If running in a container, this needs to persist
-GLASTOPF_JSON="/etc/glastopf/glastopf.json"
-
-GLASTOPF_PORT=8080
-```
-
-Once you have saved your `docker-compose.yml` file, start the honeypot with:
-
-    $ docker-compose up -d
-
-This command will download the pre-built image from hub.docker.com, and start your honeypot using this image.
-    
-You can verify the honeypot is running with `docker-compose ps`
-
-    $ docker-compose ps
-            Name                       Command               State                    Ports
-    ----------------------------------------------------------------------------------------------------------------
-    chnserver_glastopf_1     /usr/bin/runsvdir -P /etc/ ...   Up               0.0.0.0:8080->8080/tcp
-    
-When you're ready, the honeypot can be stopped by running `docker-compose down` from the directory containing the docker-compose.yml file.
-
-Your new honeypot should show up within the web interface of your management server under the `Sensors` tab, with the hostname of the container and the UUID that was stored in the glastopf.json file during registration. As it detects attempts to login to its fake services, it will send this attack info to the management server.
-
-You can now test the honeypot logging by trying to connect to one of the open honeypot ports in your web browser.
-
-Attacks logged to your management server will show up under the `Attacks` section in the web interface.
 
 # Acknowlegements
 

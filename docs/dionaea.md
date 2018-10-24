@@ -1,5 +1,9 @@
 Dionaea Honeypot
 ================
+The CommunityHoneyNetwork dionaea honeypot is an implementation of [@DinoTools's Dionaea](https://github.com/DinoTools/dionaea), configured to report logged attacks to the CommunityHoneyNetwork management server.
+
+> "Dionaea's intention is to trap malware exploiting vulnerabilities exposed by services offerd to a network, the ultimate goal is gaining a copy of the malware."
+
 ## Prerequisites
 
 The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
@@ -12,11 +16,8 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  
  Please see your system documentation for adding a user to the docker group.
 
-## Deploying Dionaea
+## Example dionaea.sysconfig file
 
-The CommunityHoneyNetwork dionaea honeypot is an implementation of [@DinoTools's Dionaea](https://github.com/DinoTools/dionaea), configured to report logged attacks to the CommunityHoneyNetwork management server.
-
-> "Dionaea's intention is to trap malware exploiting vulnerabilities exposed by services offerd to a network, the ultimate goal is gaining a copy of the malware."
 
 Prior to starting, Dionaea will parse some options from `/etc/sysconfig/dionaea` for RedHat-based or `/etc/default/dionaea` for Debian-based systems or containers. The following is an example config file:
 
@@ -30,7 +31,7 @@ DEBUG=false
 # Leaving this blank will default to the docker container IP
 IP_ADDRESS=
 
-CHN_SERVER="http://localhost"
+CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
 DEPLOY_KEY=
 DIONAEA_JSON="/etc/dionaea/dionaea.json"
 
@@ -46,7 +47,7 @@ SERVICES=(blackhole epmap ftp http memcache mirror mongo mqtt pptp sip smb tftp 
 
 # Logging options
 HPFEEDS_ENABLED=true
-FEEDS_SERVER="hpfeeds"
+FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS>"
 FEEDS_SERVER_PORT=10000
 ```
 
@@ -65,115 +66,6 @@ The following options are supported in the `/etc/sysconfig/dionaea` and `/etc/de
 * HPFEEDS_ENABLED: (boolean) Enable the hpfeeds handler module
 * FEEDS_SERVER: (string) The hostname or IP address of the HPFeeds server to send logged events.
 * FEEDS_SERVER_PORT: (integer) The HPFeeds port. Default is 10000.
-
-# Deploying Dionaea with Docker and docker-compose
-
-This example covers how to build and deploy an example [Dionaea honeypot](https://github.com/DinoTools/dionaea) and connect it to a running CommunityHoneyNetwork server for collection of data.
-
-## Prerequisites
-
-The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
-
-* Docker >= 1.13.1
-* Docker Compose >= 1.15.0
-
-## Building and Deploying Dionaea
-
-Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
-
-```
-version: '2'
-services:
-  dionaea:
-    image: stingar/dionaea:latest
-    volumes:
-      - ./dionaea.sysconfig:/etc/default/dionaea
-      - ./dionaea:/etc/dionaea
-      - ./dionaea/services-available/:/opt/dionaea/etc/dionaea/services-enabled/
-    ports:
-      - "21:21"
-      - "23:23"
-      - "53:53"
-      - "69:69"
-      - "80:80"
-      - "123:123"
-      - "135:135"
-      - "443:443"
-      - "445:445"
-      - "1433:1433"
-      - "1723:1723"
-      - "1883:1883"
-      - "1900:1900"
-      - "3306:3306"
-      - "5000:5000"
-      - "5060:5060"
-      - "5061:5061"
-      - "11211:11211"
-      - "27017:27017"
-```
-
-This will tell docker-compose to build the Dionaea container image from the files in the [CommunityHoneyNetwork Dionaea repository](https://github.com/CommunityHoneyNetwork/dionaea), and mount two volumes:
-
-* ./dionaea/services-enabled as /opt/dionaea/etc/dionaea/services-enabled/ - to allow modification and maintain persistence of dionaea service configurations
-* ./dionaea.sysconfig as /etc/default/dionaea - configuration file for Dionaea (see below)
-
-Before starting the container, copy the following and save it as `dionaea.sysconfig`, setting the `FEEDS_SERVER` and `CHN_SERVER` to the ip or hostname of the management server the honeypot will be reporting to, and `DEPLOY_KEY`
-
-If you haven't yet setup a management server, follow the [Quickstart Guide](quickstart.md)
-
-```
-#
-# This can be modified to change the default setup of the dionaea unattended installation
-
-DEBUG=true
-
-# IP Address of the honeypot
-# Leaving this blank will default to the docker container IP
-IP_ADDRESS=
-
-CHN_SERVER="http://localhost"
-DEPLOY_KEY=
-DIONAEA_JSON="/etc/dionaea/dionaea.json"
-
-# Network options
-LISTEN_ADDRESSES="0.0.0.0"
-LISTEN_INTERFACES="eth0"
-
-
-# Service options
-# blackhole, epmap, ftp, http, memcache, mirror, mongo, mqtt, mssql, mysql, pptp, sip, smb, tftp, upnp
-SERVICES=(blackhole epmap ftp http memcache mirror mongo mqtt pptp sip smb tftp upnp)
-
-
-# Logging options
-HPFEEDS_ENABLED=true
-FEEDS_SERVER="localhost"
-FEEDS_SERVER_PORT=10000
-```
-
-Once you have saved your `docker-compose.yml` file, start the honeypot with:
-
-    $ docker-compose up -d
-
-This command will download the pre-built image from hub.docker.com, and start your honeypot using this image.
-
-You can verify the honeypot is running with `docker-compose ps`
-
-    $ docker-compose ps
-            Name                       Command               State                              Ports
-    -----------------------------------------------------------------------------------------------------------------------------
-    chnserver_dionaea_1     /usr/bin/runsvdir -P /etc/ ...   Up      0.0.0.0:21->21/tcp, 0.0.0.0:23->23/tcp, 0.0.0.0:445->445/tcp
-
-
-When you're ready, the honeypot can be stopped by running `docker-compose down` from the directory containing the docker-compose.yml file.
-
-Your new honeypot should show up within the web interface of your management server under the `Sensors` tab, with the hostname of the container and the UUID that was stored in the dionaea.json file during registration.  As it detects attempts to login to its fake services, it will send this attack info to the management server.
-
-You can now test the honeypot logging by trying to netcat to one of the open honeypot ports, for example the ftp service (if enabled):
-
-    $ nc <ip.of.your.honeypot.host> 21
-
-Attacks logged to your management server will show up under the `Attacks` section in the web interface.
 
 # Service Configuration
 
