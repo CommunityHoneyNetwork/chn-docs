@@ -1,7 +1,7 @@
 Advanced Configuration
 ======================
 
-Each of the services and honeypots in the CommunityHoneyNetwork project should work together out of the box following the [Quickstart Guide](quickstart.md). More advanced configuration options can be configured using an /etc/sysconfig/<servicename> or /etc/default/<servicename> file for CentOS-based or Ubuntu-based systems, respectively.
+Each of the services and honeypots in the CommunityHoneyNetwork project should work together out of the box following the [Quickstart Guide](quickstart.md). More advanced configuration options can be configured using an /etc/default/<servicename> file for Ubuntu-based systems.
 
 Services running in Docker containers can be configured this way as well, mounting the configuration files into place using the `--volume` argument for Docker.
 
@@ -14,7 +14,6 @@ The following is an example of a shared configuration file, using default values
 CHNSERVER_DEBUG=false
 
 EMAIL=admin@localhost
-SERVER_BASE_URL='http://127.0.0.1'
 HONEYMAP_URL=''
 
 MAIL_SERVER='127.0.0.1'
@@ -59,22 +58,22 @@ version: '2'
 services:
   mongodb:
     build:
-      dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/mongodb.git#v1.1
+      dockerfile: ./Dockerfile-ubuntu
+      context: https://github.com/CommunityHoneyNetwork/mongodb.git#v1.5
     image: mongodb:centos
     volumes:
       - ./storage/mongodb:/var/lib/mongo:z
   redis:
     build:
-      dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/redis.git#v1.1
+      dockerfile: ./Dockerfile-ubuntu
+      context: https://github.com/CommunityHoneyNetwork/redis.git#v1.5
     image: redis:centos
     volumes:
       - ./storage/redis:/var/lib/redis:z
   hpfeeds:
     build:
-      dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/hpfeeds.git#v1.1
+      dockerfile: ./Dockerfile-ubuntu
+      context: https://github.com/CommunityHoneyNetwork/hpfeeds.git#v1.5
     image: hpfeeds:centos
     links:
       - mongodb:mongodb
@@ -82,16 +81,16 @@ services:
       - "10000:10000"
   mnemosyne:
     build:
-      dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/mnemosyne.git#v1.1
+      dockerfile: ./Dockerfile-ubuntu
+      context: https://github.com/CommunityHoneyNetwork/mnemosyne.git#v1.5
     image: mnemosyne:centos
     links:
       - mongodb:mongodb
       - hpfeeds:hpfeeds
   chnserver:
     build:
-      dockerfile: ./Dockerfile-centos
-      context: https://github.com/CommunityHoneyNetwork/CHN-Server.git#v1.1
+      dockerfile: ./Dockerfile-ubuntu
+      context: https://github.com/CommunityHoneyNetwork/CHN-Server.git#v1.5
     image: chnserver:centos
     volumes:
       - ./config/collector:/etc/collector:z

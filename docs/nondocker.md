@@ -1,6 +1,9 @@
 Deploying without Docker
 ========================
 
+**WARNING** non-container deployments are no longer supported. The follwing 
+information is historical and will be removed soon. 
+
 In addition to running within Docker, you can also deploy each of the CHN Server services and honeypots as regular services on a host (or many hosts).  The container images are all built using [Ansible](https://www.ansible.com/) playbooks.  These playbooks can be run on regular hosts to install the services as normal services, without running as Docker containers.
 
 **Note:** BETA STATUS - The ability to install directly to regular hosts _should_ work, but is still in development and _might_ break something.  Use at your own risk.  You're most likely to be successful installing on a freshly installed system, rather than a shared host.
