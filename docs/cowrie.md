@@ -79,7 +79,7 @@ services:
   cowrie:
     image: stingar/cowrie:latest
     volumes:
-      - ./cowrie.sysconfig:/etc/sysconfig/cowrie
+      - ./cowrie.sysconfig:/etc/default/cowrie
       - ./cowrie:/etc/cowrie
     ports:
       - "22:2222"
