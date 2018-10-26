@@ -24,8 +24,7 @@ deployment, but will serve as an example for creating a honeypot, registering
  more details on production deployments, see the full [Cowrie Documentation]
  (cowrie.md).
 
-If you haven't yet setup a management server, follow the [Quickstart Guide]
-(quickstart.md)
+If you haven't yet setup a management server, follow the [Quickstart Guide](quickstart.md)
 
 Log into the management server and browse to the "Deploy" tab. Once in the 
 Deploy section, select the drop-down box with default "New Script" and choose
