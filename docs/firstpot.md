@@ -21,8 +21,7 @@ As an example, we'll deploy Cowrie with SSH listening on port 2222, and a
 telnet server on port 23.  This is not likely helpful in a production 
 deployment, but will serve as an example for creating a honeypot, registering
  a new sensor with the management server, and capturing attack data.  For 
- more details on production deployments, see the full [Cowrie Documentation]
- (cowrie.md).
+ more details on production deployments, see the full [Cowrie Documentation](cowrie.md).
 
 If you haven't yet setup a management server, follow the [Quickstart Guide](quickstart.md)
 
