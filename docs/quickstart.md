@@ -81,6 +81,7 @@ services:
     volumes:
       - ./config/collector:/etc/collector:z
       - ./storage/chnserver/sqlite:/opt/sqlite
+      - ./chnserver.sysconfig:/etc/default/chnserver
     links:
       - mongodb:mongodb
       - redis:redis
@@ -128,4 +129,3 @@ You can now log into the web interface for your new honeypot management server. 
 ## Next Steps
 
 At this point you have a functioning CommunityHoneyNetwork server, ready to register honeypots and start collecting data.  Next, try [deploying your first honeypot](firstpot.md)...
-
