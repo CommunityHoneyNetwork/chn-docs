@@ -4,7 +4,37 @@ Cowrie Honeypot
 The CommunityHoneyNetwork Cowrie Honeypot is an implementation of [@micheloosterhof's Cowrie](https://github.com/micheloosterhof/cowrie), configured to report logged attacks to the CommunityHoneyNetwork management server.
 
 > "Cowrie is a medium interaction SSH and Telnet honeypot designed to log brute force attacks and the shell interaction performed by the attacker."
+## Prerequisites
 
+The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
+
+* Docker >= 1.13.1
+* Docker Compose >= 1.15.0
+
+**Please ensure the user on the system installing the honeypot is in the local
+ docker group**
+ 
+ Please see your system documentation for adding a user to the docker group.
+
+## Important Note!
+The sysconfig files, as well as the docker-compose.yml files below are intended 
+to help you understand the various options. While they may serve as a basis 
+for users with advanced deployment needs, most users should default to the 
+configuration files provided by the deployment scripts in the CHN web interface.
+
+## Example cowrie docker-compose.yml
+```dockerfile
+version: '2'
+services:
+  cowrie:
+    image: stingar/cowrie:latest
+    volumes:
+      - ./cowrie.sysconfig:/etc/default/cowrie
+      - ./cowrie:/etc/cowrie
+    ports:
+      - "2222:2222"
+      - "23:2223"
+```
 ## Example cowrie.sysconfig file
 
 Prior to starting, Cowrie will parse some options from `/etc/default/cowrie` for Debian-based containers.  The following is an example config file:
@@ -85,7 +115,7 @@ services:
       - "22:2222"
       - "23:2223"
 ```
-* **DO NOT** edit the `cowrie.sysconfig` file and change the SSH_LISTEN_PORT or TELNET_LISTEN_PORT; just let Docker handle the translation
+* **DO NOT** edit the `cowrie.sysconfig` file and change the SSH_LISTEN_PORT or TELNET_LISTEN_PORT; let Docker handle the translation
 * Restart the container:
 ```
 docker-compose down && docker-compose up -d

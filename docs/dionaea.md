@@ -16,6 +16,43 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  
  Please see your system documentation for adding a user to the docker group.
 
+## Important Note!
+The sysconfig files, as well as the docker-compose.yml files below are intended 
+to help you understand the various options. While they may serve as a basis 
+for users with advanced deployment needs, most users should default to the 
+configuration files provided by the deployment scripts in the CHN web interface.
+
+## Example dionaea docker-compose.yml
+```dockerfile
+version: '2'
+services:
+  dionaea:
+    image: stingar/dionaea:latest
+    volumes:
+      - ./dionaea.sysconfig:/etc/default/dionaea
+      - ./dionaea/services-available/:/opt/dionaea/etc/dionaea/services-enabled/
+      - ./dionaea/dionaea:/etc/dionaea/
+    ports:
+      - "21:21"
+      - "23:23"
+      - "69:69"
+      - "80:80"
+      - "123:123"
+      - "135:135"
+      - "443:443"
+      - "445:445"
+      - "1433:1433"
+      - "1723:1723"
+      - "1883:1883"
+      - "1900:1900"
+      - "3306:3306"
+      - "5000:5000"
+      - "5060:5060"
+      - "5061:5061"
+      - "11211:11211"
+      - "27017:27017"
+```
+
 ## Example dionaea.sysconfig file
 
 
@@ -39,11 +76,9 @@ DIONAEA_JSON="/etc/dionaea/dionaea.json"
 LISTEN_ADDRESSES="0.0.0.0"
 LISTEN_INTERFACES="eth0"
 
-
 # Service options
 # blackhole, epmap, ftp, http, memcache, mirror, mongo, mqtt, mssql, mysql, pptp, sip, smb, tftp, upnp
 SERVICES=(blackhole epmap ftp http memcache mirror mongo mqtt pptp sip smb tftp upnp)
-
 
 # Logging options
 HPFEEDS_ENABLED=true

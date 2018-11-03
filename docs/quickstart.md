@@ -22,6 +22,8 @@ Create a new directory to hold your server deployment:
 Copy the following chnserver.sysconfig variables file, and save it as 
 `chnserver.sysconfig`:
 
+_Be sure to set SERVER_BASE_URL appropriately!_
+
 ```
 # This file is read from /etc/sysconfig/chnserver or /etc/default/chnserver
 # depending on the base distro
@@ -31,7 +33,8 @@ Copy the following chnserver.sysconfig variables file, and save it as
 DEBUG=false
 
 EMAIL=admin@localhost
-SERVER_BASE_URL=''
+# For TLS support, you MUST set SERVER_BASE_URL to "https://your.site.tld"
+SERVER_BASE_URL='https://CHN.SITE.TLD'
 HONEYMAP_URL=''
 REDIS_URL='redis://redis:6379'
 MAIL_SERVER='127.0.0.1'
@@ -80,19 +83,21 @@ services:
     image: stingar/chn-server:latest
     volumes:
       - ./config/collector:/etc/collector:z
-      - ./storage/chnserver/sqlite:/opt/sqlite
-      - ./chnserver.sysconfig:/etc/default/chnserver
+      - ./storage/chnserver/sqlite:/opt/sqlite:z
+      - ./chnserver.sysconfig:/etc/default/chnserver:z
+      - ./certs:/etc/letsencrypt:z
     links:
       - mongodb:mongodb
       - redis:redis
       - hpfeeds:hpfeeds
     ports:
       - "80:80"
+      - "443:443"
 ```
 
 Once you have saved your `docker-compose.yml` file, you start up your new server with:
 
-    $ docker-compose up -d
+    docker-compose up -d
 
 This command will download the pre-built images from hub.docker.com, and start containers using these images.
 
@@ -102,7 +107,7 @@ Verify your server is running with `docker-compose ps`:
 $ docker-compose ps
         Name                    Command           State           Ports         
 --------------------------------------------------------------------------------
-chnserver_chnserver_1   /sbin/runsvdir -P         Up      127.0.0.1:443->443/tcp
+chnserver_chnserver_1   /sbin/runsvdir -P         Up      0.0.0.0:443->443/tcp
                         /etc/service                      , 0.0.0.0:80->80/tcp  
 chnserver_hpfeeds_1     /sbin/runsvdir -P         Up      10000/tcp             
                         /etc/service                                            
@@ -114,7 +119,13 @@ chnserver_redis_1       /sbin/runsvdir -P         Up      6379/tcp
                         /etc/service 
 ```                        
 
-When you're ready, the server can be stopped by running `docker-compose down`.  For now, to continue with the setup, reset the default admin account (admin@localhost) password from the auto-generated one-time password:
+When you're ready, the server can be stopped by running `docker-compose down`.  For now, to continue with the setup, reset the default admin account (admin@localhost) password from the auto-generated one-time password. 
+
+You can reset the password using the command:
+
+    docker-compose exec chnserver python /opt/manual_password_reset.py
+
+For example:
 
 ```
 $ docker-compose exec chnserver python /opt/manual_password_reset.py

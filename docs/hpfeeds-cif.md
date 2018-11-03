@@ -10,14 +10,14 @@ The simplest way to integrate CHN reporting to CIF is to:
 
 First, include this stanza in the docker-compose.yml file for CHN-server:
 ```dockerfile
- hpfeeds-cif:
-   image: stingar/hpfeeds-cif:latest
-   privileged: true
-   volumes:
-     - ./hpfeeds-cif.sysconfig:/etc/sysconfig/hpfeeds-cif
-   links:
-     - hpfeeds:hpfeeds
-     - mongodb:mongodb
+  hpfeeds-cif:
+    image: stingar/hpfeeds-cif:latest
+    privileged: true
+    volumes:
+      - ./hpfeeds-cif.sysconfig:/etc/sysconfig/hpfeeds-cif
+    links:
+      - hpfeeds:hpfeeds
+      - mongodb:mongodb
 ```
 Next, add the following hpfeeds-cif.sysconfig configuration file:
 ```bash
@@ -34,6 +34,7 @@ CIF_TLP='green'
 CIF_CONFIDENCE='8'
 CIF_TAGS='honeypot'
 CIF_GROUP='everyone'
+# Set the below value to True if your CIF instance uses a valid, CA-signed, certificate
 CIF_VERIFY_SSL=False
 
 ```

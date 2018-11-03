@@ -12,7 +12,24 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  docker group**
  
  Please see your system documentation for adding a user to the docker group.
+## Important Note!
+The sysconfig files, as well as the docker-compose.yml files below are intended 
+to help you understand the various options. While they may serve as a basis 
+for users with advanced deployment needs, most users should default to the 
+configuration files provided by the deployment scripts in the CHN web interface.
 
+## Example glastopf docker-compose.yml
+```dockerfile
+version: '2'
+services:
+    glastopf:
+        image: stingar/glastopf:latest
+        volumes:
+            - ./glastopf.sysconfig:/etc/default/glastopf
+            - ./glastopf:/etc/glastopf
+        ports:
+            - "8080:8080"
+```
 ## Example glastopf.sysconfig file
 
 Prior to starting, Glastopf will parse some options from `/etc/default/glastopf` for Debian-based systems or containers. The following is an example config file:
