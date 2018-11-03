@@ -13,6 +13,25 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  
  Please see your system documentation for adding a user to the docker group.
 
+## Important Note!
+The sysconfig files, as well as the docker-compose.yml files below are intended 
+to help you understand the various options. While they may serve as a basis 
+for users with advanced deployment needs, most users should default to the 
+configuration files provided by the deployment scripts in the CHN web interface.
+
+## Example rdphoney docker-compose.yml
+```dockerfile
+version: '2'
+services:
+    rdphoney:
+        image: stingar/rdphoney:latest
+        volumes:
+            - ./rdphoney.sysconfig:/etc/sysconfig/rdphoney
+            - ./rdphoney:/etc/rdphoney
+        ports:
+            - "3389:3389"
+```
+
 ## Example rdphoney.sysconfig file
 
 Prior to starting, RDPhoney will parse some options from `/etc/sysconfig/rdphoney` for RedHat-base or `/etc/default/rdphoney` for Debian-based systems or containers. The following is an example config file:

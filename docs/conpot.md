@@ -15,7 +15,26 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  docker group**
  
  Please see your system documentation for adding a user to the docker group.
+## Important Note!
+The sysconfig files, as well as the docker-compose.yml files below are intended 
+to help you understand the various options. While they may serve as a basis 
+for users with advanced deployment needs, most users should default to the 
+configuration files provided by the deployment scripts in the CHN web interface.
 
+## Example amun docker-compose.yml
+```dockerfile
+version: '2'
+services:
+    conpot:
+        image: stingar/conpot:latest
+        volumes:
+            - ./conpot.sysconfig:/etc/default/conpot
+            - ./conpot:/etc/conpot
+        ports:
+            - 80:80
+            - 102:102
+            - 502:502
+```
 ## Example conpot.sysconfig file
 
 Prior to starting, Conpot will parse some options from `/etc/sysconfig/conpot` for RedHat-based or `/etc/default/conpot` for Debian-based systems or containers. The following is an example config file:

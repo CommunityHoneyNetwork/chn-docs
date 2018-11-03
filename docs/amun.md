@@ -12,7 +12,25 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  
  Please see your system documentation for adding a user to the docker group.
  
- ## Example amun.sysconfig file
+## Important Note!
+The sysconfig files, as well as the docker-compose.yml files below are intended 
+to help you understand the various options. While they may serve as a basis 
+for users with advanced deployment needs, most users should default to the 
+configuration files provided by the deployment scripts in the CHN web interface.
+
+## Example amun docker-compose.yml
+```dockerfile
+version: '2'
+services:
+    amun:
+        image: stingar/amun:latest
+        volumes:
+            - ./amun.sysconfig:/etc/default/amun
+            - ./amun:/etc/amun
+        ports:
+            - "445:445"
+```
+## Example amun.sysconfig file
 
 Prior to starting, Amun will parse some options from `/etc/sysconfig/amun` for RedHat-based or `/etc/default/amun` for Debian-based systems or containers. The following is an example config file:
 

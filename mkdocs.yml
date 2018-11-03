@@ -26,4 +26,5 @@ pages:
     - 'Getting Data':
       - 'CHN Server API': serverapi.md
       - 'CIF': hpfeeds-cif.md
+      - 'Logfiles': hpfeeds-logger.md
     - 'LICENSE': LICENSE.md
