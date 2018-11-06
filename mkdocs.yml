@@ -9,7 +9,7 @@ pages:
     - 'QuickStart Guide': quickstart.md
     - 'Your First Honeypot': firstpot.md
     - 'Deploying More Honeypots': honeypots.md
-    - 'Security Considerations': security.md
+    - 'Production & Security Considerations': prod_security.md
     - 'Advanced Options':
         - 'Advanced Configuration': config.md
         - 'Deploying without Docker': nondocker.md
