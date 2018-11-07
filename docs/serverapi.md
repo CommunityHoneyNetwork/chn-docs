@@ -3,6 +3,14 @@ CHN Server REST API
 
 Useful API calls for querying honeypot data.
 
+*Authentication*
+
+Authentication is handled by passing the "apikey" parameter in the HTTP header of your request. The API key can be retrieved from the "Settings" tab in the CHN web GUI.
+
+Example: curl -H "apikey: xxxxx" https://chn.address/api/
+
+*API Methods*
+
 **Intel Feed**
 ----
 
@@ -21,7 +29,6 @@ _http://127.0.0.1/api/intel_feed/_
 
 | Name      | Required | Description                                            | Default Value | Example                               |
 | --------- | -------- | ------------------------------------------------------ | ------------- | ------------------------------------- |
-| api_key   | Yes      | API authentication key                                 | None          | a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6      |
 | hours_ago | No       | Retrieve all elements from x hours ago to current time | 4             | 24                                    |
 | limit     | No       | Maximum number of elements to retrieve                 | 1000          | 100                                   |
 | honeypot  | No       | Honeypot name to query for                             | None          | cowrie                                |
@@ -29,7 +36,7 @@ _http://127.0.0.1/api/intel_feed/_
 
 **Example Request**
 
-_curl http://127.0.0.1/api/intel_feed/?api_key=xxxxx&hours_ago=24&limit=100_
+_curl -H "apikey: xxxxx" http://127.0.0.1/api/intel_feed/?hours_ago=24&limit=100_
 
 **Example Response**
 
@@ -76,7 +83,6 @@ _http://127.0.0.1/api/intel_feed.csv/_
 
 | Name      | Required | Description                                            | Default Value | Example                               |
 | --------- | -------- | ------------------------------------------------------ | ------------- | ------------------------------------- |
-| api_key   | Yes      | API authentication key                                 | None          | a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6      |
 | hours_ago | No       | Retrieve all elements from x hours ago to current time | 4             | 24                                    |
 | limit     | No       | Maximum number of elements to retrieve                 | 1000          | 100                                   |
 | honeypot  | No       | Honeypot name to query for                             | None          | cowrie                                |
@@ -84,7 +90,7 @@ _http://127.0.0.1/api/intel_feed.csv/_
 
 **Example Request**
 
-_curl http://127.0.0.1/api/intel_feed.csv/?api_key=xxxxx&hours_ago=24&limit=100_
+_curl -H "apikey: xxxxx" http://127.0.0.1/api/intel_feed.csv/?hours_ago=24&limit=100_
 
 **Example Response**
 
@@ -114,13 +120,12 @@ _http://127.0.0.1/api/attacker_stats/< ip >_
 
 | Name      | Required | Description                                            | Default Value | Example                               |
 | --------- | -------- | ------------------------------------------------------ | ------------- | ------------------------------------- |
-| api_key   | Yes      | API authentication key                                 | None          | a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6      |
 | hours_ago | No       | Retrieve all elements from x hours ago to current time | 720           | 24                                    |
 
 
 ** Example Request **
 
-_curl http://127.0.0.1/api/attacker_stats/172.18.0.1/?api_key=xxxxx&hours_ago=24_
+_curl -H "apikey: xxxxx" http://127.0.0.1/api/attacker_stats/172.18.0.1/?hours_ago=24_
 
 ** Example Response **
 
@@ -167,7 +172,6 @@ _http://127.0.0.1/api/top_attackers_
 
 | Name      | Required | Description                                            | Default Value | Example                               |
 | --------- | -------- | ------------------------------------------------------ | ------------- | ------------------------------------- |
-| api_key   | Yes      | API authentication key                                 | None          | a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6      |
 | hours_ago | No       | Retrieve all elements from x hours ago to current time | 4             | 24                                    |
 | limit     | No       | Maximum number of elements to retrieve                 | 1000          | 100                                   |
 | honeypot  | No       | Honeypot name to query for                             | None          | cowrie                                |
@@ -175,7 +179,7 @@ _http://127.0.0.1/api/top_attackers_
 
 **Example Request**
 
-_curl http://127.0.0.1/api/top_attackers/?api_key=xxxxx&hours_ago=24_
+_curl -H "apikey: xxxxx" http://127.0.0.1/api/top_attackers/?hours_ago=24_
 
 **Example Response**
 
@@ -220,14 +224,13 @@ _http://127.0.0.1/api/feed_
 
 | Name      | Required | Description                                            | Default Value | Example                               |
 | --------- | -------- | ------------------------------------------------------ | ------------- | ------------------------------------- |
-| api_key   | Yes      | API authentication key                                 | None          | a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6      |
 | hours_ago | No       | Retrieve all elements from x hours ago to current time | None          | 24                                    |
 | limit     | No       | Maximum number of elements to retrieve                 | None          | 100                                   |
 | channel   | No       | Specific channel to query for                          | None          | cowrie.sessions                       |
 
 **Example Requests**
 
-_curl http://127.0.0.1/api/feed/?api_key=xxxxx&hours_ago=24_
+_curl -H "apikey: xxxxx" http://127.0.0.1/api/feed/?hours_ago=24_
 
 **Example Response**
 
@@ -316,7 +319,6 @@ _http://127.0.0.1/api/session_
 
 | Name             | Required | Description                                                   | Default Value | Example                               |
 | ---------------- | -------- | ------------------------------------------------------------- | ------------- | ------------------------------------- |
-| api_key          | Yes      | API authentication key                                        | None          | a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6      |
 | hours_ago        | No       | Retrieve all elements from x hours ago to current time        | None          | 24                                    |
 | limit            | No       | Maximum number of elements to retrieve                        | None          | 100                                   |
 | honeypot         | No       | Honeypot name to query for                                    | None          | cowrie                                |
@@ -327,7 +329,7 @@ _http://127.0.0.1/api/session_
 
 **Example Requests**
 
-_curl http://127.0.0.1/api/session/?api_key=xxxxx&hours_ago=24_
+_curl -H "apikey: xxxxx" http://127.0.0.1/api/session/?hours_ago=24_
 
 **Example Response**
 
