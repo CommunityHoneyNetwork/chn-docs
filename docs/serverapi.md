@@ -3,13 +3,15 @@ CHN Server REST API
 
 Useful API calls for querying honeypot data.
 
-*Authentication*
+**Authentication**
+----
 
 Authentication is handled by passing the "apikey" parameter in the HTTP header of your request. The API key can be retrieved from the "Settings" tab in the CHN web GUI.
 
 Example: curl -H "apikey: xxxxx" https://chn.address/api/
 
-*API Methods*
+**API Methods**
+----
 
 **Intel Feed**
 ----
