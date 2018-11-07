@@ -104,7 +104,7 @@ source_ip	count	tags
 
 ---
 
-** Attacker Stats **
+**Attacker Stats**
 ----
 
 _Returns detailed attacker statistics by IP address_
