@@ -1,6 +1,6 @@
-hpfeeds-cif
+hpfeeds-logger
 =============
-The hpfeeds-cif container, when added to a CHN-Server instance, will log a 
+The hpfeeds-logger container, when added to a CHN-Server instance, will log a 
 Splunk-friendly record of all attacks to a local log file.
 
 
@@ -9,7 +9,7 @@ The simplest way to integrate CHN logging to a local file is to:
 
 First, include this stanza in the docker-compose.yml file for CHN-server:
 ```dockerfile
-  hpfeeds-cif:
+  hpfeeds-logger:
     image: stingar/hpfeeds-logger:latest
     volumes:
       - ./hpfeeds-logger.sysconfig:/etc/default/hpfeeds-logger
@@ -18,9 +18,9 @@ First, include this stanza in the docker-compose.yml file for CHN-server:
       - hpfeeds:hpfeeds
       - mongodb:mongodb
 ```
-Next, add the following hpfeeds-cif.sysconfig configuration file:
+Next, add the following hpfeeds-logger.sysconfig configuration file:
 ```bash
-# This file is read from /etc/sysconfig/hpfeeds-cif
+# This file is read from /etc/sysconfig/hpfeeds-logger
 # or /etc/default/hpfeeds-logger, depending on the distro version
 #
 # Defaults here are for containers, but can be adjusted
