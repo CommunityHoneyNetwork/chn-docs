@@ -23,6 +23,7 @@ pages:
         - 'Conpot': conpot.md
         - 'Amun': amun.md
         - 'RDPhoney': rdphoney.md
+        - 'UHP': uhp.md
     - 'Getting Data':
       - 'CHN Server API': serverapi.md
       - 'CIF': hpfeeds-cif.md
