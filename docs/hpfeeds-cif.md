@@ -37,6 +37,8 @@ CIF_GROUP='everyone'
 # Set the below value to True if your CIF instance uses a valid, CA-signed, certificate
 CIF_VERIFY_SSL=False
 
+# Set to False if you wish to submit private addresses to CIF
+IGNORE_RFC1918=True
 ```
 Once the docker-compose.yml is updated and the hpfeeds-cif.sysconfig file is 
 present, you can simply:
