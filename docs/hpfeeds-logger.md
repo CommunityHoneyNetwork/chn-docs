@@ -34,6 +34,9 @@ MONGODB_PORT=27017
 
 LOG_FILE=/var/log/hpfeeds-logger/chn-splunk.log
 
+# Options are arcsight, json_formatter, raw_json, splunk
+FORMATTER_NAME=splunk
+
 ```
 Once the docker-compose.yml is updated and the hpfeeds-logger.sysconfig file is 
 present, start logging with:
