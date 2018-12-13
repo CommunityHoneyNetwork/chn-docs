@@ -1,5 +1,7 @@
 UHP Honeypot
 ===============
+__** WARNING: This honeypot is currently in ALPHA support for CHN and is not 
+likely suitable for production use at this time **__
 
 The CommunityHoneyNetwork UHP Honeypot is an implementation of [@MattCarothers's UHP](https://github.com/MattCarothers/uhp), configured to report logged attacks to the CommunityHoneyNetwork management server.
 

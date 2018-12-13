@@ -152,7 +152,14 @@ services:
   redis:
   ...
 ```
+## Administrivia
 
+You may find yourself in need to recovering the current DEPLOY_KEY in cases 
+where the server storage is lost or the container fully rebuilt (and the 
+honeypots already deployed need the new key to connect). Simply run the 
+following command on the server VM to recover the key:
+
+    docker-compose exec chnserver awk '/DEPLOY_KEY/' /opt/config.py
 
 # Security
 
@@ -164,9 +171,11 @@ with the FQDN of the server (including the https:// stem), CHN can and will use
   
 For example:
 ```bash
-SERVER_BASE_URL='https://chn.my.org'
+SERVER_BASE_URL='https://chn.my.org
 ``` 
-It is also recommended that 
+Please note that using https with 'localhost' or an IP address will result in
+ a self-signed cert, as Certbot will not issue certificates for IP addresses 
+ or localhost.
 ## Firewall
 
 In order for honeypots to register and log data to the management server, the following inbound ports need to be open on the server and reachable by the honeypots:
