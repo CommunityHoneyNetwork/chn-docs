@@ -75,6 +75,9 @@ UHP_JSON="/etc/uhp/uhp.json"
 UHP_CONFIG="smtp.json"
 
 UHP_LISTEN_PORT=2525
+
+# Comma separated tags for honeypot
+TAGS=
 ```
 
 ### Configuration Options
@@ -90,6 +93,7 @@ The following options are supported in the `/etc/sysconfig/uhp` and `/etc/defaul
 * UHP_JSON: (string) The location to store the registration information returned from the HPFeeds server.
 * UHP_CONFIG: (string) The filename for the UHP JSON honeypot configuration
 * UHP_LISTEN_PORT: (integer) The port for the UHP daemon to listen on for connections.  In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
+* TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly.
 
 
 ## Acknowledgements

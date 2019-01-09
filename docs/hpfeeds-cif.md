@@ -39,7 +39,11 @@ CIF_VERIFY_SSL=False
 
 # Set to False if you wish to submit private addresses to CIF
 IGNORE_RFC1918=True
+
+# Include the honeypot specific tags in CIFv3
+INCLUDE_HP_TAGS=False
 ```
+
 Once the docker-compose.yml is updated and the hpfeeds-cif.sysconfig file is 
 present, you can simply:
 

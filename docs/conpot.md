@@ -68,6 +68,9 @@ CONPOT_JSON="/etc/conpot/conpot.json"
 
 # Conpot specific configuration options
 CONPOT_TEMPLATE=default
+
+# Comma separated tags for honeypot
+TAGS=
 ```
 
 ### Configuration Options
@@ -82,7 +85,7 @@ The following options are supported in the `/etc/sysconfig/conpot` or `/etc/defa
 * DEPLOY_KEY: (string; REQUIRED) The deploy key provided by the feeds server administration for registration during the first startup. This key is **required** for registration.
 * CONPOT_JSON: (string) The location to store the registration information returned from the HPFeeds server.
 * CONPOT_TEMPLATE: (string) The service template to use for the Conpot daemon. Options include **iec104**, **default**, **guardian_ast**, **ipmi**, **kamstrup_382**, and **proxy**.
-
+* TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly.
 
 # Acknowlegements
 
