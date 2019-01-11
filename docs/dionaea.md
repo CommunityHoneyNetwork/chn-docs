@@ -86,7 +86,7 @@ FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS>"
 FEEDS_SERVER_PORT=10000
 
 # Comma separated tags for honeypot
-TAGS=
+TAGS=""
 ```
 
 ### Configuration Options
@@ -104,7 +104,7 @@ The following options are supported in the `/etc/sysconfig/dionaea` and `/etc/de
 * HPFEEDS_ENABLED: (boolean) Enable the hpfeeds handler module
 * FEEDS_SERVER: (string) The hostname or IP address of the HPFeeds server to send logged events.
 * FEEDS_SERVER_PORT: (integer) The HPFeeds port. Default is 10000.
-* TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly.
+* TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly. **TAGS** string must be enclosed in double quotes if string contains spaces.
 
 
 # Service Configuration

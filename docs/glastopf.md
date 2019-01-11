@@ -64,7 +64,7 @@ GLASTOPF_JSON="/etc/glastopf/glastopf.json"
 GLASTOPF_PORT=8080
 
 # Comma separated tags for honeypot
-TAGS=
+TAGS=""
 ```
 
 ### Configuration Options
@@ -79,7 +79,7 @@ The following options are supported in the `/etc/default/glastopf` files
 * DEPLOY_KEY: (string; REQUIRED) The deploy key provided by the feeds server administration for registration during the first startup.  This key is **required** for registration.
 * GLASTOPF_JSON: (string) The location to store the registration information returned from the HPFeeds server.
 * GLASTOPF_PORT: (integer) The web server port for the Glastopf daemon. In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
-* TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly.
+* TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly. **TAGS** string must be enclosed in double quotes if string contains spaces.
 
 
 # Acknowlegements

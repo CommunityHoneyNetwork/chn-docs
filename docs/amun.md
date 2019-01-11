@@ -62,7 +62,7 @@ DEPLOY_KEY=
 AMUN_JSON="/etc/amun/amun.json"
 
 # Comma separated tags for honeypot
-TAGS=
+TAGS=""
 ```
 
 ### Configuration Options
@@ -76,7 +76,7 @@ The following options are supported in the `/etc/sysconfig/amun` or `/etc/defaul
 * FEEDS_SERVER_PORT: (integer) The HPFeeds port. Default is 10000.
 * DEPLOY_KEY: (string; REQUIRED) The deploy key provided by the feeds server administration for registration during the first startup. This key is **required** for registration.
 * AMUN_JSON: (string) The location to store the registration information returned from the HPFeeds server.
-* TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly.
+* TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly. **TAGS** string must be enclosed in double quotes if string contains spaces.
 
 # Acknowlegements
 

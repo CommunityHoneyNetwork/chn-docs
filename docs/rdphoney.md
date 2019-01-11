@@ -64,7 +64,7 @@ DEPLOY_KEY=
 RDPHONEY_JSON="/etc/rdphoney/rdphoney.json"
 
 # Comma separated tags for honeypot
-TAGS=
+TAGS=""
 ```
 
 ### Configuration Options
@@ -78,7 +78,7 @@ The following options are supported in the `/etc/sysconfig/rdphoney` or `/etc/de
 * FEEDS_SERVER_PORT: (integer) The HPFeeds port. Default is 10000.
 * DEPLOY_KEY: (string; REQUIRED) The deploy key provided by the feeds server administration for registration during the first startup. This key is **required** for registration.
 * RDPHONEY_JSON: (string) The location to store the registration information returned from the HPFeeds server.
-* TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly.
+* TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly. **TAGS** string must be enclosed in double quotes if string contains spaces.
 
 
 # License
