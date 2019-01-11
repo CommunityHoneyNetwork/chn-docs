@@ -79,7 +79,7 @@ SSH_LISTEN_PORT=2222
 TELNET_LISTEN_PORT=2223
 
 # Comma separated tags for honeypot
-TAGS=
+TAGS=""
 ```
 
 ### Configuration Options
@@ -95,7 +95,7 @@ The following options are supported in the `/etc/sysconfig/cowrie` and `/etc/def
 * COWRIE_JSON: (string) The location to store the registration information returned from the HPFeeds server.
 * SSH_LISTEN_PORT: (integer) The port for the Cowrie daemon to listen on for SSH connections.  In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
 * TELNET_LISTEN_PORT: (integer) The port for the Cowrie daemon to listen on for Telnet connections. In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
-* TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly.
+* TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly. * TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly. **TAGS** string must be enclosed in double quotes if string contains spaces.
 
 
 ## Running Cowrie on port 22/23
