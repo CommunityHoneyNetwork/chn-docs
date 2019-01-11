@@ -32,7 +32,15 @@ HPFEEDS_PORT=10000
 MONGODB_HOST='mongodb'
 MONGODB_PORT=27017
 
+# Log to local file
+FILELOG_ENABLED=true
 LOG_FILE=/var/log/hpfeeds-logger/chn-splunk.log
+
+# Log to syslog
+SYSLOG_ENABLED=false
+SYSLOG_HOST=localhost
+SYSLOG_PORT=514
+SYSLOG_FACILITY=user
 
 # Options are arcsight, json_formatter, raw_json, splunk
 FORMATTER_NAME=splunk
