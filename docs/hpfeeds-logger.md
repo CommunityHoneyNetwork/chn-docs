@@ -43,6 +43,7 @@ SYSLOG_PORT=514
 SYSLOG_FACILITY=user
 
 # Options are arcsight, json_formatter, raw_json, splunk
+# This option will change all enabled output formats (file or syslog)
 FORMATTER_NAME=splunk
 
 ```
