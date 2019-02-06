@@ -20,14 +20,11 @@ First, include this stanza in the docker-compose.yml file for CHN-server:
 ```
 Next, add the following hpfeeds-logger.sysconfig configuration file:
 ```bash
-# This file is read from /etc/sysconfig/hpfeeds-logger
+# This file is read from /etc/sysconfig/hpfeeds-cif
 # or /etc/default/hpfeeds-logger, depending on the distro version
 #
 # Defaults here are for containers, but can be adjusted
 # after install for a regular server or to customize the containers
-
-HPFEEDS_HOST='hpfeeds'
-HPFEEDS_PORT=10000
 
 MONGODB_HOST='mongodb'
 MONGODB_PORT=27017
@@ -43,8 +40,18 @@ SYSLOG_PORT=514
 SYSLOG_FACILITY=user
 
 # Options are arcsight, json_formatter, raw_json, splunk
-# This option will change all enabled output formats (file or syslog)
 FORMATTER_NAME=splunk
+
+# To log data from an external HPFeeds stream, uncomment and fill out these
+# variables. Additionally, change the HPFEEDS_* variables to point to the
+# remote service.
+
+# IDENT=
+# SECRET=
+# CHANNELS=
+
+HPFEEDS_HOST='hpfeeds'
+HPFEEDS_PORT=10000
 
 ```
 Once the docker-compose.yml is updated and the hpfeeds-logger.sysconfig file is 
@@ -63,3 +70,74 @@ $ ls -l hpfeeds-logs
 total 0
 -rw-r--r-- 1 root root 0 Nov  2 22:15 chn-splunk.log
 ``` 
+# Adding an external hpfeeds source for logging
+This is a more advanced option, for those wishing to consume data from 
+another hpfeeds instance (whether CHN-based or not). This example will step 
+through the requirements for enabling this feature.
+
+## On the sending side
+The hpfeeds protocol requires 5 pieces of information in order to generate or
+ share information: host, port, ident, secret, and channel listing. On the 
+ sending side, we must provision an ident, secret, and channels that may be 
+ subscribed to. We use the "add_user.py" script to do this. If we wanted to 
+ provision an ident of "ident" with a secret of "secret" (this is a bad idea 
+ btw), we would run:
+
+```bash
+docker-compose exec hpfeeds python /opt/hpfeeds/broker/add_user.py "ident" "secret" "" "amun.events,conpot.events,thug.events,beeswarm.hive,dionaea.capture,dionaea.connections,thug.files,beeswarn.feeder,cuckoo.analysis,kippo.sessions,cowrie.sessions,glastopf.events,glastopf.files,mwbinary.dionaea.sensorunique,snort.alerts,wordpot.events,p0f.events,suricata.events,shockpot.events,elastichoney.events,rdphoney.sessions,uhp.events"
+```
+Please note that the empty double quotes are necessary to indicate that the 
+identity may not publish to any channels (unless that's something you want), 
+and the last quoted text is all the channels that a CHN instance of hpfeeds 
+will provision. Other instances may not have these channels available, or may
+ not wish to share data in those channels. 
+ 
+The sending side should now share the host, hpfeeds port, ident, secret, and 
+channel listing with the side which wishes to consume the data.
+
+## On the receiving side
+One one has the host, hpfeeds port, ident, secret, and channel listing, 
+create a new hpfeeds-logger container in your docker-compose and fill out the
+ fields in a new hpfeeds-logger.sysconfig. for example if our friend made 
+ the cowrie.sessions channel available to us from their host 10.0.0.10 with an 
+ ident of "myfriend" and 
+ secret of "p0nyf!3nds4lyfe", our sysconfig file would look like:
+
+```bash
+# This file is read from /etc/sysconfig/hpfeeds-cif
+# or /etc/default/hpfeeds-logger, depending on the distro version
+#
+# Defaults here are for containers, but can be adjusted
+# after install for a regular server or to customize the containers
+
+MONGODB_HOST='mongodb'
+MONGODB_PORT=27017
+
+# Log to local file
+FILELOG_ENABLED=true
+LOG_FILE=/var/log/hpfeeds-logger/chn-splunk.log
+
+# Log to syslog
+SYSLOG_ENABLED=false
+SYSLOG_HOST=localhost
+SYSLOG_PORT=514
+SYSLOG_FACILITY=user
+
+# Options are arcsight, json_formatter, raw_json, splunk
+FORMATTER_NAME=splunk
+
+# To log data from an external HPFeeds stream, uncomment and fill out these
+# variables. Additionally, change the HPFEEDS_* variables to point to the
+# remote service.
+
+IDENT="myfriend"
+SECRET="p0nyf!3nds4lyfe"
+CHANNELS="cowrie.sessions"
+
+HPFEEDS_HOST='10.0.0.10'
+HPFEEDS_PORT=10000
+```
+**Please Note:** Configuring channels that are not available, or not allowed 
+for the user will cause the hpfeeds-logger container to die (repeatedly). 
+The current code does not account for a failure to authenticate to a single 
+channel, and simply fails the entire transaction.
