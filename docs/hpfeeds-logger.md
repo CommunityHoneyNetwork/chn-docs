@@ -39,7 +39,7 @@ SYSLOG_HOST=localhost
 SYSLOG_PORT=514
 SYSLOG_FACILITY=user
 
-# Options are arcsight, json_formatter, raw_json, splunk
+# Options are arcsight, json, raw_json, splunk
 FORMATTER_NAME=splunk
 
 # To log data from an external HPFeeds stream, uncomment and fill out these
