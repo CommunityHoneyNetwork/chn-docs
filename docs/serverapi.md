@@ -104,6 +104,84 @@ source_ip	count	tags
 
 ---
 
+** Credentials **
+---
+
+_Returns a list of username / password combinations attempted against Cowrie honeypots_
+
+**Resource URL**
+
+_http://127.0.0.1/api/credentials/
+
+**Resource Information**
+
+* Response formats: JSON
+* Requires authentication: Yes
+
+**Parameters**
+
+| Name      | Required | Description                                            | Default Value | Example                               |
+| --------- | -------- | ------------------------------------------------------ | ------------- | ------------------------------------- |
+| hours_ago | No       | Retrieve all elements from x hours ago to current time | 4             | 24                                    |
+| limit     | No       | Maximum number of elements to retrieve                 | 1000          | 100                                   |
+
+**Example Request**
+
+_curl -H "apikey: xxxxx" http://127.0.0.1/api/credentials/?hours_ago=24&limit=100_
+
+**Example Response**
+
+```
+{
+    "data":[{
+            "count":2,
+            "password":"admin",
+            "username":"admin"
+          }],
+    "meta":{
+        "options":{},
+        "query":"attacker_stats"
+    }
+}
+```
+
+
+---
+
+** Credentials CSV**
+---
+
+_Returns a list of username / password combinations attempted against Cowrie honeypots as CSV_
+
+**Resource URL**
+
+_http://127.0.0.1/api/credentials.csv/
+
+**Resource Information**
+
+* Response formats: CSV
+* Requires authentication: Yes
+
+**Parameters**
+
+| Name      | Required | Description                                            | Default Value | Example                               |
+| --------- | -------- | ------------------------------------------------------ | ------------- | ------------------------------------- |
+| hours_ago | No       | Retrieve all elements from x hours ago to current time | 4             | 24                                    |
+| limit     | No       | Maximum number of elements to retrieve                 | 1000          | 100                                   |
+
+**Example Request**
+
+_curl -H "apikey: xxxxx" http://127.0.0.1/api/credentials.csv/?hours_ago=24&limit=100_
+
+**Example Response**
+
+```
+username	password	count
+admin	admin	2
+```
+
+---
+
 **Attacker Stats**
 ----
 
