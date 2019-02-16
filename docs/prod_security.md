@@ -105,12 +105,13 @@ This is handy if you know exactly what you want. Sometimes, however, you may
 need to "explore" the container, and running commands manually every time may
  get old. Simply exec bash, and you'll be in a bash session in the container:
  
- ```commandline
+```commandline
 $ docker-compose exec chnserver bash
 root@a60116039800:/# vim /etc/default/chnserver 
 bash: vim: command not found
 root@a60116039800:/# 
 ```
+
 Notice how vi isn't installed on this container? MANY of the things you might
  normally expect to be present won't be. You can always install the package 
  you need in the container using apt:
@@ -137,21 +138,54 @@ down), the changes you made will be removed.
 ## Restart on boot
 Once you're running honeypots in production, you'll likely want them to 
 restart automatically on boot, for instance, after a patching reboot on the 
-host server. This can be accomplished in a number of ways (see Docker and 
-docker-compose [documentation](https://docs.docker.com/compose/compose-file/compose-file-v2/#volume-configuration-reference) for details), but the easiest is to add the 
-`restart:always` flag to your docker-compose.yml file.
+host server. This can be accomplished in a number of ways, but on modern 
+systems a systemd integration is ideal. 
 
+Let's presume that we'll put the docker-compose.yml and sysconfig files in a 
+directory we'll dedicate to the service in question.
+
+```bash
+$ mkdir -p /srv/docker-compose/chnserver
+$ cp docker-compose.yml chnserver.sysconfig /srv/docker-compose/chnserver
 ```
-version: '2'
-services:
-  mongodb:
-    image: stingar/mongodb:latest
-    volumes:
-      - ./storage/mongodb:/var/lib/mongo:z
-    restart: always
-  redis:
-  ...
+
+Add a general purpose systemd configuration file to `/etc/systemd/system/`. 
+
+```yaml
+[Unit]
+Description=%i service with docker compose
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+
+WorkingDirectory=/srv/docker-compose/%i
+
+# Remove old containers
+ExecStartPre=/usr/bin/docker-compose down -v
+ExecStartPre=/usr/bin/docker-compose rm -fv
+
+# Compose up
+ExecStart=/usr/bin/docker-compose up
+
+# Compose down, remove containers and volumes
+ExecStop=/usr/bin/docker-compose down -v
+
+[Install]
+WantedBy=multi-user.target
 ```
+
+Now that we have the systemd file and our docker-compose files in place, 
+enable the service:
+```bash
+$ systemctl enable --now docker-compose@chnserver
+```
+You can now use standard systemd commands to stop, start and restart your 
+containers.
+
+
+
 ## Administrivia
 
 You may find yourself in need to recovering the current DEPLOY_KEY in cases 
@@ -176,6 +210,10 @@ SERVER_BASE_URL='https://chn.my.org
 Please note that using https with 'localhost' or an IP address will result in
  a self-signed cert, as Certbot will not issue certificates for IP addresses 
  or localhost.
+ 
+Consult the [section](certificates.md) on certificates for details on options
+ for providing your own certificates or using self-signed certs.
+ 
 ## Firewall
 
 In order for honeypots to register and log data to the management server, the following inbound ports need to be open on the server and reachable by the honeypots:
