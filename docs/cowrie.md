@@ -27,7 +27,7 @@ configuration files provided by the deployment scripts in the CHN web interface.
 version: '2'
 services:
   cowrie:
-    image: stingar/cowrie:latest
+    image: stingar/cowrie:1.7
     volumes:
       - ./cowrie.sysconfig:/etc/default/cowrie
       - ./cowrie:/etc/cowrie
@@ -112,7 +112,7 @@ By default Cowrie will run on port 2222/2223, to avoid any conflict with the rea
 version: '2'
 services:
   cowrie:
-    image: stingar/cowrie:latest
+    image: stingar/cowrie:1.7
     volumes:
       - ./cowrie.sysconfig:/etc/default/cowrie
       - ./cowrie:/etc/cowrie
