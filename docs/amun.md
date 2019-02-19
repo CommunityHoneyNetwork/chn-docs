@@ -23,7 +23,7 @@ configuration files provided by the deployment scripts in the CHN web interface.
 version: '2'
 services:
     amun:
-        image: stingar/amun:latest
+        image: stingar/amun:1.7
         volumes:
             - ./amun.sysconfig:/etc/default/amun
             - ./amun:/etc/amun

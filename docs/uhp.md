@@ -30,7 +30,7 @@ configuration files provided by the deployment scripts in the CHN web interface.
 version: '2'
 services:
   uhp:
-    image: stingar/uhp:latest
+    image: stingar/uhp:1.7
     volumes:
       - ./uhp.sysconfig:/etc/default/uhp
       - ./uhp:/etc/uhp
