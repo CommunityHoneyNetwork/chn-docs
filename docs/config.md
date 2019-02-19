@@ -113,3 +113,47 @@ Once the images are built, you start up your new server with:
 ```
 $ docker-compose up -d
 ```
+
+# Accepting all traffic from a default route
+
+There are occassions where you would like for your honeypot host to accept
+traffic from a large network, instead of just the IP address that has been
+assigned to your NIC.  In order to do this, you can use the AnyIP linux kernel
+feature.  Once traffic is being routed to your server, create a systemd service
+file with the contents below.  This example uses `192.168.1.1/24` as the target
+network, and should be changed accordingly
+
+`/etc/systemd/system/anyip-hp.service`
+
+```
+[Unit]
+Description=Enable AnyIP for my HP
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/sbin/ip addr add 192.168.1.1/24 dev lo
+ExecStop=/sbin/ip addr del 192.168.1.1/24 dev lo
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable the service with:
+```
+$ sudo systemctl enable anyip-hp.service
+$ sudo systemctl start anyip-hp.service
+```
+
+If this worked correctly, you will see the new network you added in the output of
+
+```
+$ sudo ip addr show lo
+```
+
+The service can be stopped with:
+```
+$ sudo systemctl stop anyip-hp.service
+```
