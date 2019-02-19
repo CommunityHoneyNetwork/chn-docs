@@ -52,15 +52,15 @@ DEBUG=false
 IP_ADDRESS=
 
 # CHN Server api to register to
-CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
+CHN_SERVER="${URL}"
 
 # Server to stream data to
-FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS>"
+FEEDS_SERVER="${SERVER}"
 FEEDS_SERVER_PORT=10000
 
 # Deploy key from the FEEDS_SERVER administrator
 # This is a REQUIRED value
-DEPLOY_KEY=
+DEPLOY_KEY=${DEPLOY}
 
 # Registration information file
 # If running in a container, this needs to persist
@@ -78,8 +78,15 @@ SSH_LISTEN_PORT=2222
 # in a container
 TELNET_LISTEN_PORT=2223
 
-# Comma separated tags for honeypot
+# double quotes, comma delimited tags may be specified, which will be included
+# as a field in the hpfeeds output. Use cases include tagging provider
+# infrastructure the sensor lives in, geographic location for the sensor, etc.
 TAGS=""
+
+# A specific "personality" directory for the Cowrie honeypot may be specified
+# here. These directories can include custom fs.pickle, cowrie.cfg, txtcmds and
+# userdb.txt files which can influence the attractiveness of the honeypot.
+PERSONALITY=default
 ```
 
 ### Configuration Options
@@ -96,7 +103,10 @@ The following options are supported in the `/etc/sysconfig/cowrie` and `/etc/def
 * SSH_LISTEN_PORT: (integer) The port for the Cowrie daemon to listen on for SSH connections.  In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
 * TELNET_LISTEN_PORT: (integer) The port for the Cowrie daemon to listen on for Telnet connections. In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
 * TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly. * TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly. **TAGS** string must be enclosed in double quotes if string contains spaces.
-
+* PERSONALITY: (string) a directory name under /opt/personalities containing 
+cowrie configuration files such as cowrie.cfg, fs.pickle, userdb.txt, etc. 
+See the [upstream project](https://github
+.com/cowrie/cowrie#files-of-interest) for details. 
 
 ## Running Cowrie on port 22/23
 
