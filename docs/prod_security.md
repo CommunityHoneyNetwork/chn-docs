@@ -205,7 +205,7 @@ with the FQDN of the server (including the https:// stem), CHN can and will use
   
 For example:
 ```bash
-SERVER_BASE_URL='https://chn.my.org
+SERVER_BASE_URL='https://chn.my.org'
 ``` 
 Please note that using https with 'localhost' or an IP address will result in
  a self-signed cert, as Certbot will not issue certificates for IP addresses 
