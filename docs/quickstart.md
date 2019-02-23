@@ -53,6 +53,10 @@ SUPERUSER_EMAIL=''
 SUPERUSER_PASSWORD=''
 SECRET_KEY=''
 DEPLOY_KEY=''
+
+# See https://communityhoneynetwork.readthedocs.io/en/stable/certificates/
+# Options are: 'CERTBOT', 'SELFSIGNED', 'BYO'
+CERTIFICATE_STRATEGY='CERTBOT'
 ```
 Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 
