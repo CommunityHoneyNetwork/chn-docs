@@ -153,7 +153,7 @@ $ mkdir -p /srv/docker-compose/chnserver
 $ cp docker-compose.yml chnserver.sysconfig /srv/docker-compose/chnserver
 ```
 
-Add a general purpose systemd configuration file to `/etc/systemd/system/`. 
+Add a general purpose systemd configuration file to `/etc/systemd/system/docker-compose@.service`. 
 
 ```yaml
 [Unit]
