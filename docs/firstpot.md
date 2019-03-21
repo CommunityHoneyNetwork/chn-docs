@@ -1,7 +1,7 @@
 Deploying your First Honeypot
 =============================
 
-This example covers how to build and deploy an example [Cowrie honeypot](http://www.micheloosterhof.com/cowrie/) and connect it to a running CommunityHoneyNetwork server for collection of data.
+This example covers how to build and deploy an example [Cowrie honeypot](https://www.cowrie.org/) and connect it to a running CommunityHoneyNetwork server for collection of data.
 
 ## Prerequisites
 
