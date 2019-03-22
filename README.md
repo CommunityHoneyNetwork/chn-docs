@@ -1,4 +1,4 @@
-#Prerequisites
+# Prerequisites
 
 Ensure you have mkdocs installed. This can be done with:
 
@@ -6,7 +6,7 @@ Ensure you have mkdocs installed. This can be done with:
 pip install mkdocs
 ```
 
-#Making changes
+# Making changes
 
 Fork a copy to your own repo, then clone it locally. Make any edits you wish to edit. To see what your edits look like, run:
 
