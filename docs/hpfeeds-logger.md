@@ -56,7 +56,7 @@ FORMATTER_NAME=splunk
 # variables. Additionally, change the HPFEEDS_* variables to point to the
 # remote service.
 
-# IDENT=
+IDENT=hpfeeds-logger-${RANDOM}
 # SECRET=
 # CHANNELS=
 
