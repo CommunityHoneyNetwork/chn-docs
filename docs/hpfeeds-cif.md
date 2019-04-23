@@ -23,6 +23,7 @@ Next, add the following hpfeeds-cif.sysconfig configuration file:
 ```bash
 HPFEEDS_HOST='hpfeeds'
 HPFEEDS_PORT=10000
+IDENT=hpfeeds-cif-${RANDOM}
 
 MONGODB_HOST='mongodb'
 MONGODB_PORT=27017
