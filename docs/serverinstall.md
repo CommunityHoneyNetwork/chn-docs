@@ -1,4 +1,4 @@
-QuickStart Guide
+CHN Server Install
 =================
 
 Deploy a honeypot management server and sample honeypot in seconds.  This guide will deploy all the containers for the server on a single host using a default configuration.  The honeypot can be deployed on the same host or a separate host as desired.

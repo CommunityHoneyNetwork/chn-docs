@@ -6,7 +6,7 @@ markdown_extensions:
 - markdown.extensions.admonition
 pages:
     - 'CommunityHoneyNetwork': index.md
-    - 'QuickStart Guide': quickstart.md
+    - 'CHN Server Install': serverinstall.md
     - 'Your First Honeypot': firstpot.md
     - 'Deploying More Honeypots': honeypots.md
     - 'Production & Security Considerations': prod_security.md

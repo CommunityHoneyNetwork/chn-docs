@@ -3,7 +3,9 @@ Advanced Options
 
 ## Using sysconfig/default files for configuration
 
-Each of the services and honeypots in the CommunityHoneyNetwork project should work together out of the box following the [Quickstart Guide](quickstart.md). More advanced configuration options can be configured using an /etc/sysconfig/<servicename> or /etc/default/<servicename> file for CentOS-based or Ubuntu-based systems, respectively.
+Each of the services and honeypots in the CommunityHoneyNetwork project should work together out of the box following
+ the [CHN Server Install](serverinstall.md). More advanced configuration options can be configured using an 
+ /etc/sysconfig/<servicename> or /etc/default/<servicename> file for CentOS-based or Ubuntu-based systems, respectively.
 
 Services running in Docker containers can be configured this way as well, mounting the configuration files into place using the `--volume` argument for Docker.
 

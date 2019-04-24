@@ -6,7 +6,7 @@ Honeypot deployment and management automation
 ## Simple deployments for your platform
 
 CHN aims to make deployment of honeypots and honeypot management tools easy 
-and flexible. The default deployment method uses Docker Compose and Docker to deploy with a few simple commands.  Want to jump right in an get started?  Deploy a honeypot management server and sample honeypot in minutes with the [Quickstart Guide](quickstart.md).
+and flexible. The default deployment method uses Docker Compose and Docker to deploy with a few simple commands.  Want to jump right in an get started?  Deploy a honeypot management server and sample honeypot in minutes with the [CHN Server Install](serverinstall.md).
 
 
 ## Getting the correct versions
