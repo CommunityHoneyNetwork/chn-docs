@@ -136,7 +136,53 @@ services:
 docker-compose down && docker-compose up -d
 ```
 
+## Adding a custom cowrie "personality"
 
+You can add files to your cowrie honeypot in order to customize it's behavior. Currently the code supports custom 
+versions of `cowrie.cfg`, `userdb.txt`, `fs.pickle`, and custom `txtcmds` via a directory structure. See [here](https://github.com/CommunityHoneyNetwork/cowrie/tree/master/personalities/aws-ubuntu16) for an example personality. 
+
+Once you have the custom files on the honeypot host, volume mount a directory containing these files to the container, 
+and specify the directory name in the `PERSONALITY` sysconfig option.
+
+For a more concrete example: let's say I want to include a `userdb.txt` and `cowrie.cfg` file in a personality called 'sneakycowrie'. 
+
+First I'll create a directory called "sneakycowrie" on my honeypot VM with the `userdb.txt` and `cowrie.cfg` files in
+ it. It might look like this:
+ 
+```bash
+$ ls -l
+total 12
+drwxr-xr-x 2 root root   25 Apr 25 09:51 cowrie
+-rw-r--r-- 1 me  me  1535 Apr 25 10:30 cowrie.sysconfig
+-rw-rw-r-- 1 me  me  2115 Apr 25 10:29 deploy.sh
+-rw-r--r-- 1 me  me   256 Apr 25 10:30 docker-compose.yml
+drwxrwxr-x 2 me  me    42 Apr 25 10:43 sneakycowrie
+
+$ ls -l sneakycowrie/
+total 8
+-rw-rw-r-- 1 me me 310 Apr 25 10:43 cowrie.cfg
+-rw-rw-r-- 1 me me 676 Apr 25 10:06 userdb.txt
+```
+
+Then make the following change to the `docker-compose.yml`:
+
+```
+<snip>
+    volumes:
+      - ./cowrie.sysconfig:/etc/default/cowrie
+      - ./cowrie:/etc/cowrie
+      - ./sneakycowrie:/opt/personalities/sneakycowrie
+<snip>
+```
+and then modify the `cowrie.sysconfig` to specify the directory name in the `PERSONALITY` variable:
+```
+# A specific "personality" directory for the Cowrie honeypot may be specified
+# here. These directories can include custom fs.pickle, cowrie.cfg, txtcmds and
+# userdb.txt files which can influence the attractiveness of the honeypot.
+PERSONALITY="sneakycowrie"
+```
+You should then be able to `docker-compose down` and `docker-compose up -d` at this point and the personality should take effect.
+ 
 ## Acknowledgements
 
 CommunityHoneyNetwork Cowrie container is an adaptation of [@micheloosterhof's Cowrie](https://github.com/micheloosterhof/cowrie) Cowrie software and [Threatstream's Modern Honey Network](https://threatstream.github.io/mhn/) Cowrie & HPFeeds work, among other contributors and collaborators.
