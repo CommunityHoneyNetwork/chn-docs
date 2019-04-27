@@ -22,7 +22,7 @@ to help you understand the various options. While they may serve as a basis
 for users with advanced deployment needs, most users should default to the 
 configuration files provided by the deployment scripts in the CHN web interface.
 
-## Example rdphoney docker-compose.yml
+## Example wordpot docker-compose.yml
 ```dockerfile
 version: '2'
 services:
