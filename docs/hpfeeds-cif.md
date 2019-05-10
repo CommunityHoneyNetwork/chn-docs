@@ -94,7 +94,7 @@ to understand more of the options available.
 A basic useful query would be:
 
 ```bash
-$ cif --tags honeypot --last-hour
+$ cif --tags honeypot --itype ipv4 --last-hour
 +-------+----------+----------------------------+-----------------+----------------------------+----------------------------+-------+------------------+-------------+------------+-------+----------------+
 |  tlp  |  group   |         reporttime         |    indicator    |         firsttime          |          lasttime          | count |       tags       | description | confidence | rdata | provider       |
 +-------+----------+----------------------------+-----------------+----------------------------+----------------------------+-------+------------------+-------------+------------+-------+----------------+
@@ -108,7 +108,7 @@ The CIF client also offers options for formatting the data into csv, json, as
 CSV, selecting fields of interest:
  
 ```bash
- $ cif --tags honeypot --last-hour -f csv --columns indicator,lasttime,count,tags,asn
+ $ cif --tags honeypot --itype ipv4 --last-hour -f csv --columns indicator,lasttime,count,tags,asn
 "indicator","lasttime","count","tags","asn"
 "0.0.133.212","2019-02-16T00:14:14.407959Z","10","honeypot,dionaea","12389.0"
 "0.0.161.58","2019-02-16T00:47:42.705318Z","5","honeypot,dionaea","39130.0"
@@ -117,7 +117,7 @@ CSV, selecting fields of interest:
 JSON plus some jq magic:
 
 ```bash
-$ cif --tags honeypot --last-hour -f json --columns indicator,lasttime,count,tags,asn | jq
+$ cif --tags honeypot --itype ipv4 --last-hour -f json --columns indicator,lasttime,count,tags,asn | jq
 [
   {
     "count": 10,
@@ -141,7 +141,7 @@ This sort of format is easy to achieve with the CIF client and some light
 command line magic.
 
 ```bash
-$ cif --tags honeypot --last-hour -f csv --columns indicator | tail -n +2 | sed -e 's/"//g' > file
+$ cif --tags honeypot --itype ipv4 --last-hour -f csv --columns indicator | tail -n +2 | sed -e 's/"//g' > file
 $ cat file
 0.0.161.58
 0.0.160.198
