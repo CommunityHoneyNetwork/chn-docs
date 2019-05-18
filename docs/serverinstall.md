@@ -85,6 +85,7 @@ services:
       - hpfeeds:hpfeeds
   chnserver:
     image: stingar/chn-server:1.7
+    restart: always
     volumes:
       - ./config/collector:/etc/collector:z
       - ./storage/chnserver/sqlite:/opt/sqlite:z
