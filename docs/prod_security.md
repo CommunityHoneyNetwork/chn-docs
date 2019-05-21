@@ -188,7 +188,37 @@ $ systemctl enable --now docker-compose@chnserver
 You can now use standard systemd commands to stop, start and restart your 
 containers.
 
+## Using custom deployment scripts
 
+As of version 1.8, you can provide a directory of custom deployment scripts that will automatically be imported into 
+the CHN database on start. In order to provide these scripts to the container, you must volume mount a local 
+directory into the container at `/opt/custom_scripts`. For instance, the following stanza mounts a local directory 
+called `./custom_scripts` into the appropriate location:
+
+```yaml
+  chnserver:
+    image: stingar/chn-server:1.7
+    volumes:
+      - ./config/collector:/etc/collector:z
+      - ./storage/chnserver/sqlite:/opt/sqlite:z
+      - ./chnserver.sysconfig:/etc/default/chnserver:z
+      - ./certs:/tls:z
+      - ./custom_scripts:/opt/custom_scripts:z
+    links:
+      - mongodb:mongodb
+      - redis:redis
+      - hpfeeds:hpfeeds
+    ports:
+      - "80:80"
+      - "443:443"
+```
+Once the container is restarted, the script(s) will be loaded into the database.
+
+**WARNING**: This will load the script(s), as they exist in the filesystem, on each restart. This means if you change
+ the script in the WebUI, you're changing the script as it exists in the database. Upon restart, these changes will 
+ be LOST, unless you either remove the volume mount, or make changes to the scripts in the filesystem. Both have pros
+  and cons, but this authors preference would be to only make changes to the filesystem versions and restart the 
+  server when required (and also keep those scripts in a code repository).
 
 ## Administrivia
 
