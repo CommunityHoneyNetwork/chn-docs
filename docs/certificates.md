@@ -13,5 +13,29 @@ environment variable to your container to use it: `ACME_SERVER`
 `BYO` - Mount your own directory containing cert.pem and key.pem in to the /tls
 volume of the container
 
+For example, volume mount a local directory to the `/tls` directory via your docker-compose.yml in the 
+`volumes` section for the chnserver container:
+
+```yaml
+  chnserver:
+    image: stingar/chn-server:1.7
+    volumes:
+      - ./config/collector:/etc/collector:z
+      - ./storage/chnserver/sqlite:/opt/sqlite:z
+      - ./chnserver.sysconfig:/etc/default/chnserver:z
+      - ./certs:/tls:z
+    links:
+      - mongodb:mongodb
+      - redis:redis
+      - hpfeeds:hpfeeds
+    ports:
+      - "80:80"
+      - "443:443"
+```
+Then ensure that you place your certificate files in the `./certs` directory, and that the private key is named `key.pem` and the public key is named `cert.pem`.
+
 If the SERVER variable is set to an IP address, `SELFSIGNED` is the default
-value.  If a real name is given, `CERTBOT` is the default value.
+value.  If a real name is given, `CERTBOT` is the default value. 
+
+As Certbot relies on a challenge-response protocol using the webserver, the `CERTBOT` strategy will not work with 
+NAT'ed or non-publicly accessible servers.

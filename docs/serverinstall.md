@@ -58,6 +58,13 @@ DEPLOY_KEY=''
 # Options are: 'CERTBOT', 'SELFSIGNED', 'BYO'
 CERTIFICATE_STRATEGY='CERTBOT'
 ```
+
+__Please Note!__
+
+If you cannot or do not want to use LetsEncrypt to get a valid certificate for this instance, please consult the 
+documentation on [certificates with CHN](certificates.md) before bringing up your container. It is best to ensure 
+your certificates are in place before starting up CHN for the first time when not using Let'sEncrypt.
+
 Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 
 
@@ -89,7 +96,7 @@ services:
       - ./config/collector:/etc/collector:z
       - ./storage/chnserver/sqlite:/opt/sqlite:z
       - ./chnserver.sysconfig:/etc/default/chnserver:z
-      - ./certs:/etc/letsencrypt:z
+      - ./certs:/tls:z
     links:
       - mongodb:mongodb
       - redis:redis
