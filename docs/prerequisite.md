@@ -1,7 +1,7 @@
 # Prerequisites
 
 Basic understanding of logging in to a systems console, and root access are
-both necessariy for installation
+both necessary for installation
 
 ## Docker & Docker-Compose
 
