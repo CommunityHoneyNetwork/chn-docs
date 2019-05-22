@@ -212,7 +212,12 @@ called `./custom_scripts` into the appropriate location:
       - "80:80"
       - "443:443"
 ```
-Once the container is restarted, the script(s) will be loaded into the database.
+Once the container is restarted, the script(s) will be loaded into the database. You can also force a refresh with 
+the following command:
+
+```bash
+docker-comopose exec chnserver python /opt/initdatabase.py
+```
 
 **WARNING**: This will load the script(s), as they exist in the filesystem, on each restart. This means if you change
  the script in the WebUI, you're changing the script as it exists in the database. Upon restart, these changes will 
