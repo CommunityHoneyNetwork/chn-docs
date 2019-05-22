@@ -10,8 +10,11 @@ environment variable to your container to use it: `ACME_SERVER`
 
 `SELFSIGNED` - Use OpenSSL to generate a self signed certificate
 
-`BYO` - Mount your own directory containing cert.pem and key.pem in to the /tls
-volume of the container
+`BYO` - Bring Your Own.  This is useful if you have a CA that does not support
+ACME.  To use this, mount your own directory containing cert.pem and key.pem in
+to the /tls volume of the container.  To ensure you can see the certs in your
+conatiner, use `docker-compose exec ls /tls` from within your docker-compose
+directory
 
 For example, volume mount a local directory to the `/tls` directory via your docker-compose.yml in the 
 `volumes` section for the chnserver container:
