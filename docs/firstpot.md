@@ -5,15 +5,9 @@ This example covers how to build and deploy an example [Cowrie honeypot](https:/
 
 ## Prerequisites
 
-The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
+Please visit [prerequisites](prerequisite.md) for honeypot related requirements.
 
-* Docker >= 1.13.1
-* Docker Compose >= 1.15.0
-
-**Please ensure the user on the system installing the honeypot is in the local
- docker group**
- 
- Please see your system documentation for adding a user to the docker group.
+If you have not yet deployed CHN Server, we recommend following [these instructions](serverinstall.md) before proceeding. 
 
 ## Deploying Cowrie
 
@@ -28,13 +22,16 @@ If you haven't yet setup a management server, follow the [CHN Server Install](se
 Log into the management server and browse to the "Deploy" tab. Once in the 
 Deploy section, select the drop-down box with default "New Script" and choose
  the "Ubuntu - Cowrie" option.
+ 
+Next, select the Architecture from the drop down menu. 
+
+* Select ARM for ARM-based devices such as Raspberry Pi or ODroid
+![Deploy_ARM](img/select_cowrie_arm.png)
+* Select Intel for any 64-bit Intel-based devices
+![Deploy_Intel](img/select_cowrie_intel.png)
 
 Once you've selected the "Ubuntu - Cowrie" script, the page will populate 
-with 2 sections; "Deploy Command":
-
-![Deploy](img/select_cowrie.png)
-
-and "Deploy Script": 
+with 2 sections; "Deploy Command" (above) and "Deploy Script" (below): 
 
 ![Script](img/cowrie_deploy_script.png)
 
