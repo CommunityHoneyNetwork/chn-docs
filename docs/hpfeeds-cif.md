@@ -38,12 +38,16 @@ CIF_GROUP='everyone'
 # Set the below value to True if your CIF instance uses a valid, CA-signed, certificate
 CIF_VERIFY_SSL=False
 
-# Set to False if you wish to submit private addresses to CIF
-IGNORE_RFC1918=True
+# Specify CIDR networks for which we should NOT submit CIF indicators
+# Useful for not reporting any locally compromised hosts and prepopulated with RFC1918 addresses
+IGNORE_CIDR="192.168.0.0/16,10.0.0.0/8,172.16.0.0/12"
 
 # Include the honeypot specific tags in CIFv3
 INCLUDE_HP_TAGS=False
 ```
+The `IGNORE_CIDR` option allow you to specify a set of ranges for which you wish hpfeeds-cif to ignore and NOT submit
+ to the configured CIF server. This option comes pre-populated with RFC1918 addresses, and can be modified provided 
+ the entry is quoted. 
 
 Once the docker-compose.yml is updated and the hpfeeds-cif.sysconfig file is 
 present, you can simply:
