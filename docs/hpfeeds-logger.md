@@ -34,14 +34,22 @@ MONGODB_PORT=27017
 FILELOG_ENABLED="true"
 LOG_FILE="/var/log/hpfeeds-logger/chn-splunk.log"
 
-# Choose to rotate the log file based on 'size'(default) or 'time'
+# Choose to rotate the log file based on 'size'(default), 'time', or 'none'
+# Choosing 'none' is ideal if you want to handle rotation outside of the
+# container
 ROTATION_STRATEGY="size"
 
 # If rotating by 'size', the number of MB to rotate at
 ROTATION_SIZE_MAX=100
 
-# If rotating by 'time', the number of hours to rotate at
+# If rotating by 'time', the unit to count in; valid values are "m","h", and "d"
+ROTATION_TIME_UNIT=h
+
+# If rotating by 'time', the number of rotation_time_unit to rotate at
 ROTATION_TIME_MAX=24
+
+# How many backup files to keep when rotating in the container
+ROTATION_BACKUPS=3
 
 # Log to syslog
 SYSLOG_ENABLED=false
