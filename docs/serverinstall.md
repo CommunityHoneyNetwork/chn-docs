@@ -72,26 +72,26 @@ Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 version: '2'
 services:
   mongodb:
-    image: stingar/mongodb:1.7
+    image: stingar/mongodb:1.8-pre
     volumes:
       - ./storage/mongodb:/var/lib/mongo:z
   redis:
-    image: stingar/redis:1.7
+    image: stingar/redis:1.8-pre
     volumes:
       - ./storage/redis:/var/lib/redis:z
   hpfeeds:
-    image: stingar/hpfeeds:1.7
+    image: stingar/hpfeeds:1.8-pre
     links:
       - mongodb:mongodb
     ports:
       - "10000:10000"
   mnemosyne:
-    image: stingar/mnemosyne:1.7
+    image: stingar/mnemosyne:1.8-pre
     links:
       - mongodb:mongodb
       - hpfeeds:hpfeeds
   chnserver:
-    image: stingar/chn-server:1.7
+    image: stingar/chn-server:1.8-pre
     restart: always
     volumes:
       - ./config/collector:/etc/collector:z

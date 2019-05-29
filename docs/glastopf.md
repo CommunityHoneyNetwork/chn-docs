@@ -23,7 +23,7 @@ configuration files provided by the deployment scripts in the CHN web interface.
 version: '2'
 services:
     glastopf:
-        image: stingar/glastopf:1.7
+        image: stingar/glastopf:1.8-pre
         volumes:
             - ./glastopf.sysconfig:/etc/default/glastopf
             - ./glastopf:/etc/glastopf

@@ -27,7 +27,7 @@ configuration files provided by the deployment scripts in the CHN web interface.
 version: '2'
 services:
     wordpot:
-        image: stingar/wordpot:1.7
+        image: stingar/wordpot:1.8-pre
         volumes:
             - ./wordpot.sysconfig:/etc/default/wordpot
             - ./wordpot:/etc/wordpot

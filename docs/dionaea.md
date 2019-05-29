@@ -27,7 +27,7 @@ configuration files provided by the deployment scripts in the CHN web interface.
 version: '2'
 services:
   dionaea:
-    image: stingar/dionaea:1.7
+    image: stingar/dionaea:1.8-pre
     volumes:
       - ./dionaea.sysconfig:/etc/default/dionaea
       - ./dionaea/dionaea:/etc/dionaea/
