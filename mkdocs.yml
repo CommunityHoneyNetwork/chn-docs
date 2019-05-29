@@ -30,4 +30,5 @@ pages:
       - 'CHN Server API': serverapi.md
       - 'CIF': hpfeeds-cif.md
       - 'Logfiles': hpfeeds-logger.md
+      - 'Blocking with BHR' : hpfeeds-bhr.md
     - 'LICENSE': LICENSE.md
