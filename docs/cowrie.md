@@ -60,7 +60,7 @@ FEEDS_SERVER_PORT=10000
 
 # Deploy key from the FEEDS_SERVER administrator
 # This is a REQUIRED value
-DEPLOY_KEY=${DEPLOY}
+DEPLOY_KEY="${DEPLOY}"
 
 # Registration information file
 # If running in a container, this needs to persist
