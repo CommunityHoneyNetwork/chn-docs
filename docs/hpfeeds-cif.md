@@ -14,7 +14,7 @@ First, include this stanza in the docker-compose.yml file for CHN-server:
     image: stingar/hpfeeds-cif:1.8-pre
     privileged: true
     volumes:
-      - ./hpfeeds-cif.sysconfig:/etc/default/hpfeeds-cif
+      - ./hpfeeds-cif.sysconfig:/etc/default/hpfeeds-cif:z
     links:
       - hpfeeds:hpfeeds
       - mongodb:mongodb
