@@ -12,7 +12,6 @@ First, include this stanza in the docker-compose.yml file for CHN-server:
 ```dockerfile
   hpfeeds-cif:
     image: stingar/hpfeeds-cif:1.8-pre
-    privileged: true
     volumes:
       - ./hpfeeds-cif.sysconfig:/etc/default/hpfeeds-cif:z
     links:

@@ -12,7 +12,7 @@ First, include this stanza in the docker-compose.yml file for CHN-server:
   hpfeeds-logger:
     image: stingar/hpfeeds-logger:1.8-pre
     volumes:
-      - ./hpfeeds-logger.sysconfig:/etc/default/hpfeeds-logger
+      - ./hpfeeds-logger.sysconfig:/etc/default/hpfeeds-logger:z
       - ./hpfeeds-logs:/var/log/hpfeeds-logger:z
     links:
       - hpfeeds:hpfeeds
