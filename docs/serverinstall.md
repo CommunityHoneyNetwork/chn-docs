@@ -22,7 +22,7 @@ Create a new directory to hold your server deployment:
 Copy the following chnserver.sysconfig variables file, and save it as 
 `chnserver.sysconfig`:
 
-_Be sure to set SERVER_BASE_URL appropriately!_
+_Be sure to set SERVER_BASE_URL appropriately!_ This setting supports custom paths such as `https://www.site.tld/chn` which is helpful if running behind an Application Load Balancer (see [Deploying to Cloud Providers](cloud.md)).
 
 ```
 # This file is read from /etc/default/chnserver
