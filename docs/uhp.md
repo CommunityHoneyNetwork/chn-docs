@@ -44,8 +44,7 @@ services:
 Prior to starting, UHP will parse some options from `/etc/default/uhp` for Debian-based containers.  The following is an example config file:
 
 ```
-# This file is read from /etc/sysconfig/uhp or /etc/default/uhp
-# depending on the base distro
+# This file is read from /etc/default/uhp
 #
 # This can be modified to change the default setup of the uhp unattended installation
 
@@ -82,7 +81,7 @@ TAGS=""
 
 ### Configuration Options
 
-The following options are supported in the `/etc/sysconfig/uhp` and `/etc/default/uhp files`:
+The following options are supported in the `/etc/default/uhp` file:
 
 * DEBUG: (boolean) Enable more verbose output to the console
 * IP_ADDRESS: IP address of the host running the honeypot container

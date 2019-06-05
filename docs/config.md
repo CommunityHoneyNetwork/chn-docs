@@ -50,7 +50,7 @@ To build from source as opposed to from an image, simply add the following lines
 
 ```
     build:
-      dockerfile: ./Dockerfile-centos
+      dockerfile: ./Dockerfile-ubuntu
       context: https://github.com/CommunityHoneyNetwork/<repo_name>.git#<version_tag>
 ```
 
@@ -63,21 +63,21 @@ services:
     build:
       dockerfile: ./Dockerfile-ubuntu
       context: https://github.com/CommunityHoneyNetwork/mongodb.git#v1.5
-    image: mongodb:centos
+    image: mongodb:ubuntu
     volumes:
       - ./storage/mongodb:/var/lib/mongo:z
   redis:
     build:
       dockerfile: ./Dockerfile-ubuntu
       context: https://github.com/CommunityHoneyNetwork/redis.git#v1.5
-    image: redis:centos
+    image: redis:ubuntu
     volumes:
       - ./storage/redis:/var/lib/redis:z
   hpfeeds:
     build:
       dockerfile: ./Dockerfile-ubuntu
       context: https://github.com/CommunityHoneyNetwork/hpfeeds.git#v1.5
-    image: hpfeeds:centos
+    image: hpfeeds:ubuntu
     links:
       - mongodb:mongodb
     ports:
@@ -86,7 +86,7 @@ services:
     build:
       dockerfile: ./Dockerfile-ubuntu
       context: https://github.com/CommunityHoneyNetwork/mnemosyne.git#v1.5
-    image: mnemosyne:centos
+    image: mnemosyne:ubuntu
     links:
       - mongodb:mongodb
       - hpfeeds:hpfeeds
@@ -94,7 +94,7 @@ services:
     build:
       dockerfile: ./Dockerfile-ubuntu
       context: https://github.com/CommunityHoneyNetwork/CHN-Server.git#v1.5
-    image: chnserver:centos
+    image: chnserver:ubuntu
     volumes:
       - ./config/collector:/etc/collector:z
     links:

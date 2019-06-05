@@ -20,8 +20,7 @@ First, include this stanza in the docker-compose.yml file for CHN-server:
 ```
 Next, add the following hpfeeds-logger.sysconfig configuration file:
 ```bash
-# This file is read from /etc/sysconfig/hpfeeds-logger
-# or /etc/default/hpfeeds-logger, depending on the distro version
+# This file is read from /etc/default/hpfeeds-logger
 #
 # Defaults here are for containers, but can be adjusted
 # after install for a regular server or to customize the containers
@@ -121,8 +120,7 @@ create a new hpfeeds-logger container in your docker-compose and fill out the
  secret of "p0nyf!3nds4lyfe", our sysconfig file would look like:
 
 ```bash
-# This file is read from /etc/sysconfig/hpfeeds-cif
-# or /etc/default/hpfeeds-logger, depending on the distro version
+# This file is read from /etc/default/hpfeeds-logger
 #
 # Defaults here are for containers, but can be adjusted
 # after install for a regular server or to customize the containers

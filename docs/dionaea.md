@@ -50,12 +50,17 @@ services:
       - "5061:5061"
       - "11211:11211"
       - "27017:27017"
+    cap_add:
+      - NET_ADMIN
 ```
+
+Please note that while Dionaea will run without the `NET_ADMIN` capability set, it will consume 100% of a CPU and not
+ function optimally.
 
 ## Example dionaea.sysconfig file
 
 
-Prior to starting, Dionaea will parse some options from `/etc/sysconfig/dionaea` for RedHat-based or `/etc/default/dionaea` for Debian-based systems or containers. The following is an example config file:
+Prior to starting, Dionaea will parse some options from `/etc/default/dionaea` for Debian-based systems or containers. The following is an example config file:
 
 ```
 #
@@ -90,7 +95,7 @@ TAGS=""
 
 ### Configuration Options
 
-The following options are supported in the `/etc/sysconfig/dionaea` and `/etc/default/dionaea` files:
+The following options are supported in the `/etc/default/dionaea` files:
 
 * DEBUG: (boolean) Enable more verbose output to the console
 * IP_ADDRESS: IP address of the host running the honeypot container

@@ -14,8 +14,8 @@ $ docker-compose logs
 hpfeeds_1      | INFO:root:Auth success by mnemosyne.
 hpfeeds_1      | INFO:root:Auth success by mnemosyne.
 hpfeeds_1      | INFO:root:Auth success by mnemosyne.
-mongodb_1      | + '[' -f /etc/sysconfig/mongod ']'
-mongodb_1      | + . /etc/sysconfig/mongod
+mongodb_1      | + '[' -f /etc/default/mongod ']'
+mongodb_1      | + . /etc/default/mongod
 mongodb_1      | ++ mongod=/usr/bin/mongod
 mongodb_1      | ++ CONFIGFILE=/etc/mongod.conf
 mongodb_1      | ++ OPTIONS=' -f /etc/mongod.conf'
@@ -45,8 +45,8 @@ specify the name and it will filter to only that container:
 ```commandline
 $ docker-compose logs mongodb |head
 Attaching to chnserver_mongodb_1
-mongodb_1      | + '[' -f /etc/sysconfig/mongod ']'
-mongodb_1      | + . /etc/sysconfig/mongod
+mongodb_1      | + '[' -f /etc/default/mongod ']'
+mongodb_1      | + . /etc/default/mongod
 mongodb_1      | ++ mongod=/usr/bin/mongod
 mongodb_1      | ++ CONFIGFILE=/etc/mongod.conf
 mongodb_1      | ++ OPTIONS=' -f /etc/mongod.conf'
@@ -72,8 +72,7 @@ the container:
 
 ```commandline
 $ docker-compose exec chnserver cat /etc/default/chnserver
-# This file is read from /etc/sysconfig/chnserver or /etc/default/chnserver
-# depending on the base distro
+# This file is read from /etc/default/chnserver
 #
 # This can be modified to change the default setup of the chnserver unattended installation
 

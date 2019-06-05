@@ -37,10 +37,11 @@ services:
 ```
 ## Example conpot.sysconfig file
 
-Prior to starting, Conpot will parse some options from `/etc/sysconfig/conpot` for RedHat-based or `/etc/default/conpot` for Debian-based systems or containers. The following is an example config file:
+Prior to starting, Conpot will parse some options from `/etc/default/conpot` for Debian-based systems or containers. 
+The following is an example config file:
 
 ```
-# This file is read from /etc/sysconfig/conpot or /etc/default/conpot
+# This file is read from /etc/default/conpot
 # depending on the base distro
 #
 # This can be modified to change the default setup of the conpot unattended installation
@@ -75,7 +76,7 @@ TAGS=""
 
 ### Configuration Options
 
-The following options are supported in the `/etc/sysconfig/conpot` or `/etc/default/conpot` files:
+The following options are supported in the `/etc/default/conpot` file:
 
 * DEBUG: (boolean) Enable more verbose output to the console
 * IP_ADDRESS: IP address of the host running the honeypot container

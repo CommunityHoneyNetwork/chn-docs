@@ -5,7 +5,7 @@ Advanced Options
 
 Each of the services and honeypots in the CommunityHoneyNetwork project should work together out of the box following
  the [CHN Server Install](serverinstall.md). More advanced configuration options can be configured using an 
- /etc/sysconfig/<servicename> or /etc/default/<servicename> file for CentOS-based or Ubuntu-based systems, respectively.
+/etc/default/<servicename> file for Ubuntu-based systems.
 
 Services running in Docker containers can be configured this way as well, mounting the configuration files into place using the `--volume` argument for Docker.
 

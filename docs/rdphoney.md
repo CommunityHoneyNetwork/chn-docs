@@ -26,7 +26,7 @@ services:
     rdphoney:
         image: stingar/rdphoney:1.8-pre
         volumes:
-            - ./rdphoney.sysconfig:/etc/sysconfig/rdphoney
+            - ./rdphoney.sysconfig:/etc/default/rdphoney
             - ./rdphoney:/etc/rdphoney
         ports:
             - "3389:3389"
@@ -34,11 +34,10 @@ services:
 
 ## Example rdphoney.sysconfig file
 
-Prior to starting, RDPhoney will parse some options from `/etc/sysconfig/rdphoney` for RedHat-base or `/etc/default/rdphoney` for Debian-based systems or containers. The following is an example config file:
+Prior to starting, RDPhoney will parse some options from `/etc/default/rdphoney` for Debian-based systems or containers. The following is an example config file:
 
 ```
-# This file is read from /etc/sysconfig/rdphoney or /etc/default/rdphoney
-# depending on the base distro
+# This file is read from /etc/default/rdphoney
 #
 # This can be modified to change the default setup of the rdphoney unattended installation
 
@@ -69,7 +68,7 @@ TAGS=""
 
 ### Configuration Options
 
-The following options are supported in the `/etc/sysconfig/rdphoney` or `/etc/default/rdphoney` files:
+The following options are supported in the `/etc/default/rdphoney` file:
 
 * DEBUG: (boolean) Enable more verbose output to the console
 * IP_ADDRESS: IP address of the host running the honeypot container

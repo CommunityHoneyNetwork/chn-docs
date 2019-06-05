@@ -32,10 +32,11 @@ services:
 ```
 ## Example amun.sysconfig file
 
-Prior to starting, Amun will parse some options from `/etc/sysconfig/amun` for RedHat-based or `/etc/default/amun` for Debian-based systems or containers. The following is an example config file:
+Prior to starting, Amun will parse some options from `/etc/default/amun` for Debian-based systems or containers. The 
+following is an example config file:
 
 ```
-# This file is read from /etc/sysconfig/amun or /etc/default/amun
+# This file is read from /etc/default/amun
 # depending on the base distro
 #
 # This can be modified to change the default setup of the amun unattended installation
@@ -67,7 +68,7 @@ TAGS=""
 
 ### Configuration Options
 
-The following options are supported in the `/etc/sysconfig/amun` or `/etc/default/amun` files:
+The following options are supported in the `/etc/default/amun` file:
 
 * DEBUG: (boolean) Enable more verbose output to the console
 * IP_ADDRESS: IP address of the host running the honeypot container

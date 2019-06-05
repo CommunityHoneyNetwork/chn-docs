@@ -36,11 +36,10 @@ services:
 ```
 ## Example wordpot.sysconfig file
 
-Prior to starting, Wordpot will parse some options from `/etc/sysconfig/wordpot` for RedHat-based or `/etc/default/wordpot` for Debian-based systems or containers.  The following is an example config file:
+Prior to starting, Wordpot will parse some options from `/etc/default/wordpot` for Debian-based systems or containers.  The following is an example config file:
 
 ```
-# This file is read from /etc/sysconfig/wordpot or /etc/default/wordpot
-# depending on the base distro
+# This file is read from /etc/default/wordpot
 #
 # This can be modified to change the default setup of the wordpot unattended installation
 
@@ -71,7 +70,7 @@ WORDPRESS_PORT=8080
 
 ### Configuration Options
 
-The following options are supported in the `/etc/sysconfig/wordpot` or `/etc/default/wordpot` files:
+The following options are supported in the `/etc/default/wordpot` file:
 
 * DEBUG: (boolean) Enable more verbose output to the console
 * IP_ADDRESS: IP address of the host running the honeypot container

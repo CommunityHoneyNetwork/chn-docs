@@ -40,7 +40,7 @@ services:
 Prior to starting, Cowrie will parse some options from `/etc/default/cowrie` for Debian-based containers.  The following is an example config file:
 
 ```
-# This file is read from /etc/sysconfig/cowrie or /etc/default/cowrie
+# This file is read from /etc/default/cowrie
 # depending on the base distro
 #
 # This can be modified to change the default setup of the cowrie unattended installation
@@ -91,7 +91,7 @@ PERSONALITY=default
 
 ### Configuration Options
 
-The following options are supported in the `/etc/sysconfig/cowrie` and `/etc/default/cowrie files`:
+The following options are supported in the `/etc/default/cowrie` files:
 
 * DEBUG: (boolean) Enable more verbose output to the console
 * IP_ADDRESS: IP address of the host running the honeypot container

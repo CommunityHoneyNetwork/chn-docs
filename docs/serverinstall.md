@@ -25,8 +25,7 @@ Copy the following chnserver.sysconfig variables file, and save it as
 _Be sure to set SERVER_BASE_URL appropriately!_
 
 ```
-# This file is read from /etc/sysconfig/chnserver or /etc/default/chnserver
-# depending on the base distro
+# This file is read from /etc/default/chnserver
 #
 # This can be modified to change the default setup of the chnserver unattended installation
 
