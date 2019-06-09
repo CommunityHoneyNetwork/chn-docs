@@ -18,6 +18,10 @@ containers for the project's tools, and so, require the following:
 * Docker >= 1.13.1
 * Docker Compose >= 1.15.0
 
+__Note:__ On Linux, you will need some escalated privileges to run docker.
+This may include having rights to run `$ sudo docker`, or your user being a part of the
+`docker` group.
+
 ### Ubuntu Installation
 
 ```
@@ -46,11 +50,6 @@ found [here](https://brew.sh/)
 $ brew install docker docker-compose
 ```
 
-Note that on Linux, you will need some escalated privileges to run docker.
-This may include having rights to run `$ sudo docker`, or being a part of the
-`docker` group.
-
-
 
 ## Certificate Strategy
 
@@ -61,12 +60,15 @@ interface.  More information on these choices can be found
 ## Network Connectivity
 
 When using the CERTBOT Certificate strategy, your CHN server will need to have
-port 80 open and reachable by the world.  This is required by the ACME protocol
+port 80/tcp open and reachable by the world.  This is required by the ACME protocol
 in order to verify your domain.
 
 If you are deploying honeypots to networks beyond the network that your CHN
 server lives on, you will need to be sure that the honeypots can reach back to
-the CHN server on ports 80, 443, and 10000.
+the CHN server on ports 80/tcp, 443/tcp, and 10000/tcp.
+
+Honeypots need either 80/tcp or 443/tcp open only during the registration process, but always need port 10000/tcp open in order 
+to send data to the central server.
 
 ## Quickstart Repository
 
