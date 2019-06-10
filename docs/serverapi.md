@@ -111,7 +111,7 @@ _Returns a list of username / password combinations attempted against Cowrie hon
 
 **Resource URL**
 
-_http://127.0.0.1/api/credentials/
+_http://127.0.0.1/api/credentials/_
 
 **Resource Information**
 
@@ -155,7 +155,7 @@ _Returns a list of username / password combinations attempted against Cowrie hon
 
 **Resource URL**
 
-_http://127.0.0.1/api/credentials.csv/
+_http://127.0.0.1/api/credentials.csv/_
 
 **Resource Information**
 
