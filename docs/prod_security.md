@@ -215,8 +215,17 @@ Once the container is restarted, the script(s) will be loaded into the database.
 the following command:
 
 ```bash
-docker-comopose exec chnserver python /opt/initdatabase.py
+docker-comopose exec chnserver bash
 ```
+
+This puts you inside the container. Now run:
+
+```bash
+cd /opt && python /opt/initdatabase.py
+```
+
+This will ensure your custom scripts are loaded into the database. Now you can type `exit` to leave the container 
+bash prompt.
 
 **WARNING**: This will load the script(s), as they exist in the filesystem, on each restart. This means if you change
  the script in the WebUI, you're changing the script as it exists in the database. Upon restart, these changes will 
