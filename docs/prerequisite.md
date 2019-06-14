@@ -18,6 +18,10 @@ containers for the project's tools, and so, require the following:
 * Docker >= 1.13.1
 * Docker Compose >= 1.15.0
 
+Please note that you will have a more stable experience by installing docker-compose and docker from your 
+distributions repos, rather than downloading docker directly from Docker. Direct downloads from Docker *do* tend to 
+have more features, but those features often come at the price of unresolved bugs. 
+
 __Note:__ On Linux, you will need some escalated privileges to run docker.
 This may include having rights to run `$ sudo docker`, or your user being a part of the
 `docker` group.
