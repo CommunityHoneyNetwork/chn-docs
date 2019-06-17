@@ -48,7 +48,21 @@ docker-compose and adding the local user to the docker group
 
 **Please Note** that you should generally not change the ports in the 
 sysconfig files, but rather change the ports that Docker translates 
-connects to (i.e., in the )
+connections to (i.e., in the docker-compose.yml file). For instance, if you want cowrie to listen on port 4000, 
+adjust the docker-compose.yml file like so:
+
+```yaml
+version: '2'
+services:
+  cowrie:
+    image: stingar/cowrie:1.8-pre
+    volumes:
+      - ./cowrie.sysconfig:/etc/default/cowrie
+      - ./cowrie:/etc/cowrie
+    ports:
+      - "4000:2222"
+      - "23:2223"
+```
 
 ### Adding tags to your honeypots
 
