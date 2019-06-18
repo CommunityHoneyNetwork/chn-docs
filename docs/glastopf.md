@@ -1,6 +1,10 @@
 Glastopf Honeypot
 =================
 
+The CommunityHoneyNetwork Cowrie Honeypot is an implementation of [Lukas Rist Glastopf](https://github.com/mushorg/glastopf), configured to report logged 
+attacks to the CommunityHoneyNetwork management server.
+
+>Glastopf is a Python web application honeypot founded by Lukas Rist.
 ## Prerequisites
 
 The default deployment model uses Docker and Docker Compose to deploy containers for the project's tools, and so, require the following:
