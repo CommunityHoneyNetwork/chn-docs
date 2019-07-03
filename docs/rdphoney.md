@@ -24,7 +24,7 @@ configuration files provided by the deployment scripts in the CHN web interface.
 version: '2'
 services:
     rdphoney:
-        image: stingar/rdphoney:1.8-pre
+        image: stingar/rdphoney:1.8
         volumes:
             - ./rdphoney.sysconfig:/etc/default/rdphoney
             - ./rdphoney:/etc/rdphoney

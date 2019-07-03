@@ -9,7 +9,7 @@ The simplest way to integrate CHN reporting to BHR is to:
 First, include this stanza in the docker-compose.yml file for CHN-server:
 ```dockerfile
   hpfeeds-bhr:
-    image: stingar/hpfeeds-bhr:1.8-pre
+    image: stingar/hpfeeds-bhr:1.8
     volumes:
       - ./hpfeeds-bhr.sysconfig:/etc/default/hpfeeds-bhr:z
     links:

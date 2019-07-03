@@ -196,7 +196,7 @@ called `./custom_scripts` into the appropriate location:
 
 ```yaml
   chnserver:
-    image: stingar/chn-server:1.8-pre
+    image: stingar/chn-server:1.8
     volumes:
       - ./config/collector:/etc/collector:z
       - ./storage/chnserver/sqlite:/opt/sqlite:z
