@@ -215,7 +215,7 @@ Once the container is restarted, the script(s) will be loaded into the database.
 the following command:
 
 ```bash
-docker-comopose exec chnserver bash
+docker-compose exec chnserver bash
 ```
 
 This puts you inside the container. Now run:
