@@ -86,6 +86,10 @@ $ ls -l hpfeeds-logs
 total 0
 -rw-r--r-- 1 root root 0 Nov  2 22:15 chn-splunk.log
 ``` 
+
+**NOTE:** You can only enable either syslog output OR filelog, but not both in the same container. If both formats 
+are needed, create one container with filelog enabled, and another container with syslog enabled.
+
 # Adding an external hpfeeds source for logging
 This is a more advanced option, for those wishing to consume data from 
 another hpfeeds instance (whether CHN-based or not). This example will step 
