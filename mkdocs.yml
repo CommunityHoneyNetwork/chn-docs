@@ -29,6 +29,7 @@ pages:
     - 'Getting Data':
       - 'CHN Server API': serverapi.md
       - 'CIF': hpfeeds-cif.md
+      - 'CHN Intel Feeds': chnintelfeed.md
       - 'Logfiles': hpfeeds-logger.md
       - 'Blocking with BHR' : hpfeeds-bhr.md
     - 'LICENSE': LICENSE.md
