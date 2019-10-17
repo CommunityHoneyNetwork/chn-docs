@@ -161,7 +161,7 @@ The service can be stopped with:
 $ sudo systemctl stop anyip-hp.service
 ```
 
-# Performing Automatic Database Cleanup
+# Performing automatic database cleanup
 
 My default, the Mongo database keeps all honeypot and session data permanently. However,
 there may be benefits to automated rolling disposal of aged records after a certain
