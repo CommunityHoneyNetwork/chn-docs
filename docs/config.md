@@ -119,7 +119,7 @@ $ docker-compose up -d
 
 # Accepting all traffic from a default route
 
-There are occassions where you would like for your honeypot host to accept
+There are occasions where you would like for your honeypot host to accept
 traffic from a large network, instead of just the IP address that has been
 assigned to your NIC.  In order to do this, you can use the AnyIP linux kernel
 feature.  Once traffic is being routed to your server, create a systemd service
@@ -160,3 +160,35 @@ The service can be stopped with:
 ```
 $ sudo systemctl stop anyip-hp.service
 ```
+
+# Performing Automatic Database Cleanup
+
+My default, the Mongo database keeps all honeypot and session data permanently. However,
+there may be benefits to automated rolling disposal of aged records after a certain
+threshold -- for example, if honeypot entries are already logged elsewhere such as a CIF
+instance. In that case, expunging old records from Mongo can reduce used space on the
+collector and increase performance of the collector's webUI. 
+
+To enable this feature,
+edit the `docker-compose.yml` file under mnemosyne section to add an environment variable
+called `MONGODB_INDEXTTL=<integerInSeconds>` where _integerInSeconds_ is an integer value
+in seconds after which you want older records automatically removed.
+
+```
+--snip--
+
+mnemosyne:
+    image: stingar/mnemosyne:1.8
+    links:
+      - mongodb:mongodb
+      - hpfeeds:hpfeeds
+    environment:
+      - MONGODB_INDEXTTL=2592000 # 60 sec * 60 min * 24 hrs * 30 days
+      
+--snip--
+```
+
+In the example snippet above, the `MONGODB_INDEXTTL` value is set to a number that will
+remove hpfeed and session information from the Mongo database after 30 days has elapsed. The
+feature is enabled as part of the mnemosyne container since that is the microservice that 
+instantiates connections to Mongo and queues up messages to write. 
