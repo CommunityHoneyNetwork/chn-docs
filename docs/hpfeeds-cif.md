@@ -43,6 +43,11 @@ IGNORE_CIDR="192.168.0.0/16,10.0.0.0/8,172.16.0.0/12"
 
 # Include the honeypot specific tags in CIFv3
 INCLUDE_HP_TAGS=False
+
+# ADVANCED: Specify the Redis database number to use for caching CIF submissions. This is only necessary when
+# running multiple CIF containers on the same host submitting to different instances. Note that hpfeeds-bhr defaults
+# to using database 1 and hpfeeds-cif defaults to using database 2, so generally safe choices are in the range of 3-15.
+# CIF_CACHE_DB=2
 ```
 The `IGNORE_CIDR` option allow you to specify a set of ranges for which you wish hpfeeds-cif to ignore and NOT submit
  to the configured CIF server. This option comes pre-populated with RFC1918 addresses, and can be modified provided 
