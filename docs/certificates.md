@@ -6,7 +6,8 @@ variable you can optionally pass to the container called
 [LetsEncrypt](https://letsencrypt.org/), using the
 [ACME](https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment)
 protocol.  If you have your own ACME server, you can pass an additional
-environment variable to your container to use it: `ACME_SERVER`
+environment variable to your container to use it: `ACME_SERVER`. Additionally, see the [prerequisites](prerequisite
+.md) section on *Network Connectivity* for additional requirements for using `CERTBOT`
 
 `SELFSIGNED` - Use OpenSSL to generate a self signed certificate
 
