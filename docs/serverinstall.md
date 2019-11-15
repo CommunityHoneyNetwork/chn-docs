@@ -19,7 +19,7 @@ First, clone the quickstart repository into an install location; we will presume
  location.
 
 ```bash
-mkdir -p /opt && git clone https://github.com/CommunityHoneyNetwork/chn-quickstart.git /opt/chnserver
+sudo mkdir -p /opt && sudo git clone https://github.com/CommunityHoneyNetwork/chn-quickstart.git /opt/chnserver
 ```
 Enter the Quickstart directory:
 ```bash
@@ -62,9 +62,11 @@ After this question is complete, an initial `chnserver.sysconfig` file will be w
 How many days of honeypot data should be maintained in the database (default 30 days)?
 Number of Days:
 ```
-Here you can set how long you'd like to maintain honeypot data in the mongo database. We reccomend keeping this
+Here you can set how long you'd like to maintain honeypot data in the mongo database. We recommend keeping this
 number relatively low (such as 14 or 30 days), and relying on the [logging mechanisms](hpfeeds-logger.md) to create
 a long-term archive.
+
+After this question is complete, an initial `mnemosyne.sysconfig` file will be written out to disk.
 
 ### Question: Remote CIFv3 logging ###
 ```bash
@@ -111,7 +113,7 @@ After this question is complete, an initial `hpfeeds-logger.sysconfig` file will
 ### Final considerations ###
 This will end the `guided_docker_compose.py` process. At this point there should be a valid docker-compose.yml file
  in the current directory (`./docker-compose.yml`), and valid config file in`./config/sysconfig/` for `chnserver.sysconfig` 
- and optionally `hpfeeds-cif.sysconfig` and `hpfeeds-logger.sysconfig`. 
+ and optionally `hpfeeds-cif.sysconfig`, `mnemosyne.sysconfig`, and `hpfeeds-logger.sysconfig`. 
  
 At this point you can either add additional configuration to the sysconfig files in `./config/sysconfig` or start the
  server with:
@@ -211,6 +213,27 @@ If you cannot or do not want to use LetsEncrypt to get a valid certificate for t
 documentation on [certificates with CHN](certificates.md) before bringing up your container. It is best to ensure 
 your certificates are in place before starting up CHN for the first time when not using Let's Encrypt.
 
+With no additional configuration, the CHN Server will keep only 30 days of data in the mongo database. In order to
+ adjust this limit, add a new file called `mnemosyne.sysconfig` with the following contents:
+ 
+```bash
+# This file is read from /etc/default/mnemosyne
+# This can be modified to change the default setup of the unattended installation
+HPFEEDS_HOST='hpfeeds'
+HPFEEDS_PORT=10000
+MONGODB_HOST='mongodb'
+MONGODB_PORT=27017
+
+# MONGODB_INDEXTTL sets the number of seconds to keep data in the mongo database
+# This default value is 30 days
+MONGODB_INDEXTTL=2592000
+
+# Use this setting to 'True' to not log RFC1918 addresses to the mongo database.
+IGNORE_RFC1918=False
+```
+
+__Please Note!__ The value for the timeout is in *seconds*. 
+
 Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 
 
@@ -236,6 +259,8 @@ services:
     links:
       - mongodb:mongodb
       - hpfeeds:hpfeeds
+    volumes:
+      - ./mnemosyne.sysconfig:/etc/default/mnemosyne:z
   chnserver:
     image: stingar/chn-server:1.8
     restart: always
@@ -301,5 +326,8 @@ You should be able to login using the `admin@localhost` account and the password
 Please know that this administrator password will be reset every time a container instance is re-deployed from the
  image. If you would like to keep the same administrator password, please populate the `SUPERUSER_EMAIL` and
   `SUPERUSER_PASSWORD` fields in chnserver.sysconfig. Similarly, you can force a static `DEPLOY_KEY`. 
+
+You may also wish to configure logging for your CHN Server instance at this time as well. Please see [this section](hpfeeds-logger.md)
+for more information on configuring logging.
 
 At this point you have a functioning CommunityHoneyNetwork server, ready to register honeypots and start collecting data.  Next, try [deploying your first honeypot](firstpot.md)...

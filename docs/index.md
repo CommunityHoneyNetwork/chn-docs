@@ -6,7 +6,8 @@ Honeypot deployment and management automation
 ## Simple deployments for your platform
 
 CHN aims to make deployment of honeypots and honeypot management tools easy 
-and flexible. The default deployment method uses Docker Compose and Docker to deploy with a few simple commands.  Want to jump right in an get started?  Deploy a honeypot management server and sample honeypot in minutes with the [CHN Server Install](serverinstall.md).
+and flexible. The default deployment method uses Docker Compose and Docker to deploy with a few simple commands
+.  Want to jump right in and get started?  Deploy a honeypot management server and sample honeypot in minutes with the [CHN Server Install](serverinstall.md).
 
 
 ## Getting the correct versions
@@ -22,7 +23,8 @@ The releases pages for each project - for example, the [CHN-Server release page]
 
 ## Contributing
 
-Contributions to the CommunityHoneyNetwork project are welcome!  Afterall, it's not much of a community without your help.  Documentation always needs help, individual projects each have their own issues or bugs that need to be addressed, and test coverage can always be improved.
+Contributions to the CommunityHoneyNetwork project are welcome!  After all, it's not much of a community without your
+ help.  Documentation always needs help, individual projects each have their own issues or bugs that need to be addressed, and test coverage can always be improved.
 
 To contribute, submit a pull request to one of the [CommunityhoneyNetwork projects](https://github.com/CommunityHoneyNetwork) you'd like to work with. 
 
