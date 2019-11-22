@@ -3,7 +3,7 @@ Advanced Configuration
 
 Each of the services and honeypots in the CommunityHoneyNetwork project should work together out of the box following
  the [CHN Server Install](serverinstall.md). More advanced configuration options can be configured using an 
- /etc/default/<servicename> file for Ubuntu-based systems.
+ /etc/default/<servicename> file.
 
 Services running in Docker containers can be configured this way as well, mounting the configuration files into place using the `--volume` argument for Docker.
 
@@ -50,7 +50,7 @@ To build from source as opposed to from an image, simply add the following lines
 
 ```
     build:
-      dockerfile: ./Dockerfile-ubuntu
+      dockerfile: ./Dockerfile
       context: https://github.com/CommunityHoneyNetwork/<repo_name>.git#<version_tag>
 ```
 
@@ -61,22 +61,22 @@ version: '2'
 services:
   mongodb:
     build:
-      dockerfile: ./Dockerfile-ubuntu
-      context: https://github.com/CommunityHoneyNetwork/mongodb.git#v1.5
+      dockerfile: ./Dockerfile
+      context: https://github.com/CommunityHoneyNetwork/mongodb.git#v1.8
     image: mongodb:ubuntu
     volumes:
       - ./storage/mongodb:/var/lib/mongo:z
   redis:
     build:
-      dockerfile: ./Dockerfile-ubuntu
-      context: https://github.com/CommunityHoneyNetwork/redis.git#v1.5
+      dockerfile: ./Dockerfile
+      context: https://github.com/CommunityHoneyNetwork/redis.git#v1.8
     image: redis:ubuntu
     volumes:
       - ./storage/redis:/var/lib/redis:z
   hpfeeds:
     build:
-      dockerfile: ./Dockerfile-ubuntu
-      context: https://github.com/CommunityHoneyNetwork/hpfeeds.git#v1.5
+      dockerfile: ./Dockerfile
+      context: https://github.com/CommunityHoneyNetwork/hpfeeds.git#v1.8
     image: hpfeeds:ubuntu
     links:
       - mongodb:mongodb
@@ -84,16 +84,16 @@ services:
       - "10000:10000"
   mnemosyne:
     build:
-      dockerfile: ./Dockerfile-ubuntu
-      context: https://github.com/CommunityHoneyNetwork/mnemosyne.git#v1.5
+      dockerfile: ./Dockerfile
+      context: https://github.com/CommunityHoneyNetwork/mnemosyne.git#v1.8
     image: mnemosyne:ubuntu
     links:
       - mongodb:mongodb
       - hpfeeds:hpfeeds
   chnserver:
     build:
-      dockerfile: ./Dockerfile-ubuntu
-      context: https://github.com/CommunityHoneyNetwork/CHN-Server.git#v1.5
+      dockerfile: ./Dockerfile
+      context: https://github.com/CommunityHoneyNetwork/CHN-Server.git#v1.8
     image: chnserver:ubuntu
     volumes:
       - ./config/collector:/etc/collector:z
@@ -104,7 +104,9 @@ services:
     ports:
       - "80:80"
 ```
-
+The above config will build docker images from the v1.8 release version of CHN. You can change the URL to point to
+ specific tagged releases or even specific commits.
+ 
 Build the Docker images for the containers that make up the server:
 
 ```
@@ -119,18 +121,18 @@ $ docker-compose up -d
 
 # Accepting all traffic from a default route
 
-There are occassions where you would like for your honeypot host to accept
+There are occasions where you would like for your honeypot host to accept
 traffic from a large network, instead of just the IP address that has been
-assigned to your NIC.  In order to do this, you can use the AnyIP linux kernel
+assigned to your NIC. One way to do this is to use the AnyIP linux kernel
 feature.  Once traffic is being routed to your server, create a systemd service
 file with the contents below.  This example uses `192.168.1.1/24` as the target
-network, and should be changed accordingly
+network you wish the host to accept traffic for, and should be changed accordingly:
 
 `/etc/systemd/system/anyip-hp.service`
 
 ```
 [Unit]
-Description=Enable AnyIP for my HP
+Description=Enable AnyIP for my Honeypots
 After=network.target
 
 [Service]

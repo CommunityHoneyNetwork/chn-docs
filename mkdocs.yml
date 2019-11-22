@@ -13,8 +13,6 @@ pages:
     - 'Production & Security Considerations': prod_security.md
     - 'Advanced Options':
         - 'Advanced Configuration': config.md
-        - 'Deploying without Docker': nondocker.md
-        - 'Deploying on Kubernetes': kubernetes.md
         - 'Custom certificates': certificates.md
         - 'Deploying to cloud providers': cloud.md
     - 'Honeypot Configuration Details':

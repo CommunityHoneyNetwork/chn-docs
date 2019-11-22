@@ -37,4 +37,5 @@ In order to merge the pull request, it'll have to take the following steps:
 
 ## Acknowledgements
 
-CommunityHoneyNetwork is an adaptation of [Threatstream's Modern Honey Network](https://threatstream.github.io/mhn/) project, and several other excellent projects by the [Honeynet Project](https://www.honeynet.org/) and others. 
+CommunityHoneyNetwork was forked from Threatstream's Modern Honey Network project, and uses several excellent
+ projects by the [Honeynet Project](https://www.honeynet.org/). 
