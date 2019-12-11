@@ -81,7 +81,6 @@ DEBUG=false
 EMAIL=admin@localhost
 SERVER_BASE_URL=''
 HONEYMAP_URL=''
-REDIS_URL='redis://redis:6379'
 MAIL_SERVER='127.0.0.1'
 MAIL_PORT=25
 MAIL_TLS='y'
@@ -205,7 +204,6 @@ called `./custom_scripts` into the appropriate location:
       - ./custom_scripts:/opt/custom_scripts:z
     links:
       - mongodb:mongodb
-      - redis:redis
       - hpfeeds:hpfeeds
     ports:
       - "80:80"

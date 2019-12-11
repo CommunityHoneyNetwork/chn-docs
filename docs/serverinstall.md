@@ -184,7 +184,6 @@ EMAIL=admin@localhost
 # For TLS support, you MUST set SERVER_BASE_URL to "https://your.site.tld"
 SERVER_BASE_URL='https://CHN.SITE.TLD'
 HONEYMAP_URL=''
-REDIS_URL='redis://redis:6379'
 MAIL_SERVER='127.0.0.1'
 MAIL_PORT=25
 MAIL_TLS='y'
@@ -271,12 +270,13 @@ services:
       - ./certs:/tls:z
     links:
       - mongodb:mongodb
-      - redis:redis
       - hpfeeds:hpfeeds
     ports:
       - "80:80"
       - "443:443"
 ```
+
+__Please Note!__ If you chose not to run hpfeeds-cif or hpfeeds-bhr, the redis container can be omitted.
 
 Once you have saved your `docker-compose.yml` file, you start up your new server with:
 
