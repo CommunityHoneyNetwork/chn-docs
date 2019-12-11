@@ -27,9 +27,6 @@ MAIL_PASSWORD=''
 DEFAULT_MAIL_SENDER=''
 CERTIFICATE_STRATEGY='CERTBOT'
 
-# Redis config options
-REDIS_URL='redis://redis:6379'
-
 # MongoDB config options
 MONGODB_HOST='mongodb'
 MONGODB_PORT=27017
@@ -99,7 +96,6 @@ services:
       - ./config/collector:/etc/collector:z
     links:
       - mongodb:mongodb
-      - redis:redis
       - hpfeeds:hpfeeds
     ports:
       - "80:80"

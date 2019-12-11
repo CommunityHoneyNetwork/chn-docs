@@ -17,6 +17,7 @@ First, include this stanza in the docker-compose.yml file for CHN-server:
     links:
       - hpfeeds:hpfeeds
       - mongodb:mongodb
+      - redis:redis
 ```
 Next, add the following hpfeeds-cif.sysconfig configuration file:
 ```bash
