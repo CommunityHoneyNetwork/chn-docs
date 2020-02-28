@@ -77,7 +77,7 @@ As troubleshooting a remote CIF instance can prove difficult, a high level of
 ##Installing the CIF client
 One of the easiest ways to pull data from a CIF instance is to use the [CIF 
 client](https://github.com/csirtgadgets/bearded-avenger-sdk-py/wiki) from the
- CIF project. Installing a CIFv3 client is as easy as `pip install 'cifsdk>=3.0.0,<4.0'`. Once the client is installed, you should save your credentials 
+ CIF project. Installing a CIFv3 client is as easy as `pip3 install 'cifsdk>=3.0.0,<4.0'`. Once the client is installed, you should save your credentials 
  in a configuration file, where the format is:
  
 ```yaml
