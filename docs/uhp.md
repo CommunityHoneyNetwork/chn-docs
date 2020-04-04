@@ -20,33 +20,34 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  Please see your system documentation for adding a user to the docker group.
 
 ## Important Note!
-The sysconfig files, as well as the docker-compose.yml files below are intended
+The env files, as well as the docker-compose.yml files below are intended
 to help you understand the various options. While they may serve as a basis
 for users with advanced deployment needs, most users should default to the
 configuration files provided by the deployment scripts in the CHN web interface.
 
 ## Example uhp docker-compose.yml
 ```
-version: '2'
+version: '3'
 services:
-  uhp:
-    image: stingar/uhp:1.8
-    volumes:
-      - ./uhp.sysconfig:/etc/default/uhp
-      - ./uhp:/etc/uhp
-      - ./uhp_configs:/opt/uhp_configs/
-    ports:
-      - "25:2525"
+    uhp:
+        image: stingar/uhp:1.9
+        restart: always
+        volumes:
+            - configs:/etc/uhp
+        ports:
+            - "25:2525"
+        env_file:
+            - uhp.env
+volumes:
+    configs:
 ```
 
-## Example uhp.sysconfig file
+## Example uhp.env file
 
 Prior to starting, UHP will parse some options from `/etc/default/uhp` for Debian-based containers.  The following is an example config file:
 
 ```
-# This file is read from /etc/default/uhp
-#
-# This can be modified to change the default setup of the uhp unattended installation
+# This can be modified to change the default setup of the unattended installation
 
 DEBUG=false
 
@@ -55,28 +56,28 @@ DEBUG=false
 IP_ADDRESS=
 
 # CHN Server api to register to
-CHN_SERVER="http://chnserver"
+CHN_SERVER={url}
 
 # Server to stream data to
-FEEDS_SERVER="hpfeeds"
+FEEDS_SERVER={server}
 FEEDS_SERVER_PORT=10000
 
 # Deploy key from the FEEDS_SERVER administrator
 # This is a REQUIRED value
-DEPLOY_KEY=
+DEPLOY_KEY={deploy}
 
 # Registration information file
 # If running in a container, this needs to persist
-UHP_JSON="/etc/uhp/uhp.json"
+UHP_JSON=/etc/uhp/uhp.json
 
 # Defaults include auto-config-gen.json, avtech-devices.json, generic-listener.json,
 # hajime.json, http-log-headers.json, http.json, pop3.json, and smtp.json
-UHP_CONFIG="smtp.json"
+UHP_CONFIG=smtp.json
 
 UHP_LISTEN_PORT=2525
 
 # Comma separated tags for honeypot
-TAGS=""
+TAGS={tags}
 ```
 
 ### Configuration Options

@@ -8,28 +8,26 @@ The default deployment model uses Docker and Docker Compose to deploy containers
 * Docker >= 1.13.1
 * Docker Compose >= 1.15.0
 
-**Please ensure the user on the system installing the honeypot is in the local
- docker group**
+**Please ensure the user on the system installing the honeypot is in the local docker group or has sudo privileges**
  
- Please see your system documentation for adding a user to the docker group.
+Please see your system documentation for adding a user to the docker group.
+
+If you haven't yet, please take a look at the overall project [prerequisites page](prerequisite.md)
 
 ## Deploying More Honeypots
 
-Currently the following Honeypots are supported with CHN:
+The following Honeypots are currently supported with CHN:
 
 * [Cowrie](cowrie.md)
 * [Dionaea](dionaea.md)
-* [Glastopf](glastopf.md)
-* [Wordpot](wordpot.md)
 * [Conpot](conpot.md)
-* [Amun](amun.md)
 * [RDPHoney](rdphoney.md)
+* [UHP](uhp.md)
 
 The general deployment model is the same for each of these:
 * Select the deploy script you wish to deploy via the web interface
 * Paste the "Deploy Command" into a VM host *with Docker installed already* 
-* Verify installation succeded by examing the command line output and 
-checking the view sensor page on CHN Server
+* Verify installation succeeded by examining the command line output and checking the view sensor page on CHN Server
 
 ## Customizing your deployments
 
@@ -43,8 +41,7 @@ you might want to change include:
 
 * Changing the listening port in the docker-compose.yml file
 * Customizing options in the sysconfig file
-* Addition additional code to ease deployment such as installing 
-docker-compose and adding the local user to the docker group
+* Addition additional code to ease deployment such as installing docker-compose and adding the local user to the docker group
 
 **Please Note** that you should generally not change the ports in the 
 sysconfig files, but rather change the ports that Docker translates 
@@ -52,16 +49,20 @@ connections to (i.e., in the docker-compose.yml file). For instance, if you want
 adjust the docker-compose.yml file like so:
 
 ```yaml
-version: '2'
+version: '3'
 services:
   cowrie:
-    image: stingar/cowrie:1.8
+    image: stingar/cowrie:1.9
+    restart: always
     volumes:
-      - ./cowrie.sysconfig:/etc/default/cowrie
-      - ./cowrie:/etc/cowrie
+      - configs:/etc/cowrie
     ports:
       - "4000:2222"
       - "23:2223"
+    env_file:
+      - cowrie.env
+volumes:
+    configs:
 ```
 
 ### Adding tags to your honeypots
@@ -101,11 +102,11 @@ bgp_prefix:152.3.0.0/16
 # data related tags
 personality:aws-ubuntu16
 
-# the next option could be used in the future to prevent any sensor data from 
-# being sent to the common CIF instance, or shared via hpfeeds sharing
-exportable:false
-
 # Prehaps administrative groups are useful for automation purposes
 group:us-east-1b
 fleet:aws
 ```
+### Customizing honeypot behavior ###
+Some honeypots, notably [Dionaea](dionaea.md) and [Cowrie](cowrie.md) can be customized substantially to change their network
+ appearance and behaviors. Please see the sections on CHN for their "personalities", as well as the original honeypot
+  documentation home to see options.

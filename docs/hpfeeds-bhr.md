@@ -9,34 +9,34 @@ The simplest way to integrate CHN reporting to BHR is to:
 First, include this stanza in the docker-compose.yml file for CHN-server:
 ```dockerfile
   hpfeeds-bhr:
-    image: stingar/hpfeeds-bhr:1.8
-    volumes:
-      - ./hpfeeds-bhr.sysconfig:/etc/default/hpfeeds-bhr:z
+    image: stingar/hpfeeds-bhr:1.9
+    env_file:
+      - hpfeeds-bhr.env
     links:
       - redis:redis
+      - hpfeeds3:hpfeeds3
+      - mongodb:mongodb
 ```
 Next, add the following hpfeeeds-bhr.sysconfig configuration file:
 ```bash
-# This file is read from /etc/default/hpfeeds-bhr
-#
-# Defaults here are for containers, but can be adjusted
-# to customize the containers
+ Defaults here are for containers, but can be adjusted to customize the containers
+DEBUG=false
 
-HPFEEDS_HOST='hpfeeds'
+HPFEEDS_HOST=hpfeeds3
 HPFEEDS_PORT=10000
-IDENT=hpfeeds-bhr-${RANDOM}
+IDENT=hpfeeds-bhr
 
-MONGODB_HOST='mongodb'
+MONGODB_HOST=mongodb
 MONGODB_PORT=27017
 
-BHR_HOST='https://bhr'
-BHR_TOKEN=''
-BHR_VERIFY_SSL=False
-BHR_TAGS=''
+BHR_HOST=https://bhr.edu
+BHR_TOKEN={api-token}
+BHR_VERIFY_SSL=True
+BHR_TAGS=stingar-chn
 
 # Specify CIDR networks for which we should NOT submit to BHR
 # Useful for not reporting any locally compromised hosts and prepopulated with RFC1918 addresses
-IGNORE_CIDR="192.168.0.0/16,10.0.0.0/8,172.16.0.0/12"
+IGNORE_CIDR=192.168.0.0/16,172.16.0.0/12,10.0.0.0/8
 
 # Include the honeypot specific tags in the comment for BHR
 INCLUDE_HP_TAGS=False
@@ -44,11 +44,11 @@ INCLUDE_HP_TAGS=False
 # ADVANCED: Specify the Redis database number to use for caching BHR submissions. This is only necessary when
 # running multiple BHR containers on the same host submitting to different instances. Note that hpfeeds-bhr defaults
 # to using database 1 and hpfeeds-cif defaults to using database 2, so generally safe choices are in the range of 3-15.
-# BHR_CACHE_DB=1
+BHR_CACHE_DB=1
 ```
 The `IGNORE_CIDR` option allow you to specify a set of ranges for which you wish hpfeeeds-bhr to ignore and NOT submit
- to the configured BHR server. This option comes pre-populated with RFC1918 addresses, and can be modified provided 
- the entry is quoted. 
+ to the configured BHR server. This option comes pre-populated with RFC1918 addresses, and can be modified to include
+  your local IP ranges and sensitive external services. 
 
 Once the docker-compose.yml is updated and the hpfeeeds-bhr.sysconfig file is 
 present, you can simply:

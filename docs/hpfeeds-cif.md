@@ -6,41 +6,45 @@ Intelligence Framework (CIF) instance. You can read more about CIF [here](https:
 
 
 # Adding hpfeeds-cif to CHN-Server
-The simplest way to integrate CHN reporting to CIF is to:
+The simplest way to integrate CHN reporting to CIF is to use the [quickstart method](serverinstall.md) . If you're building
+ manually, use the following steps.
 
 First, include this stanza in the docker-compose.yml file for CHN-server:
 ```dockerfile
   hpfeeds-cif:
-    image: stingar/hpfeeds-cif:1.8
-    volumes:
-      - ./hpfeeds-cif.sysconfig:/etc/default/hpfeeds-cif:z
+    image: stingar/hpfeeds-cif:1.9
+    env_file:
+      - hpfeeds-cif.env
     links:
-      - hpfeeds:hpfeeds
+      - hpfeeds3:hpfeeds3
       - mongodb:mongodb
       - redis:redis
 ```
-Next, add the following hpfeeds-cif.sysconfig configuration file:
+Next, add the following hpfeeds-cif.env configuration file:
 ```bash
-HPFEEDS_HOST='hpfeeds'
+HPFEEDS_HOST=hpfeeds3
 HPFEEDS_PORT=10000
-IDENT=hpfeeds-cif-${RANDOM}
+IDENT=hpfeeds-cif
 
-MONGODB_HOST='mongodb'
+MONGODB_HOST=mongodb
 MONGODB_PORT=27017
 
-CIF_HOST='https://YOUR.CIF.SERVER'
-CIF_TOKEN='YOUR_API_TOKEN_WITH_WRITE_ACCESS'
-CIF_PROVIDER='org-chn'
-CIF_TLP='green'
-CIF_CONFIDENCE='8'
-CIF_TAGS='honeypot'
-CIF_GROUP='everyone'
+CIF_HOST={cif_server_url}
+CIF_TOKEN={cif_token}
+CIF_PROVIDER={cif_org}
+CIF_TLP=green
+CIF_CONFIDENCE=8
+CIF_TAGS=honeypot
+CIF_GROUP=everyone
 # Set the below value to True if your CIF instance uses a valid, CA-signed, certificate
 CIF_VERIFY_SSL=False
 
+# Set to False if you wish to submit private addresses to CIF
+IGNORE_RFC1918=True
+
 # Specify CIDR networks for which we should NOT submit CIF indicators
 # Useful for not reporting any locally compromised hosts and prepopulated with RFC1918 addresses
-IGNORE_CIDR="192.168.0.0/16,10.0.0.0/8,172.16.0.0/12"
+IGNORE_CIDR=192.168.0.0/16,10.0.0.0/8,172.16.0.0/12
 
 # Include the honeypot specific tags in CIFv3
 INCLUDE_HP_TAGS=False
@@ -50,11 +54,13 @@ INCLUDE_HP_TAGS=False
 # to using database 1 and hpfeeds-cif defaults to using database 2, so generally safe choices are in the range of 3-15.
 # CIF_CACHE_DB=2
 ```
-The `IGNORE_CIDR` option allow you to specify a set of ranges for which you wish hpfeeds-cif to ignore and NOT submit
- to the configured CIF server. This option comes pre-populated with RFC1918 addresses, and can be modified provided 
- the entry is quoted. 
+Be sure to update the variables enclosed in `{}`, such as `{cif_server_url}`, `{cif_token}`, and `{cif_org}`.
 
-Once the docker-compose.yml is updated and the hpfeeds-cif.sysconfig file is 
+The `IGNORE_CIDR` option allow you to specify a set of ranges for which you wish hpfeeds-cif to ignore and NOT submit
+ to the configured CIF server. This option comes pre-populated with RFC1918 addresses, and can be modified prevent
+  submission of local public IP addresses, external vulnerability scanners, etcetera. 
+
+Once the docker-compose.yml is updated and the hpfeeds-cif.env file is 
 present, you can simply:
 
 ```bash
@@ -75,8 +81,8 @@ As troubleshooting a remote CIF instance can prove difficult, a high level of
 
 # Pulling data from CIF
 ##Installing the CIF client
-One of the easiest ways to pull data from a CIF instance is to use the [CIF 
-client](https://github.com/csirtgadgets/bearded-avenger-sdk-py/wiki) from the
+One of the easiest ways to pull data from a CIF instance for feeds is to use the [chn-intel-feeds](chnintelfeed.md
+) container. As an alternative for more flexible feed generation and ad-hoc querying, it's best to use the [CIF client](https://github.com/csirtgadgets/bearded-avenger-sdk-py/wiki) from the
  CIF project. Installing a CIFv3 client is as easy as `pip3 install 'cifsdk>=3.0.0,<4.0'`. Once the client is installed, you should save your credentials 
  in a configuration file, where the format is:
  

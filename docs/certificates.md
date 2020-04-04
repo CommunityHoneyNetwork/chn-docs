@@ -22,16 +22,14 @@ For example, volume mount a local directory to the `/tls` directory via your doc
 
 ```yaml
   chnserver:
-    image: stingar/chn-server:1.8
+    image: stingar/chn-server:1.9
     volumes:
-      - ./config/collector:/etc/collector:z
       - ./storage/chnserver/sqlite:/opt/sqlite:z
-      - ./chnserver.sysconfig:/etc/default/chnserver:z
       - ./certs:/tls:z
+    env_file:
+      - chnserver.env
     links:
       - mongodb:mongodb
-      - redis:redis
-      - hpfeeds:hpfeeds
     ports:
       - "80:80"
       - "443:443"

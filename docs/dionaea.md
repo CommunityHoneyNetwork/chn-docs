@@ -17,28 +17,26 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  Please see your system documentation for adding a user to the docker group.
 
 ## Important Note!
-The sysconfig files, as well as the docker-compose.yml files below are intended 
+The env files, as well as the docker-compose.yml files below are intended 
 to help you understand the various options. While they may serve as a basis 
 for users with advanced deployment needs, most users should default to the 
 configuration files provided by the deployment scripts in the CHN web interface.
 
 ## Example dionaea docker-compose.yml
 ```dockerfile
-version: '2'
+version: '3'
 services:
   dionaea:
-    image: stingar/dionaea:1.8
+    image: stingar/dionaea:1.9
+    restart: always
     volumes:
-      - ./dionaea.sysconfig:/etc/default/dionaea
-      - ./dionaea/dionaea:/etc/dionaea/
+      - configs:/etc/dionaea/
     ports:
       - "21:21"
       - "23:23"
       - "69:69"
-      - "80:80"
       - "123:123"
       - "135:135"
-      - "443:443"
       - "445:445"
       - "1433:1433"
       - "1723:1723"
@@ -50,21 +48,24 @@ services:
       - "5061:5061"
       - "11211:11211"
       - "27017:27017"
-    cap_add:
-      - NET_ADMIN
+    env_file:
+      - dionaea.env
+    cap_add:
+      - NET_ADMIN
+volumes:
+    configs:
 ```
 
 Please note that while Dionaea will run without the `NET_ADMIN` capability set, it will consume 100% of a CPU and not
  function optimally.
 
-## Example dionaea.sysconfig file
+## Example dionaea.env file
 
 
-Prior to starting, Dionaea will parse some options from `/etc/default/dionaea` for Debian-based systems or containers. The following is an example config file:
+Prior to starting, Dionaea will parse options passed to the container via the `env_file` specification in the docker-compose file. The following is an example env file:
 
 ```
-#
-# This can be modified to change the default setup of the dionaea unattended installation
+# This can be modified to change the default setup of the unattended installation
 
 DEBUG=false
 
@@ -72,25 +73,31 @@ DEBUG=false
 # Leaving this blank will default to the docker container IP
 IP_ADDRESS=
 
-CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
-DEPLOY_KEY=
-DIONAEA_JSON="/etc/dionaea/dionaea.json"
+CHN_SERVER=https://{fqdn_or_ip_of_chn_server}
+DEPLOY_KEY={deploy_key}
 
 # Network options
-LISTEN_ADDRESSES="0.0.0.0"
-LISTEN_INTERFACES="eth0"
+LISTEN_ADDRESSES=0.0.0.0
+LISTEN_INTERFACES=eth0
 
 # Service options
 # blackhole, epmap, ftp, http, memcache, mirror, mongo, mqtt, mssql, mysql, pptp, sip, smb, tftp, upnp
 SERVICES=(blackhole epmap ftp http memcache mirror mongo mqtt pptp sip smb tftp upnp)
 
+DIONAEA_JSON=/etc/dionaea/dionaea.json
+
 # Logging options
 HPFEEDS_ENABLED=true
-FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS>"
+FEEDS_SERVER={fqdn_or_ip_of_chn_server}
 FEEDS_SERVER_PORT=10000
 
 # Comma separated tags for honeypot
-TAGS=""
+TAGS=
+
+# A specific "personality" directory for the dionaea honeypot may be specified
+# here. These directories can include custom dionaea.cfg and service configurations
+# files which can influence the attractiveness of the honeypot.
+PERSONALITY=""
 ```
 
 ### Configuration Options
@@ -154,7 +161,7 @@ Current Dionaea services available:
 
 ## Disabling Dionaea services
 
-If you wish to remove a service from the dionaea honeypot, you can simply delete the corresponding yaml file from `./dionaea/services-enabled/`, and remove the relevant service from dionaea.sysconfig.
+If you wish to remove a service from the dionaea honeypot, you can simply delete the corresponding yaml file from `./dionaea/services-enabled/`, and remove the relevant service from dionaea.env.
 
 ## Adding a custom dionaea "personality"
 
@@ -162,7 +169,7 @@ You can add files to your dionaea honeypot in order to customize it's behavior. 
 versions of `dionaea.cfg`, and custom service configuration via a directory structure. See [here](https://github.com/CommunityHoneyNetwork/dionaea/tree/master/personalities/debian) for an example personality. 
 
 Once you have the custom files on the honeypot host, volume mount a directory containing these files to the container, 
-and specify the directory name in the `PERSONALITY` sysconfig option.
+and specify the directory name in the `PERSONALITY` env option.
 
 For a more concrete example: let's say I want to include a `dionaea.cfg` file in a personality called 'sneakydionaea'. 
 
@@ -172,8 +179,7 @@ look like this:
 ```bash
 $ ls -l
 total 12
-drwxr-xr-x 2 root root   25 Apr 25 09:51 dionaea
--rw-r--r-- 1 me  me  1535 Apr 25 10:30 dionaea.sysconfig
+-rw-r--r-- 1 me  me  1535 Apr 25 10:30 dionaea.env
 -rw-rw-r-- 1 me  me  2115 Apr 25 10:29 deploy.sh
 -rw-r--r-- 1 me  me   256 Apr 25 10:30 docker-compose.yml
 drwxrwxr-x 2 me  me    42 Apr 25 10:43 sneakydionaea
@@ -188,17 +194,16 @@ Then make the following change to the `docker-compose.yml`:
 ```
 <snip>
     volumes:
-      - ./dionaea.sysconfig:/etc/default/dionaea
-      - ./dionaea:/etc/dionaea
+      - configs:/etc/dionaea
       - ./sneakydionaea:/opt/personalities/sneakydionaea
 <snip>
 ```
-and then modify the `dionaea.sysconfig` to specify the directory name in the `PERSONALITY` variable:
+and then modify the `dionaea.env` to specify the directory name in the `PERSONALITY` variable:
 ```
 # A specific "personality" directory for the dionaea honeypot may be specified
 # here. These directories can include custom fs.pickle, dionaea.cfg, txtcmds and
 # userdb.txt files which can influence the attractiveness of the honeypot.
-PERSONALITY="sneakydionaea"
+PERSONALITY=sneakydionaea
 ```
 You should then be able to `docker-compose down` and `docker-compose up -d` at this point and the personality should take effect.
 

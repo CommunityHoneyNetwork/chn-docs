@@ -17,33 +17,35 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  Please see your system documentation for adding a user to the docker group.
 
 ## Important Note!
-The sysconfig files, as well as the docker-compose.yml files below are intended 
+The env files, as well as the docker-compose.yml files below are intended 
 to help you understand the various options. While they may serve as a basis 
 for users with advanced deployment needs, most users should default to the 
 configuration files provided by the deployment scripts in the CHN web interface.
 
 ## Example cowrie docker-compose.yml
 ```dockerfile
-version: '2'
+version: '3'
 services:
   cowrie:
-    image: stingar/cowrie:1.8
+    image: stingar/cowrie:1.9
+    restart: always
     volumes:
-      - ./cowrie.sysconfig:/etc/default/cowrie
-      - ./cowrie:/etc/cowrie
+      - configs:/etc/cowrie
     ports:
       - "2222:2222"
       - "23:2223"
+    env_file:
+      - cowrie.env
+volumes:
+    configs:
 ```
-## Example cowrie.sysconfig file
+## Example cowrie.env file
 
-Prior to starting, Cowrie will parse some options from `/etc/default/cowrie` for Debian-based containers.  The following is an example config file:
+Prior to starting, Cowrie will parse options from the environment, passed to the container via the `env_file
+` specification in the docker-compose file. The following is an example env file:
 
 ```
-# This file is read from /etc/default/cowrie
-# depending on the base distro
-#
-# This can be modified to change the default setup of the cowrie unattended installation
+# This can be modified to change the default setup of the unattended installation
 
 DEBUG=false
 
@@ -52,19 +54,19 @@ DEBUG=false
 IP_ADDRESS=
 
 # CHN Server api to register to
-CHN_SERVER="${URL}"
+CHN_SERVER=https://{fqdn_or_ip_of_chn_server}
 
 # Server to stream data to
-FEEDS_SERVER="${SERVER}"
+FEEDS_SERVER={fqdn_or_ip_of_chn_server}
 FEEDS_SERVER_PORT=10000
 
 # Deploy key from the FEEDS_SERVER administrator
 # This is a REQUIRED value
-DEPLOY_KEY="${DEPLOY}"
+DEPLOY_KEY={deploy_key}
 
 # Registration information file
 # If running in a container, this needs to persist
-COWRIE_JSON="/etc/cowrie/cowrie.json"
+COWRIE_JSON=/etc/cowrie/cowrie.json
 
 # SSH Listen Port
 # Can be set to 22 for deployments on real servers
@@ -81,7 +83,7 @@ TELNET_LISTEN_PORT=2223
 # double quotes, comma delimited tags may be specified, which will be included
 # as a field in the hpfeeds output. Use cases include tagging provider
 # infrastructure the sensor lives in, geographic location for the sensor, etc.
-TAGS=""
+TAGS=
 
 # A specific "personality" directory for the Cowrie honeypot may be specified
 # here. These directories can include custom fs.pickle, cowrie.cfg, txtcmds and
@@ -119,18 +121,23 @@ By default Cowrie will run on port 2222/2223, to avoid any conflict with the rea
 * (Optional) Disconnect from your exiting SSH session(s)
 * Edit the `docker-compose.yml` file to expose the standard SSH port:
 ```
-version: '2'
+version: '3'
 services:
   cowrie:
-    image: stingar/cowrie:1.8
+    image: stingar/cowrie:1.9
+    restart: always
     volumes:
-      - ./cowrie.sysconfig:/etc/default/cowrie
-      - ./cowrie:/etc/cowrie
+      - configs:/etc/cowrie
     ports:
       - "22:2222"
       - "23:2223"
+    env_file:
+      - cowrie.env
+volumes:
+    configs:
 ```
-* **DO NOT** edit the `cowrie.sysconfig` file and change the SSH_LISTEN_PORT or TELNET_LISTEN_PORT; let Docker handle the translation
+* **DO NOT** edit the `cowrie.env` file and change the SSH_LISTEN_PORT or TELNET_LISTEN_PORT; let Docker handle the
+ translation
 * Restart the container:
 ```
 docker-compose down && docker-compose up -d
@@ -142,7 +149,7 @@ You can add files to your cowrie honeypot in order to customize it's behavior. C
 versions of `cowrie.cfg`, `userdb.txt`, `fs.pickle`, and custom `txtcmds` via a directory structure. See [here](https://github.com/CommunityHoneyNetwork/cowrie/tree/master/personalities/aws-ubuntu16) for an example personality. 
 
 Once you have the custom files on the honeypot host, volume mount a directory containing these files to the container, 
-and specify the directory name in the `PERSONALITY` sysconfig option.
+and specify the directory name in the `PERSONALITY` env option.
 
 For a more concrete example: let's say I want to include a `userdb.txt` and `cowrie.cfg` file in a personality called 'sneakycowrie'. 
 
@@ -152,8 +159,7 @@ First I'll create a directory called "sneakycowrie" on my honeypot VM with the `
 ```bash
 $ ls -l
 total 12
-drwxr-xr-x 2 root root   25 Apr 25 09:51 cowrie
--rw-r--r-- 1 me  me  1535 Apr 25 10:30 cowrie.sysconfig
+-rw-r--r-- 1 me  me  1535 Apr 25 10:30 cowrie.env
 -rw-rw-r-- 1 me  me  2115 Apr 25 10:29 deploy.sh
 -rw-r--r-- 1 me  me   256 Apr 25 10:30 docker-compose.yml
 drwxrwxr-x 2 me  me    42 Apr 25 10:43 sneakycowrie
@@ -169,17 +175,16 @@ Then make the following change to the `docker-compose.yml`:
 ```
 <snip>
     volumes:
-      - ./cowrie.sysconfig:/etc/default/cowrie
-      - ./cowrie:/etc/cowrie
+      - configs:/etc/cowrie
       - ./sneakycowrie:/opt/personalities/sneakycowrie
 <snip>
 ```
-and then modify the `cowrie.sysconfig` to specify the directory name in the `PERSONALITY` variable:
+and then modify the `cowrie.env` to specify the directory name in the `PERSONALITY` variable:
 ```
 # A specific "personality" directory for the Cowrie honeypot may be specified
 # here. These directories can include custom fs.pickle, cowrie.cfg, txtcmds and
 # userdb.txt files which can influence the attractiveness of the honeypot.
-PERSONALITY="sneakycowrie"
+PERSONALITY=sneakycowrie
 ```
 You should then be able to `docker-compose down` and `docker-compose up -d` at this point and the personality should take effect.
  

@@ -7,20 +7,20 @@ This example covers how to build and deploy an example [Cowrie honeypot](https:/
 
 Please visit [prerequisites](prerequisite.md) for honeypot related requirements.
 
-If you have not yet deployed CHN Server, we recommend following [these instructions](serverinstall.md) before proceeding. 
+If you have not yet deployed CHN Server, please deploy a server using [these instructions](serverinstall.md) before
+ proceeding. 
 
 ## Deploying Cowrie
 
 As an example, we'll deploy Cowrie with SSH listening on port 2222, and a 
-telnet server on port 23.  This is not likely helpful in a production 
-deployment, but will serve as an example for creating a honeypot, registering
- a new sensor with the management server, and capturing attack data.  For 
- more details on production deployments, see the full [Cowrie Documentation](cowrie.md).
+telnet server on port 23.  This will serve as an example for creating a honeypot, registering
+ a new honeypot with the management server, and capturing attack data.  For 
+ more details on deployment options for Cowrie, see the full [CHN Cowrie Documentation](cowrie.md).
 
 If you haven't yet setup a management server, follow the [CHN Server Install](serverinstall.md)
 
 Log into the management server and browse to the "Deploy" tab. Once in the 
-Deploy section, select the drop-down box with default "New Script" and choose
+Deploy section, select the drop-down box (default is "New Script") and choose
  the "Ubuntu - Cowrie" option.
  
 Next, select the Architecture from the drop down menu. 
@@ -48,13 +48,12 @@ options.
 
 You can verify the honeypot is running with `docker-compose ps`:
 
-    $ docker-compose ps
-        Name                  Command               State                      Ports                    
-    ----------------------------------------------------------------------------------------------------
-    vcm_cowrie_1   /sbin/runsvdir -P /etc/service   Up      0.0.0.0:2222->2222/tcp, 0.0.0.0:23->2223/tcp 
+```
+         Name               Command         State                      Ports                    
+--------------------------------------------------------------------------------------------
+cowrie_cowrie_1   /code/entrypoint.sh   Up      0.0.0.0:2222->2222/tcp, 0.0.0.0:23->2223/tcp
+```
 
-
-When you're ready, the honeypot can be stopped by running `docker-compose down` from the directory containing the docker-compose.yml file.
 
 Your new honeypot should show up within the web interface of your management server under the `Sensors` tab, with the hostname of the container and the UUID that was stored in the cowrie.json file during registration.  As it detects attempts to login to it's fake SSH client, it will send this attack info to the management server.
 
@@ -72,6 +71,8 @@ Attacks logged to your management server will show up under the `Attacks` sectio
 
 *Above: The Attack Report page of the management server, showing a logged hit to the Cowrie honeypot*
 
+
+The honeypot can be stopped by running `docker-compose down` from the directory containing the docker-compose.yml file.
 
 ## Troubleshooting
 

@@ -1,7 +1,6 @@
 hpfeeds-logger
 =============
-The hpfeeds-logger container, when added to a CHN-Server instance, will log a 
-Splunk-friendly record of all attacks to a local log file.
+The hpfeeds-logger container, when added to a CHN-Server instance, will log a record of all attacks to a local log file.
 
 
 # Adding hpfeeds-logger to CHN-Server
@@ -10,33 +9,31 @@ The simplest way to integrate CHN logging to a local file is to:
 First, include this stanza in the docker-compose.yml file for CHN-server:
 ```dockerfile
   hpfeeds-logger:
-    image: stingar/hpfeeds-logger:1.8
+    image: stingar/hpfeeds-logger:1.9
     volumes:
-      - ./hpfeeds-logger.sysconfig:/etc/default/hpfeeds-logger:z
       - ./hpfeeds-logs:/var/log/hpfeeds-logger:z
+    env_file:
+      - config/sysconfig/hpfeeds-logger.env
     links:
-      - hpfeeds:hpfeeds
+      - hpfeeds3:hpfeeds3
       - mongodb:mongodb
+
 ```
-Next, add the following hpfeeds-logger.sysconfig configuration file:
+Next, add the following hpfeeds-logger.env configuration file:
 ```bash
-# This file is read from /etc/default/hpfeeds-logger
-#
 # Defaults here are for containers, but can be adjusted
 # after install for a regular server or to customize the containers
 
-MONGODB_HOST="mongodb"
+MONGODB_HOST=mongodb
 MONGODB_PORT=27017
 
 # Log to local file; the path is internal to the container and the host filesystem
 # location is controlled by volume mapping in the docker-compose.yml
-FILELOG_ENABLED="true"
-LOG_FILE="/var/log/hpfeeds-logger/chn-splunk.log"
+FILELOG_ENABLED=true
+LOG_FILE=/var/log/hpfeeds-logger/chn.log
 
-# Choose to rotate the log file based on 'size'(default), 'time', or 'none'
-# Choosing 'none' is ideal if you want to handle rotation outside of the
-# container
-ROTATION_STRATEGY="size"
+# Choose to rotate the log file based on 'size'(default) or 'time'
+ROTATION_STRATEGY=size
 
 # If rotating by 'size', the number of MB to rotate at
 ROTATION_SIZE_MAX=100
@@ -44,11 +41,8 @@ ROTATION_SIZE_MAX=100
 # If rotating by 'time', the unit to count in; valid values are "m","h", and "d"
 ROTATION_TIME_UNIT=h
 
-# If rotating by 'time', the number of rotation_time_unit to rotate at
+# If rotating by 'time', the number of hours to rotate at
 ROTATION_TIME_MAX=24
-
-# How many backup files to keep when rotating in the container
-ROTATION_BACKUPS=3
 
 # Log to syslog
 SYSLOG_ENABLED=false
@@ -63,14 +57,14 @@ FORMATTER_NAME=splunk
 # variables. Additionally, change the HPFEEDS_* variables to point to the
 # remote service.
 
-IDENT=hpfeeds-logger-${RANDOM}
+IDENT=hpfeeds-logger
 # SECRET=
 # CHANNELS=
 
-HPFEEDS_HOST='hpfeeds'
+HPFEEDS_HOST=hpfeeds3
 HPFEEDS_PORT=10000
 ```
-Once the docker-compose.yml is updated and the hpfeeds-logger.sysconfig file is 
+Once the docker-compose.yml is updated and the hpfeeds-logger.env file is 
 present, start logging with:
 
 ```bash
@@ -118,10 +112,10 @@ channel listing with the side which wishes to consume the data.
 ## On the receiving side
 One one has the host, hpfeeds port, ident, secret, and channel listing, 
 create a new hpfeeds-logger container in your docker-compose and fill out the
- fields in a new hpfeeds-logger.sysconfig. for example if our friend made 
+ fields in a new hpfeeds-logger.env. for example if our friend made 
  the cowrie.sessions channel available to us from their host 10.0.0.10 with an 
  ident of "myfriend" and 
- secret of "p0nyf!3nds4lyfe", our sysconfig file would look like:
+ secret of "p0nyf!3nds4lyfe", our env file would look like:
 
 ```bash
 # This file is read from /etc/default/hpfeeds-logger
@@ -129,7 +123,7 @@ create a new hpfeeds-logger container in your docker-compose and fill out the
 # Defaults here are for containers, but can be adjusted
 # after install for a regular server or to customize the containers
 
-MONGODB_HOST='mongodb'
+MONGODB_HOST=mongodb
 MONGODB_PORT=27017
 
 # Log to local file
@@ -149,14 +143,17 @@ FORMATTER_NAME=splunk
 # variables. Additionally, change the HPFEEDS_* variables to point to the
 # remote service.
 
-IDENT="myfriend"
-SECRET="p0nyf!3nds4lyfe"
-CHANNELS="cowrie.sessions"
+IDENT=myfriend
+SECRET=p0nyf!3nds4lyfe
+CHANNELS=cowrie.sessions
 
-HPFEEDS_HOST='10.0.0.10'
+HPFEEDS_HOST=10.0.0.10
 HPFEEDS_PORT=10000
 ```
 **Please Note:** Configuring channels that are not available, or not allowed 
 for the user will cause the hpfeeds-logger container to die (repeatedly). 
 The current code does not account for a failure to authenticate to a single 
 channel, and simply fails the entire transaction.
+
+Please be sure to verify your logger is working as intended by running `docker-compose logs` and watching for events
+ to be logged to the volume mounted output directory.

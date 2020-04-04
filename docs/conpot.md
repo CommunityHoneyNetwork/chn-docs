@@ -16,35 +16,38 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  
  Please see your system documentation for adding a user to the docker group.
 ## Important Note!
-The sysconfig files, as well as the docker-compose.yml files below are intended 
+The env files, as well as the docker-compose.yml files below are intended 
 to help you understand the various options. While they may serve as a basis 
 for users with advanced deployment needs, most users should default to the 
 configuration files provided by the deployment scripts in the CHN web interface.
 
 ## Example amun docker-compose.yml
 ```dockerfile
-version: '2'
+version: '3'
 services:
     conpot:
-        image: stingar/conpot:1.8
+        image: stingar/conpot:1.9
+        restart: always
         volumes:
-            - ./conpot.sysconfig:/etc/default/conpot
-            - ./conpot:/etc/conpot
+            - configs:/etc/conpot
         ports:
-            - 80:80
-            - 102:102
-            - 502:502
+            - "80:8800"
+            - "102:10201"
+            - "502:5020"
+            - "21:2121"
+            - "44818:44818"
+        env_file:
+            - conpot.env
+volumes:
+    configs:
 ```
-## Example conpot.sysconfig file
+## Example conpot.env file
 
-Prior to starting, Conpot will parse some options from `/etc/default/conpot` for Debian-based systems or containers. 
+Prior to starting, Conpot will parse some options from `conpot.env`. 
 The following is an example config file:
 
 ```
-# This file is read from /etc/default/conpot
-# depending on the base distro
-#
-# This can be modified to change the default setup of the conpot unattended installation
+# This can be modified to change the default setup of the unattended installation
 
 DEBUG=false
 
@@ -53,30 +56,30 @@ DEBUG=false
 IP_ADDRESS=
 
 # CHN Server api to register to
-CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
+CHN_SERVER={https://URL}
 
 # Server to stream data to
-FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS>"
+FEEDS_SERVER={server}
 FEEDS_SERVER_PORT=10000
 
 # Deploy key from the FEEDS_SERVER administrator
 # This is a REQUIRED value
-DEPLOY_KEY=
+DEPLOY_KEY={deploy}
 
 # Registration information file
 # If running in a container, this needs to persist
-CONPOT_JSON="/etc/conpot/conpot.json"
+CONPOT_JSON=/etc/conpot/conpot.json
 
 # Conpot specific configuration options
 CONPOT_TEMPLATE=default
 
 # Comma separated tags for honeypot
-TAGS=""
+TAGS={tags}
 ```
 
 ### Configuration Options
 
-The following options are supported in the `/etc/default/conpot` file:
+The following options are supported in the `conpot.env` file:
 
 * DEBUG: (boolean) Enable more verbose output to the console
 * IP_ADDRESS: IP address of the host running the honeypot container

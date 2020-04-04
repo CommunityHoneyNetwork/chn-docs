@@ -25,7 +25,7 @@ distributions repos, rather than downloading docker directly from Docker. Direct
 have more features, but those features often come at the price of unresolved bugs. 
 
 __Note:__ On Linux, you will need some escalated privileges to run docker.
-This may include having rights to run `$ sudo docker`, or your user being a part of the
+This may include having rights to run `$ sudo docker-compose`, or your user being a part of the
 `docker` group.
 
 ### Ubuntu Installation
@@ -101,7 +101,7 @@ Bringing your own certificate lets you leverage your existing certificate provid
 ### SELFSIGNED ###
 The CHN Server can create it's own, self-signed, certificate for use with the CHN server. This is the least desirable
  option, as browsers will give warnings on every inital load of the web interface. Additionally, the deployment
- commands, which leverage the command line utility `curl` will error when using a self-signed certificate. Users
+ commands, which leverage the command line utility `wget` will error when using a self-signed certificate. Users
  will need to add `--no-check-certificate` to these deployment commands in order to successfully pull the deployment
   script.
    

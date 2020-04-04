@@ -10,24 +10,20 @@ pages:
     - 'CHN Server Install': serverinstall.md
     - 'Your First Honeypot': firstpot.md
     - 'Deploying More Honeypots': honeypots.md
-    - 'Production & Security Considerations': prod_security.md
     - 'Advanced Options':
+        - 'Production & Security Considerations': prod_security.md
         - 'Advanced Configuration': config.md
         - 'Custom certificates': certificates.md
-        - 'Deploying to cloud providers': cloud.md
+    - 'Getting Data':
+        - 'CHN Server API': serverapi.md
+        - 'Logfiles': hpfeeds-logger.md
+        - 'CIF': hpfeeds-cif.md
+        - 'CHN Intel Feeds': chnintelfeed.md
+        - 'Blocking with BHR': hpfeeds-bhr.md
     - 'Honeypot Configuration Details':
         - 'Cowrie': cowrie.md
         - 'Dionaea': dionaea.md
-        - 'Glastopf': glastopf.md
-        - 'Wordpot': wordpot.md
         - 'Conpot': conpot.md
-        - 'Amun': amun.md
         - 'RDPhoney': rdphoney.md
         - 'UHP': uhp.md
-    - 'Getting Data':
-      - 'CHN Server API': serverapi.md
-      - 'CIF': hpfeeds-cif.md
-      - 'CHN Intel Feeds': chnintelfeed.md
-      - 'Logfiles': hpfeeds-logger.md
-      - 'Blocking with BHR' : hpfeeds-bhr.md
     - 'LICENSE': LICENSE.md

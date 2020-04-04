@@ -14,32 +14,34 @@ The default deployment model uses Docker and Docker Compose to deploy containers
  Please see your system documentation for adding a user to the docker group.
 
 ## Important Note!
-The sysconfig files, as well as the docker-compose.yml files below are intended 
+The env files, as well as the docker-compose.yml files below are intended 
 to help you understand the various options. While they may serve as a basis 
 for users with advanced deployment needs, most users should default to the 
 configuration files provided by the deployment scripts in the CHN web interface.
 
 ## Example rdphoney docker-compose.yml
 ```dockerfile
-version: '2'
+version: '3'
 services:
     rdphoney:
-        image: stingar/rdphoney:1.8
+        image: stingar/rdphoney:1.9
+        restart: always
         volumes:
-            - ./rdphoney.sysconfig:/etc/default/rdphoney
-            - ./rdphoney:/etc/rdphoney
+            - configs:/etc/rdphoney
         ports:
             - "3389:3389"
+        env_file:
+            - rdphoney.env
+volumes:
+    configs:
 ```
 
-## Example rdphoney.sysconfig file
+## Example rdphoney.env file
 
-Prior to starting, RDPhoney will parse some options from `/etc/default/rdphoney` for Debian-based systems or containers. The following is an example config file:
+Prior to starting, RDPhoney will parse some options from `rdphoney.env`. The following is an example config file:
 
 ```
-# This file is read from /etc/default/rdphoney
-#
-# This can be modified to change the default setup of the rdphoney unattended installation
+# This can be modified to change the default setup of the unattended installation
 
 DEBUG=false
 
@@ -48,22 +50,22 @@ DEBUG=false
 IP_ADDRESS=
 
 # CHN Server api to register to
-CHN_SERVER="http://<IP.OR.NAME.OF.YOUR.CHNSERVER>"
+CHN_SERVER={url}
 
 # Server to stream data to
-FEEDS_SERVER="<IP.OR.NAME.OF.YOUR.HPFEEDS>"
+FEEDS_SERVER={server}
 FEEDS_SERVER_PORT=10000
 
 # Deploy key from the FEEDS_SERVER administrator
 # This is a REQUIRED value
-DEPLOY_KEY=
+DEPLOY_KEY={deploy}
 
 # Registration information file
 # If running in a container, this needs to persist
-RDPHONEY_JSON="/etc/rdphoney/rdphoney.json"
+RDPHONEY_JSON=/etc/rdphoney/rdphoney.json
 
 # Comma separated tags for honeypot
-TAGS=""
+TAGS={tags}
 ```
 
 ### Configuration Options

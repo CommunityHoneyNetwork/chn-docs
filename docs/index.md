@@ -13,9 +13,7 @@ and flexible. The default deployment method uses Docker Compose and Docker to de
 ## Getting the correct versions
 When installing CHN Server and Honeypots, it is important to make sure versions of each component are compatible with the others.  We recommend using release tags to maintain compatibility between projects.  CHN maintains stable release tags that are tested to work across the different CHN projects.
 
-The most recent tags will receive minor feature backports and fixes. Older branches will receive only critical fixes.
-
-In addition to the releases, the master branches from each project track current work **in development**, and are not guaranteed to be stable.
+The master branches from each project track current work **in development**, and are not guaranteed to be stable.
 
 **Getting the latest releases**
 

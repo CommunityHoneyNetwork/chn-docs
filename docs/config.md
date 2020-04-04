@@ -2,42 +2,9 @@ Advanced Configuration
 ======================
 
 Each of the services and honeypots in the CommunityHoneyNetwork project should work together out of the box following
- the [CHN Server Install](serverinstall.md). More advanced configuration options can be configured using an 
- /etc/default/<servicename> file.
+ the [CHN Server Install](serverinstall.md). More advanced configuration options can be configured by modifying the
+  env file associated with the container.
 
-Services running in Docker containers can be configured this way as well, mounting the configuration files into place using the `--volume` argument for Docker.
-
-Using Docker/docker-compose, each of the containers can share a single sysconfig file, mounted into the appropriate location for each.  Options not appropriate for each particular service are just unused.
-
-The following is an example of a shared configuration file, using default values:
-
-```
-# CHN Server options
-CHNSERVER_DEBUG=false
-
-EMAIL=admin@localhost
-HONEYMAP_URL=''
-SERVER_BASE_URL='https://CHN.SITE.TLD'
-MAIL_SERVER='127.0.0.1'
-MAIL_PORT=25
-MAIL_TLS='y'
-MAIL_SSL='y'
-MAIL_USERNAME=''
-MAIL_PASSWORD=''
-DEFAULT_MAIL_SENDER=''
-CERTIFICATE_STRATEGY='CERTBOT'
-
-# MongoDB config options
-MONGODB_HOST='mongodb'
-MONGODB_PORT=27017
-
-# HPfeeds config options
-HPFEEDS_HOST='hpfeeds'
-HPFEEDS_PORT=10000
-
-# Mnemosyne config options
-IGNORE_RFC1918=False
-```
 
 # Building docker containers from source
 
@@ -54,27 +21,23 @@ To build from source as opposed to from an image, simply add the following lines
 For example, if you wish to build CHN Server from source, your docker-compose file will look like the following:
 
 ```
-version: '2'
+version: '3'
 services:
   mongodb:
-    build:
-      dockerfile: ./Dockerfile
-      context: https://github.com/CommunityHoneyNetwork/mongodb.git#v1.8
-    image: mongodb:ubuntu
+    image: mongo:3.4.24-xenial
     volumes:
-      - ./storage/mongodb:/var/lib/mongo:z
+      - ./storage/mongodb:/data/db:z
+
   redis:
-    build:
-      dockerfile: ./Dockerfile
-      context: https://github.com/CommunityHoneyNetwork/redis.git#v1.8
-    image: redis:ubuntu
+    image: redis:alpine
     volumes:
-      - ./storage/redis:/var/lib/redis:z
-  hpfeeds:
+      - ./storage/redis:/data:z
+
+  hpfeeds3:
     build:
       dockerfile: ./Dockerfile
-      context: https://github.com/CommunityHoneyNetwork/hpfeeds.git#v1.8
-    image: hpfeeds:ubuntu
+      context: https://github.com/CommunityHoneyNetwork/hpfeeds3.git#v1.9
+    image: hpfeeds:latest
     links:
       - mongodb:mongodb
     ports:
@@ -82,26 +45,33 @@ services:
   mnemosyne:
     build:
       dockerfile: ./Dockerfile
-      context: https://github.com/CommunityHoneyNetwork/mnemosyne.git#v1.8
-    image: mnemosyne:ubuntu
+      context: https://github.com/CommunityHoneyNetwork/mnemosyne.git#v1.9
+    image: mnemosyne:latest
+    env_file:
+      - ./mnemosyne.env
     links:
       - mongodb:mongodb
-      - hpfeeds:hpfeeds
+      - hpfeeds3:hpfeeds3
   chnserver:
     build:
       dockerfile: ./Dockerfile
-      context: https://github.com/CommunityHoneyNetwork/CHN-Server.git#v1.8
-    image: chnserver:ubuntu
+      context: https://github.com/CommunityHoneyNetwork/CHN-Server.git#v1.9
+    image: chnserver:latest
     volumes:
       - ./config/collector:/etc/collector:z
-    links:
-      - mongodb:mongodb
-      - hpfeeds:hpfeeds
+      - ./storage/chnserver/sqlite:/opt/sqlite:z
+      - ./certs:/etc/letsencrypt:z
+    env_file:
+      - ./chnserver.env
     ports:
       - "80:80"
+      - "443:443"
 ```
-The above config will build docker images from the v1.8 release version of CHN. You can change the URL to point to
- specific tagged releases or even specific commits.
+The above config will build docker images from the v1.9 tagged version of CHN. You can change the URL to point to
+ specific tagged releases or even specific commits to build from those instead. 
+ 
+If you wish to make code changes, you can either fork the projects to your own repos and specify those URLs in the
+ context, or download the repos locally and specify their location. 
  
 Build the Docker images for the containers that make up the server:
 

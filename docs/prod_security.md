@@ -66,60 +66,24 @@ Two more handy options for the _logs_ command are:
 ### docker-compose exec
 What if the problem you're encountering doesn't generate a log, or you want 
 to verify the environment inside the container? The [docker-compose exec](https://docs.docker.com/compose/reference/exec/) 
-command allows you to verify items directly; a good use case would be 
-verifying that the sysconfig file you provided actually got picked up inside 
-the container: 
+command allows you to verify items directly in the container.
 
-```commandline
-$ docker-compose exec chnserver cat /etc/default/chnserver
-# This file is read from /etc/default/chnserver
-#
-# This can be modified to change the default setup of the chnserver unattended installation
-
-DEBUG=false
-
-EMAIL=admin@localhost
-SERVER_BASE_URL=''
-HONEYMAP_URL=''
-MAIL_SERVER='127.0.0.1'
-MAIL_PORT=25
-MAIL_TLS='y'
-MAIL_SSL='y'
-MAIL_USERNAME=''
-MAIL_PASSWORD=''
-DEFAULT_MAIL_SENDER=''
-MONGODB_HOST='mongodb'
-MONGODB_PORT=27017
-HPFEEDS_HOST='hpfeeds'
-HPFEEDS_PORT=10000
-
-SUPERUSER_EMAIL=''
-SUPERUSER_PASSWORD=''
-SECRET_KEY=''
-DEPLOY_KEY=''
-
-# See https://communityhoneynetwork.readthedocs.io/en/stable/certificates/
-# Options are: 'CERTBOT', 'SELFSIGNED', 'BYO'
-CERTIFICATE_STRATEGY='CERTBOT'
-```
-
-This is handy if you know exactly what you want. Sometimes, however, you may 
-need to "explore" the container, and running commands manually every time may
+This is handy when you may need to "explore" the container, and running commands manually every time may
  get old. Simply exec bash, and you'll be in a bash session in the container:
  
 ```commandline
 $ docker-compose exec chnserver bash
-root@a60116039800:/# vim /etc/default/chnserver 
+root@a60116039800:/# vim /opt/config.py 
 bash: vim: command not found
 root@a60116039800:/# 
 ```
 
-Notice how vi isn't installed on this container? MANY of the things you might
+Notice how vim isn't installed on this container? MANY of the things you might
  normally expect to be present won't be. You can always install the package 
  you need in the container using apt:
  
 ```commandline
-root@a60116039800:/# apt install -y vim                                                                                                                                                                                                 
+root@a60116039800:/# apt update && apt install -y vim                                                                                                                                                                                                 
 Reading package lists... Done                                                                                                                                                                                                           
 Building dependency tree                                                                                                                                                                                                                
 Reading state information... Done                                                                                                                                                                                                       
@@ -143,36 +107,36 @@ restart automatically on boot, for instance, after a patching reboot on the
 host server. This can be accomplished in a number of ways, but on modern 
 systems a systemd integration is ideal. 
 
-Let's presume that we'll put the docker-compose.yml and sysconfig files in a 
+Let's presume that we'll put the docker-compose.yml and env files in a 
 directory we'll dedicate to the service in question.
 
 ```bash
-$ mkdir -p /srv/docker-compose/chnserver
-$ cp docker-compose.yml chnserver.sysconfig /srv/docker-compose/chnserver
+$ mkdir -p /opt/chnserver
+$ cp docker-compose.yml chnserver.env /opt/chnserver
 ```
 
-Add a general purpose systemd configuration file to `/etc/systemd/system/docker-compose@.service`. 
+Add a general purpose systemd configuration file to `/etc/systemd/system/chnserver.service`. 
 
 ```yaml
 [Unit]
-Description=%i service with docker compose
+Description=CHN-Server service with docker compose
 Requires=docker.service
 After=docker.service
 
 [Service]
 Restart=always
 
-WorkingDirectory=/srv/docker-compose/%i
+WorkingDirectory=/opt/chnserver
 
 # Remove old containers
-ExecStartPre=/usr/bin/docker-compose down -v
+ExecStartPre=/usr/bin/docker-compose down
 ExecStartPre=/usr/bin/docker-compose rm -fv
 
 # Compose up
 ExecStart=/usr/bin/docker-compose up
 
-# Compose down, remove containers and volumes
-ExecStop=/usr/bin/docker-compose down -v
+# Compose down, remove containers
+ExecStop=/usr/bin/docker-compose down
 
 [Install]
 WantedBy=multi-user.target
@@ -181,7 +145,7 @@ WantedBy=multi-user.target
 Now that we have the systemd file and our docker-compose files in place, 
 enable the service:
 ```bash
-$ systemctl enable --now docker-compose@chnserver
+$ systemctl enable --now chnserver.service
 ```
 You can now use standard systemd commands to stop, start and restart your 
 containers.
@@ -195,19 +159,19 @@ called `./custom_scripts` into the appropriate location:
 
 ```yaml
   chnserver:
-    image: stingar/chn-server:1.8
+    image: stingar/chn-server:1.9
     volumes:
-      - ./config/collector:/etc/collector:z
       - ./storage/chnserver/sqlite:/opt/sqlite:z
-      - ./chnserver.sysconfig:/etc/default/chnserver:z
-      - ./certs:/tls:z
+      - ./certs:/etc/letsencrypt:z
       - ./custom_scripts:/opt/custom_scripts:z
+    env_file:
+      - ./config/sysconfig/chnserver.env
     links:
       - mongodb:mongodb
-      - hpfeeds:hpfeeds
     ports:
       - "80:80"
       - "443:443"
+    restart: always
 ```
 Once the container is restarted, the script(s) will be loaded into the database. You can also force a refresh with 
 the following command:
@@ -236,7 +200,7 @@ bash prompt.
 You may find yourself in need to recovering the current DEPLOY_KEY in cases 
 where the server storage is lost or the container fully rebuilt (and the 
 honeypots already deployed need the new key to connect). Simply run the 
-following command on the server VM to recover the key:
+following command on the server command line to recover the key:
 
     docker-compose exec chnserver awk '/DEPLOY_KEY/' /opt/config.py
 
@@ -271,3 +235,7 @@ If you find that your honeypots are not showing up in the CHN Server “Sensors�
 Connecting to port 10000 with a tool such as netcat should return binary output beginning with *“@hp2”* if this port is accessible.
 
 We recommend restricting these ports to honeypots and any host that needs access to this data.
+
+**Be Warned:** On some systems, in default configurations, docker-compose stanzas will automatically override
+ firewall restrictions and expose ports without restriction. It is always advisable to test your access controls once
+  deployed.
