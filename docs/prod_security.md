@@ -239,3 +239,17 @@ We recommend restricting these ports to honeypots and any host that needs access
 **Be Warned:** On some systems, in default configurations, docker-compose stanzas will automatically override
  firewall restrictions and expose ports without restriction. It is always advisable to test your access controls once
   deployed.
+  
+## Dealing with large mongo collections
+
+It may be desirable or necessary for users to clear out the voluminous session data in the mongo database. When this
+ is required, there is a script existing in the mnemosyne container which will clear out all existing sessions from
+  the database. This script can take a while to run on larger databases, so you may wish to execute this command in a
+   screen or tmux session.
+   
+```bash
+docker-compose exec mnemosyne mongo mongodb/mnemosyne /opt/clear_database.js
+```
+
+This will remove all data in the mongo database, including raw sessions data from honeypots, attack data for the UI
+, statistical counts, etc. This will *not* remove sensor registration information. 
