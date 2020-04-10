@@ -13,7 +13,7 @@ Please see the [prerequisites](prerequisite.md) page, regardless of which way yo
 
 ## Deploying the Server, the quickstart way
 
-To ease installation, you can bootstrap a basic install of CHN using the [quickstart](https://github.com/CommunityHoneyNetwork/chn-quickstart) guide.
+To ease installation, you can bootstrap a basic install of CHN using the [quickstart](https://github.com/CommunityHoneyNetwork/chn-quickstart/tree/v1.9) guide.
 
 First, clone the quickstart repository into an install location; we will presume `/opt/chnserver` will be our install
  location.
