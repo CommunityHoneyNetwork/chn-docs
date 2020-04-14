@@ -27,7 +27,7 @@ cd /opt/chnserver
 ```
 Run the Quickstart process:
 ```bash
-./guided_docker_compose.py
+sudo ./guided_docker_compose.py
 ```
 
 Once the process launches, you will be asked a series of questions. Answer each question to complete the Quickstart
