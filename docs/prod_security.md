@@ -107,13 +107,14 @@ restart automatically on boot, for instance, after a patching reboot on the
 host server. This can be accomplished in a number of ways, but on modern 
 systems a systemd integration is ideal. 
 
-Let's presume that you used the quickstart process to build your server, which is located in `./chn-quickstart
-`. Given this, you should move the contents of chn-quickstart into it's permanent location, like this:
+Let's presume that you used the quickstart process to build your server, and your `docker-compose.yml` file is located in
+ `./chnserver`. Given this, you should move the contents of chnserver directory into it's permanent location, like this:
 
 ```bash
 $ mkdir -p /opt/chnserver
-$ cp -R ./chn-quickstart/* /opt/chnserver
+$ cp -R ./chnserver/* /opt/chnserver
 ```
+*Note:* If you originally cloned the `chn-quickstart` repository into `/opt/chnserver`, you can skip the step above.
 
 Add a general purpose systemd configuration file to `/etc/systemd/system/chnserver.service`. 
 
