@@ -198,7 +198,7 @@ You may log into the web interface for your new honeypot management server.  In 
 You should be able to login using the `admin@localhost` account and the password you just found. If you need to reset
  the password, change the password on the command line with the command:
 ```bash
-docker-compose exec chnserver python /opt/manual_password_reset.py
+docker-compose exec chnserver python3 /opt/manual_password_reset.py
 ```
 
 At this point you should have a functioning CommunityHoneyNetwork server, ready to register honeypots and start collecting data.  Next, try [deploying your first honeypot](firstpot.md)...
@@ -360,12 +360,12 @@ To continue access the CHN Server web interface, you will need the administrator
 By default, CHN will create a random admin credential. To reset the default admin account (admin@localhost) password
  from the auto-generated one-time password you can reset the password using the command:
 
-    docker-compose exec chnserver python /opt/manual_password_reset.py
+    docker-compose exec chnserver python3 /opt/manual_password_reset.py
 
 For example:
 
 ```
-$ docker-compose exec chnserver python /opt/manual_password_reset.py
+$ docker-compose exec chnserver python3 /opt/manual_password_reset.py
 Enter email address: admin@localhost
 Enter new password:
 Enter new password (again):
