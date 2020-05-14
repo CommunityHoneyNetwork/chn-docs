@@ -278,8 +278,8 @@ __Please Note!__ The value for the timeout is in *seconds*.
 Copy the following Docker Compose yaml, and save it as `docker-compose.yml`:
 
 
-```                                                                                                                                                                             [6/164]
----                                                                                                                                                                                                                                           
+```
+--- 
 version: '3'                                                                                                                                                                                                                                  
 services:                                                                                                                                                                                                                                     
   mongodb:                                                                                                                                                                                                                                    
