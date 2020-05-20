@@ -95,6 +95,8 @@ The `FILENAME`, `REMOTE`, `TOKEN`, `ITYPE`, `TAGS`, and a time specification (su
 for all feed specifications. Other items may be specified, and will otherwise default to the values as defined in the 
 upstream [CIF Python SDK](https://github.com/csirtgadgets/bearded-avenger-sdk-py/wiki).
 
+# Adding safelisting to feed pulls
+
 It is worth noting that **there is NO default safelisting** for feeds performed by this container.
 
 To add safelisting entries to your partner id, create a one-indicator-per-line file for each type of indicator you
