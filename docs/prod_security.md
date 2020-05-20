@@ -131,7 +131,7 @@ WorkingDirectory=/opt/chnserver
 
 # Remove old containers
 ExecStartPre=/usr/bin/docker-compose down
-ExecStartPre=/usr/bin/docker-compose rm -f
+ExecStartPre=/usr/bin/docker-compose rm
 ExecStartPre=/usr/bin/docker-compose pull
 
 # Compose up
