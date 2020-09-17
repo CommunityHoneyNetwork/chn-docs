@@ -128,5 +128,5 @@ The Quickstart method requires an additional python module not typically require
 
 ```bash
 sudo apt install git
-pip3 install validators
+python3 -m pip install validators
 ```

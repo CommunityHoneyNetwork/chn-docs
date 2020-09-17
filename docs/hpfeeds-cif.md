@@ -83,7 +83,7 @@ As troubleshooting a remote CIF instance can prove difficult, a high level of
 ##Installing the CIF client
 One of the easiest ways to pull data from a CIF instance for feeds is to use the [chn-intel-feeds](chnintelfeed.md
 ) container. As an alternative for more flexible feed generation and ad-hoc querying, it's best to use the [CIF client](https://github.com/csirtgadgets/bearded-avenger-sdk-py/wiki) from the
- CIF project. Installing a CIFv3 client is as easy as `pip3 install 'cifsdk>=3.0.0,<4.0'`. Once the client is installed, you should save your credentials 
+ CIF project. Installing a CIFv3 client is as easy as `python3 -m pip install 'cifsdk>=3.0.0,<4.0'`. Once the client is installed, you should save your credentials 
  in a configuration file, where the format is:
  
 ```yaml
