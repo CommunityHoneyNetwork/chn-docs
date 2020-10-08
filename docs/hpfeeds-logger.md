@@ -98,8 +98,9 @@ The hpfeeds protocol requires 5 pieces of information in order to generate or
  btw), we would run:
 
 ```bash
-docker-compose exec hpfeeds python /opt/hpfeeds/broker/add_user.py "ident" "secret" "" "amun.events,conpot.events,thug.events,beeswarm.hive,dionaea.capture,dionaea.connections,thug.files,beeswarm.feeder,cuckoo.analysis,kippo.sessions,cowrie.sessions,glastopf.events,glastopf.files,mwbinary.dionaea.sensorunique,snort.alerts,wordpot.events,p0f.events,suricata.events,shockpot.events,elastichoney.events,rdphoney.sessions,uhp.events"
+docker-compose exec hpfeeds3 /app/bin/python3 /src/hpfeeds/add_user.py --owner chn --ident "ident" --secret "secret" --publish "" --subscribe "amun.events,conpot.events,thug.events,beeswarm.hive,dionaea.capture,dionaea.connections,thug.files,beeswarm.feeder,cuckoo.analysis,kippo.sessions,cowrie.sessions,glastopf.events,glastopf.files,mwbinary.dionaea.sensorunique,snort.alerts,wordpot.events,p0f.events,suricata.events,shockpot.events,elastichoney.events,rdphoney.sessions,uhp.events,elasticpot.events,spylex.events,big-hp.events" --mongodb-host mongodb --mongodb-port 27017
 ```
+
 Please note that the empty double quotes are necessary to indicate that the 
 identity may not publish to any channels (unless that's something you want), 
 and the last quoted text is all the channels that a CHN instance of hpfeeds 
