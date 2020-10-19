@@ -12,7 +12,7 @@ The simplest way to integrate CHN reporting to CIF is to use the [quickstart met
 First, include this stanza in the docker-compose.yml file for CHN-server:
 ```dockerfile
   hpfeeds-cif:
-    image: stingar/hpfeeds-cif:1.9
+    image: stingar/hpfeeds-cif:1.9.1
     env_file:
       - hpfeeds-cif.env
     links:

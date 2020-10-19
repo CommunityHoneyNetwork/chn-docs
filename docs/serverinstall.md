@@ -13,7 +13,7 @@ Please see the [prerequisites](prerequisite.md) page, regardless of which way yo
 
 ## Deploying the Server, the quickstart way
 
-To ease installation, you can bootstrap a basic install of CHN using the [quickstart](https://github.com/CommunityHoneyNetwork/chn-quickstart/tree/v1.9) guide.
+To ease installation, you can bootstrap a basic install of CHN using the [quickstart](https://github.com/CommunityHoneyNetwork/chn-quickstart/tree/v1.9.1) guide.
 
 First, clone the quickstart repository into an install location; we will presume `/opt/chnserver` will be our install
  location.
@@ -293,14 +293,14 @@ services:
       - ./storage/redis:/data:z
 
   hpfeeds3:
-    image: stingar/hpfeeds3:1.9
+    image: stingar/hpfeeds3:1.9.1
     links:
       - mongodb:mongodb
     ports:
       - "10000:10000"
 
   mnemosyne:
-    image: stingar/mnemosyne:1.9
+    image: stingar/mnemosyne:1.9.1
     env_file:
       - ./config/sysconfig/mnemosyne.env
     links:
@@ -308,7 +308,7 @@ services:
       - hpfeeds3:hpfeeds3
 
   chnserver:
-    image: stingar/chn-server:1.9
+    image: stingar/chn-server:1.9.1
     volumes:
       - ./config/collector:/etc/collector:z
       - ./storage/chnserver/sqlite:/opt/sqlite:z
@@ -323,7 +323,7 @@ services:
       - "443:443"
 
   hpfeeds-logger:
-    image: stingar/hpfeeds-logger:1.9
+    image: stingar/hpfeeds-logger:1.9.1
     volumes:
       - ./storage/hpfeeds-logs:/var/log/hpfeeds-logger:z
     env_file:

@@ -22,7 +22,7 @@ For example, volume mount a local directory to the `/tls` directory via your doc
 
 ```yaml
   chnserver:
-    image: stingar/chn-server:1.9
+    image: stingar/chn-server:1.9.1
     volumes:
       - ./storage/chnserver/sqlite:/opt/sqlite:z
       - ./certs:/tls:z

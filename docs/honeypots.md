@@ -52,7 +52,7 @@ adjust the docker-compose.yml file like so:
 version: '3'
 services:
   cowrie:
-    image: stingar/cowrie:1.9
+    image: stingar/cowrie:1.9.1
     restart: always
     volumes:
       - configs:/etc/cowrie

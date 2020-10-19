@@ -26,7 +26,7 @@ configuration files provided by the deployment scripts in the CHN web interface.
 version: '3'
 services:
     conpot:
-        image: stingar/conpot:1.9
+        image: stingar/conpot:1.9.1
         restart: always
         volumes:
             - configs:/etc/conpot

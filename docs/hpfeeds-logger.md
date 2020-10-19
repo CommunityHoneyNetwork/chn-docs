@@ -9,7 +9,7 @@ The simplest way to integrate CHN logging to a local file is to:
 First, include this stanza in the docker-compose.yml file for CHN-server:
 ```dockerfile
   hpfeeds-logger:
-    image: stingar/hpfeeds-logger:1.9
+    image: stingar/hpfeeds-logger:1.9.1
     volumes:
       - ./hpfeeds-logs:/var/log/hpfeeds-logger:z
     env_file:

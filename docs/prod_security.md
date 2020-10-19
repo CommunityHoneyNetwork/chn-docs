@@ -161,7 +161,7 @@ called `./custom_scripts` into the appropriate location:
 
 ```yaml
   chnserver:
-    image: stingar/chn-server:1.9
+    image: stingar/chn-server:1.9.1
     volumes:
       - ./storage/chnserver/sqlite:/opt/sqlite:z
       - ./certs:/etc/letsencrypt:z

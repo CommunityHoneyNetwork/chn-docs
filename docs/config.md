@@ -36,7 +36,7 @@ services:
   hpfeeds3:
     build:
       dockerfile: ./Dockerfile
-      context: https://github.com/CommunityHoneyNetwork/hpfeeds3.git#v1.9
+      context: https://github.com/CommunityHoneyNetwork/hpfeeds3.git#v1.9.1
     image: hpfeeds:latest
     links:
       - mongodb:mongodb
@@ -45,7 +45,7 @@ services:
   mnemosyne:
     build:
       dockerfile: ./Dockerfile
-      context: https://github.com/CommunityHoneyNetwork/mnemosyne.git#v1.9
+      context: https://github.com/CommunityHoneyNetwork/mnemosyne.git#v1.9.1
     image: mnemosyne:latest
     env_file:
       - ./mnemosyne.env
@@ -55,7 +55,7 @@ services:
   chnserver:
     build:
       dockerfile: ./Dockerfile
-      context: https://github.com/CommunityHoneyNetwork/CHN-Server.git#v1.9
+      context: https://github.com/CommunityHoneyNetwork/CHN-Server.git#v1.9.1
     image: chnserver:latest
     volumes:
       - ./config/collector:/etc/collector:z
@@ -67,7 +67,7 @@ services:
       - "80:80"
       - "443:443"
 ```
-The above config will build docker images from the v1.9 tagged version of CHN. You can change the URL to point to
+The above config will build docker images from the v1.9.1 tagged version of CHN. You can change the URL to point to
  specific tagged releases or even specific commits to build from those instead. 
  
 If you wish to make code changes, you can either fork the projects to your own repos and specify those URLs in the

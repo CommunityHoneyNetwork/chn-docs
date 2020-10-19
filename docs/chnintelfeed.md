@@ -17,7 +17,7 @@ The simplest way to integrate feeds is:
 First, include this stanza in the `docker-compose.yml` file for CHN-server:
 ```dockerfile
   chn-intel-feeds:
-    image: stingar/chn-intel-feeds:1.9
+    image: stingar/chn-intel-feeds:1.9.1
     env_file:
       - chn-intel-feeds.env
     volumes:
