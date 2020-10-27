@@ -12,6 +12,7 @@ pages:
     - 'Deploying More Honeypots': honeypots.md
     - 'Advanced Options':
         - 'Production & Security Considerations': prod_security.md
+        - 'Upgrade Notes': upgrading.md
         - 'Advanced Configuration': config.md
         - 'Custom certificates': certificates.md
     - 'Getting Data':

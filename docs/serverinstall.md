@@ -260,14 +260,14 @@ With no additional configuration, the CHN Server will keep only 30 days of data 
 ```bash
 # This file is read from /etc/default/mnemosyne
 # This can be modified to change the default setup of the unattended installation
-HPFEEDS_HOST='hpfeeds'
+HPFEEDS_HOST=hpfeeds
 HPFEEDS_PORT=10000
-MONGODB_HOST='mongodb'
+MONGODB_HOST=mongodb
 MONGODB_PORT=27017
 
 # MONGODB_INDEXTTL sets the number of seconds to keep data in the mongo database
 # This default value is 7 days, or 604800 seconds
-MONGODB_INDEXTTL=2592000
+MONGODB_INDEXTTL=604800
 
 # Use this setting to 'True' to not log RFC1918 addresses to the mongo database.
 IGNORE_RFC1918=False
