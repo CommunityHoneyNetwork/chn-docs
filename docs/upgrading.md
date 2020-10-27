@@ -36,6 +36,7 @@ For those that really want to upgrade in place, there are quite a few changes to
 ### Upgrading CHN-Server components
 
 In the [docker-compose.yml](https://communityhoneynetwork.readthedocs.io/en/v1.9/serverinstall/#deploying-the-server-manually)
+
 * Remove STINGAR-specific images for mongodb and redis, in favor of upstream vanilla images
 * Move from `hpfeeds` to `hpfeeds3` in your images
 * Remove all `volumes` for `image.sysconfig` in favor of the new `env_file` for `image.env` format
@@ -43,10 +44,12 @@ In the [docker-compose.yml](https://communityhoneynetwork.readthedocs.io/en/v1.9
  requirements.
 
 In the [chnserver.env](https://communityhoneynetwork.readthedocs.io/en/v1.9/serverinstall/#deploying-the-server-manually) you must:
+
 * Ensure you remove all quotes around variable assignments (single or double)
 * Make sure you're not using the example `SUPERUSER_PASSWORD`!
 
 Create a [mnemosyne.env](https://communityhoneynetwork.readthedocs.io/en/v1.9/serverinstall/#deploying-the-server-manually) file in order to specify how long mnemosyne data is kept in the mongo database.
+
 * We recommend 7 days (604800 seconds) and for longer retention use [hpfeeds-logger](https://communityhoneynetwork.readthedocs.io/en/v1.9/hpfeeds-logger/)   
  and export the logs elsewhere
  
