@@ -24,6 +24,7 @@ pages:
     - 'Honeypot Configuration Details':
         - 'Cowrie': cowrie.md
         - 'Dionaea': dionaea.md
+        - 'ssh-auth-logger': ssh-auth-logger.md
         - 'Conpot': conpot.md
         - 'RDPhoney': rdphoney.md
         - 'UHP': uhp.md
