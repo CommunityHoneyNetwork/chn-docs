@@ -114,7 +114,7 @@ See the [upstream project](https://github
 
 By default Cowrie will run on port 2222/2223, to avoid any conflict with the real SSH or Telnet services on the machine. If you wish to run the honeypot on port 22, you need to move the real SSH service to a new port. This is outside the scope of our documentation, but would look generally like:
 
-* Edit `/etc/ssh/sshd_config` and change the `Port 22` stanza to your desired port, such as `Port 22222`.
+* Edit `/etc/ssh/sshd_config` and change the `Port 22` stanza to your desired port, such as `Port 2022`.
 * Restart the SSH daemon `sudo systemctl restart ssh.service`
 * Ensure the SSH daemon is running `sudo systemctl status ssh.service` and look for "Active: active (running)"
 * From a NEW terminal, try to SSH to your new port, to ensure your config is working
