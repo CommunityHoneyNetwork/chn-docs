@@ -73,7 +73,7 @@ SSHAUTHLOGGER_JSON=/etc/ssh-auth-logger/ssh-auth-logger.json
 # comma delimited tags may be specified, which will be included
 # as a field in the hpfeeds output. Use cases include tagging provider
 # infrastructure the sensor lives in, geographic location for the sensor, etc.
-TAGS=${TAGS}
+TAGS=
 ```
 
 ### Configuration Options
