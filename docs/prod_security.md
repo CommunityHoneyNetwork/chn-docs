@@ -242,6 +242,8 @@ We recommend restricting these ports to honeypots and any host that needs access
  firewall restrictions and expose ports without restriction. It is always advisable to test your access controls once
   deployed.
   
+Please take a look at [Docker iptables documentation](https://docs.docker.com/network/iptables/) for more information. 
+  
 ## Dealing with large mongo collections
 
 It may be desirable or necessary for users to clear out the voluminous session data in the mongo database. When this
