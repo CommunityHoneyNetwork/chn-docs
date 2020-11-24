@@ -20,8 +20,12 @@ The following Honeypots are currently supported with CHN:
 
 * [Cowrie](cowrie.md)
 * [Dionaea](dionaea.md)
+* [Honeydb-agent](honeydb-agent.md)
+* [ssh-auth-logger](ssh-auth-logger.md)
 * [Conpot](conpot.md)
-* [RDPHoney](rdphoney.md)
+* [RDPhoney](rdphoney.md)
+* [Elasticpot](elasticpot.md)
+* [Big-HP](big-hp.md)
 * [UHP](uhp.md)
 
 The general deployment model is the same for each of these:

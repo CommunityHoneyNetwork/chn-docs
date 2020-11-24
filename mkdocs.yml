@@ -24,8 +24,11 @@ pages:
     - 'Honeypot Configuration Details':
         - 'Cowrie': cowrie.md
         - 'Dionaea': dionaea.md
+        - 'Honeydb-agent': honeydb-agent.md
         - 'ssh-auth-logger': ssh-auth-logger.md
         - 'Conpot': conpot.md
         - 'RDPhoney': rdphoney.md
+        - 'Elasticpot': elasticpot.md
+        - 'Big-HP': big-hp.md
         - 'UHP': uhp.md
     - 'LICENSE': LICENSE.md
