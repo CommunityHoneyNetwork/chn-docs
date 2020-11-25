@@ -129,6 +129,7 @@ The following options are supported in the `/etc/default/honeydb-agent` files:
 * TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly. 
 **TAGS** string must be enclosed in double quotes if string contains spaces.
 
+You can find detailed information on the honeydb-agent, it's configuration, and it's plugins at the [honeydb-agent documentation](https://honeydb-agent-docs.readthedocs.io/en/latest/configuration/) 
 
 ## Running honeydb-agent on port 22
 
