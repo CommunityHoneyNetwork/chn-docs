@@ -260,7 +260,7 @@ With no additional configuration, the CHN Server will keep only 30 days of data 
 ```bash
 # This file is read from /etc/default/mnemosyne
 # This can be modified to change the default setup of the unattended installation
-HPFEEDS_HOST=hpfeeds
+HPFEEDS_HOST=hpfeeds3
 HPFEEDS_PORT=10000
 MONGODB_HOST=mongodb
 MONGODB_PORT=27017
