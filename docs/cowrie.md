@@ -45,13 +45,13 @@ Prior to starting, Cowrie will parse options from the environment, passed to the
 ` specification in the docker-compose file. The following is an example env file:
 
 ```
-# This can be modified to change the default setup of the unattended installation
+# This can be modified to change the default setup
 
 DEBUG=false
 
-# IP Address of the honeypot
-# Leaving this blank will default to the docker container IP
-IP_ADDRESS=
+# IP address reported to the CHN sensor list and used in the dst_ip for hpfeeds logs
+# Leaving this blank will cause the honeypot to default to the Docker IP
+REPORTED_IP=
 
 # CHN Server api to register to
 CHN_SERVER=https://{fqdn_or_ip_of_chn_server}
@@ -89,6 +89,15 @@ TAGS=
 # here. These directories can include custom fs.pickle, cowrie.cfg, txtcmds and
 # userdb.txt files which can influence the attractiveness of the honeypot.
 PERSONALITY=default
+
+# If the S3_* variables are filled out, Cowrie will upload all unique files created on 
+# the honeypot to an S3 bucket. 
+
+S3_OUTPUT_ENABLED=false
+S3_ACCESS_KEY={access_key}}
+S3_SECRET_KEY={access_secret}
+S3_ENDPOINT={endpoint}
+S3_REGION={AWS_region}
 ```
 
 ### Configuration Options
@@ -96,7 +105,7 @@ PERSONALITY=default
 The following options are supported in the `/etc/default/cowrie` files:
 
 * DEBUG: (boolean) Enable more verbose output to the console
-* IP_ADDRESS: IP address of the host running the honeypot container
+* REPORTED_IP: IP address reported to the CHN sensor list and used in the dst_ip for hpfeeds logs
 * CHN_SERVER: (string) The URL of the CHN Server used to register honeypot.
 * FEEDS_SERVER: (string) The hostname or IP address of the HPFeeds server to send logged events.  This is likely going to be the CHN management server.
 * FEEDS_SERVER_PORT: (integer) The HPFeeds port.  Default is 10000.
@@ -105,10 +114,12 @@ The following options are supported in the `/etc/default/cowrie` files:
 * SSH_LISTEN_PORT: (integer) The port for the Cowrie daemon to listen on for SSH connections.  In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
 * TELNET_LISTEN_PORT: (integer) The port for the Cowrie daemon to listen on for Telnet connections. In containerized applications, this is _inside the container_, and the port can still be mapped to a different port on the host.
 * TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly. * TAGS: (string) Comma delimited string for honeypot-specific tags. Tags must be separated by a comma to be parsed properly. **TAGS** string must be enclosed in double quotes if string contains spaces.
-* PERSONALITY: (string) a directory name under /opt/personalities containing 
-cowrie configuration files such as cowrie.cfg, fs.pickle, userdb.txt, etc. 
-See the [upstream project](https://github
-.com/cowrie/cowrie#files-of-interest) for details. 
+* PERSONALITY: (string) a directory name under /opt/personalities containing cowrie configuration files such as cowrie.cfg, fs.pickle, userdb.txt, etc. See the [upstream project](https://github.com/cowrie/cowrie#files-of-interest) for details. 
+* S3_OUTPUT_ENABLED: (boolean) True/False value determins if S3 output of unique files should be enabled
+* S3_ACCESS_KEY: (string) Access key for the S3 account
+* S3_SECRET_KEY: (string) Secret key for the S3 account
+* S3_ENDPOINT: (string) Endpoint where the S3 bucket lives
+* S3_REGION: (string) Optional region specification for AWS S3 buckets
 
 ## Running Cowrie on port 22/23
 
@@ -187,7 +198,12 @@ and then modify the `cowrie.env` to specify the directory name in the `PERSONALI
 PERSONALITY=sneakycowrie
 ```
 You should then be able to `docker-compose down` and `docker-compose up -d` at this point and the personality should take effect.
- 
+
+## Output files collected on honeypot to S3
+
+Using the `S3_*` variables in `cowrie.env`, Cowrie will attempt to upload any files that are created on the honeypot 
+to an S3 bucket of your choosing.
+
 ## Acknowledgements
 
 CommunityHoneyNetwork Cowrie container is an adaptation of [@micheloosterhof's Cowrie](https://github.com/micheloosterhof/cowrie) Cowrie software and [Threatstream's Modern Honey Network](https://threatstream.github.io/mhn/) Cowrie & HPFeeds work, among other contributors and collaborators.
